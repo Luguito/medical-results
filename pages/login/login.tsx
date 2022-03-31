@@ -1,6 +1,6 @@
-import { } from 'react';
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
 import { TextField } from '@mui/material';
+import Link from 'next/link';
 
 export const LoginComponent = () => {
     return (
@@ -21,7 +21,9 @@ export const LoginComponent = () => {
                         Contraseña
                         <TextField size="small" />
                     </ItemCard>
-                    <small style={{ textAlign: 'right' }}>Olvide mi contraseña</small>
+                    <Link href="/forgot-password">
+                        <small style={{ textAlign: 'right' }}>Olvide mi contraseña</small>
+                    </Link>
                 </ContentCard>
                 <FooterCard style={{ justifyContent: 'center' }}>
                     <ButtonGrey style={{ width: '90%' }}>Iniciar sesión</ButtonGrey>
