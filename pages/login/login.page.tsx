@@ -32,3 +32,5 @@ export const LoginComponent = () => {
         </ContainerCenter>
     )
 }
+
+export default LoginComponent;
