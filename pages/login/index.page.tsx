@@ -16,4 +16,4 @@ export const LoginPage = () => {
     )
 }
 
-export default LoginComponent;
+export default LoginPage;
