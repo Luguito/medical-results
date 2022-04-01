@@ -1,7 +1,7 @@
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
 import { TextField } from '@mui/material';
 import { useRouter } from 'next/router'
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
