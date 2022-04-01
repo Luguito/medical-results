@@ -1,7 +1,7 @@
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
 import { TextField } from '@mui/material';
 
-export const ForgotComponent = () => {
+export const ForgotPage = () => {
     return (
             <ContainerCenter>
                 <CardContainer style={{ padding: '2em', width: '25%' }}>
@@ -25,4 +25,4 @@ export const ForgotComponent = () => {
     )
 }
 
-export default ForgotComponent;
+export default ForgotPage;

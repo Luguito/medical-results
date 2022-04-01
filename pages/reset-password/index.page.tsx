@@ -1,7 +1,7 @@
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
 import { TextField } from '@mui/material';
 
-export const ResetComponent = () => {
+export const ResetPage = () => {
     return (
             <ContainerCenter>
                 <CardContainer style={{ padding: '2em', width: '25%' }}>
@@ -29,4 +29,4 @@ export const ResetComponent = () => {
     )
 }
 
-export default ResetComponent;
+export default ResetPage;
