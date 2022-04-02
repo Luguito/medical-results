@@ -49,4 +49,5 @@ interface INavInfo {
     title: string,
     subtitle: string,
     buttonText: string,
+    buttonColor: 'blue' | 'grey',
 }

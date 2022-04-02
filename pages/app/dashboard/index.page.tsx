@@ -6,9 +6,10 @@ export const DashboardPage = () => {
             <LayoutComponent 
             Component={<Test></Test>} 
             navInfo={{
-                buttonText: 'Volver al Inicio',
+                buttonText: 'Buscar resultados',
                 title: 'Tus resultados',
-                subtitle: 'Encuentra tus resultados de manera facil'
+                subtitle: 'Encuentra tus resultados de manera facil',
+                buttonColor: 'blue'
             }}></LayoutComponent>
         </>
     )
