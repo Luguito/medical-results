@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { LayoutColor, ItemListColor } from '@global-colors';
+import { PrimaryBlueColor } from '@global-colors';
 
 export const ContainerLayout = styled.section`
     display: flex;
     height: 100%;
+    background-color: ${PrimaryBlueColor}
 `
 export const Layout = styled.section`
     background-color: ${LayoutColor};
@@ -30,4 +32,11 @@ export const ItemList = styled.li`
         border-radius: 10px;
         padding-left: 10px;
     }
+`
+
+export const ContainerContent = styled.section`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 2em;
 `
