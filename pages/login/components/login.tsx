@@ -5,6 +5,10 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { TextColor } from '@global-colors';
 
+// Logo image
+import Image from 'next/image';
+import logo from '../../../assets/logo.png';
+
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const router = useRouter();
     const [form, setForm] = useState({
@@ -30,6 +34,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
             <CardContainer style={{ padding: '2em', width: '25%' }}>
                 <HeaderCard>
                     <TitleCard>
+                        <Image src={logo} height="20px" width="35px" layout="responsive"></Image>
                         <h3 style={{ marginBottom: '8px', color: 'black' }}>Iniciar sesión</h3>
                         <small style={{ color: TextColor }}>Ingresa tus credenciales</small>
                     </TitleCard>
