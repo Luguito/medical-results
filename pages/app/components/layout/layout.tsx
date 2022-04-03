@@ -1,4 +1,4 @@
-import { ContainerLayout, Layout, OptionLists, ItemList, ContainerContent } from './layout.styled';
+import { ContainerLayout, Layout, OptionLists, ItemList, ContainerContent, Container } from './layout.styled';
 import { UserLoggedComponent } from '../user/user';
 import NavBarComponent from '../navbar/navbar';
 import { ReactElement } from 'react';
@@ -31,7 +31,9 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
             </Layout>
             <ContainerContent>
                 <NavBarComponent {...navInfo}></NavBarComponent>
-                {Component}
+                <Container>
+                    {Component}
+                </Container>
             </ContainerContent>
         </ContainerLayout>
     )

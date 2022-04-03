@@ -40,3 +40,7 @@ export const ContainerContent = styled.section`
     width: 100%;
     gap: 2em;
 `
+
+export const Container = styled.section`
+    padding: 1em;
+`
