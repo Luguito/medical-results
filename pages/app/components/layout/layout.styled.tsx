@@ -42,5 +42,7 @@ export const ContainerContent = styled.section`
 `
 
 export const Container = styled.section`
-    padding: 1em;
+    padding: 1.2em;
+    height: 90%;
+    overflow: hidden;
 `
