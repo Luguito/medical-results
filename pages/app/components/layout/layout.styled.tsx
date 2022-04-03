@@ -26,7 +26,7 @@ export const ItemList = styled.li`
     font-size: 0.7rem;
     
     &:hover {
-        background: ${ItemListColor};
+        background: #33a4d5;
         font-weight: 600;
         border-radius: 10px;
         padding-left: 10px;
