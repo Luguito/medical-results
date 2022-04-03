@@ -4,6 +4,8 @@ import { ContainerTable, Table, HeaderTable, ItemTable, RowTable, FooterTable } 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
+import ImageIcon from '@mui/icons-material/Image';
+
 export const TableComponent = () => {
     const dummyData = Array(10).fill({})
 
@@ -35,7 +37,9 @@ export const TableComponent = () => {
                                         <ItemTable>Test #{index}</ItemTable>
                                         <ItemTable>Test #{index}</ItemTable>
                                         <ItemTable>Test #{index}</ItemTable>
-                                        <ItemTable>Test #{index}</ItemTable>
+                                        <ItemTable>
+                                            <ImageIcon></ImageIcon>
+                                        </ItemTable>
                                     </RowTable>
                                 )
                             })
