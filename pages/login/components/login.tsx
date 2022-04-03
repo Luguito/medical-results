@@ -8,6 +8,9 @@ import { TextColor } from '@global-colors';
 // Logo image
 import Image from 'next/image';
 import logo from '../../../assets/logo.png';
+// Schema
+import { schema } from '../schema/login.schema';
+
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const router = useRouter();
@@ -25,6 +28,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
 
         // Redirect -> router.push('/app/dashboard');
         // changeLogin -> changeLogin(true)
+        // Validate if login is completed schema.isValid(form)
 
         console.log(form);
     }
