@@ -3,6 +3,7 @@ import { TextField } from '@mui/material';
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 import Link from 'next/link';
+import { TextColor } from '@global-colors';
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const router = useRouter();
@@ -30,7 +31,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                 <HeaderCard>
                     <TitleCard>
                         <h3 style={{ marginBottom: '8px', color: 'black' }}>Iniciar sesión</h3>
-                        <small>Ingresa tus credenciales</small>
+                        <small style={{ color: TextColor }}>Ingresa tus credenciales</small>
                     </TitleCard>
                 </HeaderCard>
                 <ContentCard>
@@ -43,7 +44,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                         <TextField type="password" size="small" onChange={(e) => handleFields('password', e.target)} />
                     </ItemCard>
                     <Link href="/forgot-password">
-                        <small style={{ textAlign: 'right' }}>Olvide mi contraseña</small>
+                        <small style={{ textAlign: 'right', color: TextColor }}>Olvide mi contraseña</small>
                     </Link>
                 </ContentCard>
                 <FooterCard style={{ justifyContent: 'center' }}>

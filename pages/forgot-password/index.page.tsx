@@ -1,3 +1,4 @@
+import { TextColor } from '@global-colors';
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
 import { TextField } from '@mui/material';
 
@@ -8,7 +9,7 @@ export const ForgotPage = () => {
                     <HeaderCard>
                         <TitleCard>
                             <h3 style={{ marginBottom: '8px', color: 'black' }}>Reestablecer Contraseña</h3>
-                            <small>Ingresa tus credenciales</small>
+                            <small style={{ color: TextColor }}>Ingresa tus credenciales</small>
                         </TitleCard>
                     </HeaderCard>
                     <ContentCard>

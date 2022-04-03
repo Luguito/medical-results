@@ -1,14 +1,13 @@
 import styled from 'styled-components';
-import { LayoutColor, ItemListColor } from '@global-colors';
-import { PrimaryBlueColor } from '@global-colors';
+import { LayoutColor, PrimaryBlueColor, ItemListColor, SecondaryBlueColor } from '@global-colors';
 
 export const ContainerLayout = styled.section`
     display: flex;
     height: 100%;
-    background-color: ${PrimaryBlueColor}
+    background-color: ${SecondaryBlueColor}
 `
 export const Layout = styled.section`
-    background-color: ${LayoutColor};
+    background-color: ${PrimaryBlueColor};
     color: #FFF;
     height: 100%;
     width: 15%;

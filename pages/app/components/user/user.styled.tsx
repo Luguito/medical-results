@@ -11,8 +11,8 @@ export const UserLoggedContainer = styled.section`
 `;
 
 export const ProfileImgContainer = styled.div`
-    height: 8em;
-    width: 8em;
+    height: 5em;
+    width: 5em;
     background-color: ${SecondaryGreyColor};
     border-radius: 50%
 `

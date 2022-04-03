@@ -14,7 +14,7 @@ export const CardContainer = styled.article`
     background-color: #FFFFFF;
     min-width: 10em;
     min-height: 10em;
-    color: ${PrimaryGreyColor};
+    font-weight: 500;
 `;
 
 export const HeaderCard = styled.header`
@@ -47,7 +47,7 @@ export const FooterCard = styled.article`
 
 export const ButtonGrey = styled(Button)`
     && {
-        background-color: ${PrimaryGreyColor};
+        background-color: ${PrimaryBlueColor};
         border-radius: 20px;
         color: #FFFFFF;
     }

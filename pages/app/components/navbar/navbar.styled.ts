@@ -1,4 +1,4 @@
-import { PrimaryGreyColor } from '@global-colors';
+import { PrimaryBlueColor, PrimaryGreyColor } from '@global-colors';
 import {} from '@global-styled';
 import styled from 'styled-components'
 import Button from '@mui/material/Button';
@@ -28,7 +28,7 @@ export const SubTitle = styled.small``
 
 export const ButtonGrey = styled(Button)`
     && {
-        background-color: ${PrimaryGreyColor};
+        background-color: ${PrimaryBlueColor};
         border-radius: 20px;
         color: #FFFFFF;
         padding: 0.5em;
