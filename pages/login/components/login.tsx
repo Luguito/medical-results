@@ -10,7 +10,8 @@ import Image from 'next/image';
 import logo from '../../../assets/logo.png';
 // Schema
 import { schema } from '../schema/login.schema';
-
+// API
+import apiLogin from '../../../api/login/login.api';
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const router = useRouter();
@@ -21,13 +22,17 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     }
 
     const handleLogin = () => {
-        // If the first time user logged we gonna change de login using changeLogin Dispatcher if not true we redirect to dashboard
+        schema.isValid(form).then(res => {
+            if(res) {
+                apiLogin.post('auth/login', form, {}).then(res => {
+                    localStorage.setItem('token', res?.data?.accessToken);
+                    localStorage.setItem('user', JSON.stringify(res?.data?.user));
 
-        // Redirect -> router.push('/app/dashboard');
-        // changeLogin -> changeLogin(true)
-        // Validate if login is completed schema.isValid(form)
-        schema.isValid(form).then(res => console.log(res));
-        console.log(form);
+                    res?.data?.user?.pendingPassword && changeLogin(true);
+                    !res?.data?.user?.pendingPassword && router.push('/app/dashboard');
+                });
+            }
+        });
     }
 
     return (

@@ -1,8 +1,33 @@
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
 import { TextField } from '@mui/material';
-import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+
+// Schema
+import { schema } from '../schema/first-time.schema';
+// API
+import apiLogin from '../../../api/login/login.api';
 
 export const FirstLoginComponent = () => {
+    const router = useRouter();
+    const [form, setForm] = useState({ email: '', password: '' });
+    
+    const handleFields = (type: string, { value }: { value: string }) => {
+        setForm({ ...form, [type]: value });
+    }
+
+    const handleLogin = () => {
+        schema.isValid(form).then(res => {
+            if(res) {
+                apiLogin.put('user/first-login', form, {}).then(res => {
+                    localStorage.setItem('token', res?.data?.accessToken);
+                    localStorage.setItem('user', JSON.stringify(res?.data?.user));
+                    router.push('/app/dashboard');
+                });
+            }
+        });
+    }
+
     return (
         <ContainerCenter>
             <CardContainer style={{ padding: '2em', width: '25%' }}>
@@ -15,11 +40,11 @@ export const FirstLoginComponent = () => {
                 <ContentCard>
                     <ItemCard>
                         Correo electronico
-                        <TextField size="small" />
+                        <TextField size="small" onChange={(e) => handleFields('email', e.target)}/>
                     </ItemCard>
                     <ItemCard>
                         Nueva contraseña
-                        <TextField size="small" />
+                        <TextField size="small" onChange={(e) => handleFields('password', e.target)}/>
                     </ItemCard>
                     <ItemCard>
                         Repetir contraseña
@@ -27,7 +52,7 @@ export const FirstLoginComponent = () => {
                     </ItemCard>
                 </ContentCard>
                 <FooterCard style={{ justifyContent: 'center' }}>
-                    <ButtonGrey style={{ width: '90%' }}>Continuar</ButtonGrey>
+                    <ButtonGrey style={{ width: '90%' }} onClick={handleLogin}>Continuar</ButtonGrey>
                 </FooterCard>
             </CardContainer>
         </ContainerCenter>
