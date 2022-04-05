@@ -14,10 +14,7 @@ import { schema } from '../schema/login.schema';
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const router = useRouter();
-    const [form, setForm] = useState({
-        number_id: '',
-        password: ''
-    });
+    const [form, setForm] = useState({ ccid: '', password: '' });
 
     const handleFields = (type: string, { value }: { value: string }) => {
         setForm({ ...form, [type]: value });
@@ -29,7 +26,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
         // Redirect -> router.push('/app/dashboard');
         // changeLogin -> changeLogin(true)
         // Validate if login is completed schema.isValid(form)
-
+        schema.isValid(form).then(res => console.log(res));
         console.log(form);
     }
 
@@ -46,7 +43,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                 <ContentCard>
                     <ItemCard>
                         Cedula
-                        <TextField size="small" onChange={(e) => handleFields('number_id', e.target)} />
+                        <TextField size="small" onChange={(e) => handleFields('ccid', e.target)} />
                     </ItemCard>
                     <ItemCard>
                         Contraseña
