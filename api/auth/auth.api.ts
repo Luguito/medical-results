@@ -1,4 +1,4 @@
-const apiUrl = "https://huninorte.herokuapp.com/api"
+const apiUrl = "https://huninorte.herokuapp.com/api/auth"
 // const apiUrl = "https://e12c-2800-484-6979-ac4-8468-4ef8-6924-a645.ngrok.io/api"
 
 export const get = (url: string, options: RequestInit): Promise<any> => {

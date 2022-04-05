@@ -17,7 +17,8 @@
     "baseUrl": "./",
     "paths": {
       "@global-styled": ["./global-styled/global-styled.ts"],
-      "@global-colors": ["./global-styled/global-colors.ts"]
+      "@global-colors": ["./global-styled/global-colors.ts"],
+      "@api": ["./api"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

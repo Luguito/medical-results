@@ -6,7 +6,7 @@ import { useState } from 'react';
 // Schema
 import { schema } from '../schema/first-time.schema';
 // API
-import apiLogin from '../../../api/login/login.api';
+import { Auth } from '@api';
 
 export const FirstLoginComponent = () => {
     const router = useRouter();
@@ -19,7 +19,7 @@ export const FirstLoginComponent = () => {
     const handleLogin = () => {
         schema.isValid(form).then(res => {
             if(res) {
-                apiLogin.put('user/first-login', form, {}).then(res => {
+                Auth.put('first-login', form, {}).then(res => {
                     localStorage.setItem('token', res?.data?.accessToken);
                     localStorage.setItem('user', JSON.stringify(res?.data?.user));
                     router.push('/app/dashboard');

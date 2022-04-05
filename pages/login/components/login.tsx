@@ -11,7 +11,7 @@ import logo from '../../../assets/logo.png';
 // Schema
 import { schema } from '../schema/login.schema';
 // API
-import apiLogin from '../../../api/login/login.api';
+import { Auth } from '@api';
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const router = useRouter();
@@ -24,7 +24,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const handleLogin = () => {
         schema.isValid(form).then(res => {
             if(res) {
-                apiLogin.post('auth/login', form, {}).then(res => {
+                Auth.post('login', form, {}).then(res => {
                     localStorage.setItem('token', res?.data?.accessToken);
                     localStorage.setItem('user', JSON.stringify(res?.data?.user));
 
