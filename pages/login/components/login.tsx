@@ -1,30 +1,34 @@
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
-import { TextField } from '@mui/material';
+import { Alert, AlertTitle, TextField } from '@mui/material';
+import { TextColor } from '@global-colors';
 import { useRouter } from 'next/router'
 import { useState } from 'react';
 import Link from 'next/link';
-import { TextColor } from '@global-colors';
 
 // Logo image
-import Image from 'next/image';
 import logo from '../../../assets/logo.png';
+import Image from 'next/image';
 // Schema
 import { schema } from '../schema/login.schema';
 // API
 import { Auth } from '@api';
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
-    const router = useRouter();
+    const [showError, setError] = useState({ show: false, message: '' });
     const [form, setForm] = useState({ ccid: '', password: '' });
+    const router = useRouter();
 
     const handleFields = (type: string, { value }: { value: string }) => {
         setForm({ ...form, [type]: value });
     }
 
     const handleLogin = () => {
-        schema.isValid(form).then(res => {
-            if(res) {
+        schema.isValid(form).then(valid => {
+            if (valid) {
                 Auth.post('login', form, {}).then(res => {
+                    if (res.message) {
+                        return setError({ show: true, message: res.message })
+                    }
                     localStorage.setItem('token', res?.data?.accessToken);
                     localStorage.setItem('user', JSON.stringify(res?.data?.user));
 
@@ -46,6 +50,14 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                     </TitleCard>
                 </HeaderCard>
                 <ContentCard>
+                    {
+                        showError.show ?
+                            <Alert severity="error">
+                                <AlertTitle>Error</AlertTitle>
+                                {showError.message}
+                            </Alert> :
+                            null
+                    }
                     <ItemCard>
                         Cedula
                         <TextField size="small" onChange={(e) => handleFields('ccid', e.target)} />
