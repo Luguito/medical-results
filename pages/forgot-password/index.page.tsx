@@ -1,25 +1,31 @@
-import { TextColor } from '@global-colors';
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
-import { TextField } from '@mui/material';
+import { Alert, AlertColor, AlertTitle, TextField } from '@mui/material';
+import { TextColor } from '@global-colors';
 // Logo image
-import Image from 'next/image';
-import { useState } from 'react';
 import logo from '../../assets/logo.png';
-
+import { useState } from 'react';
+import Image from 'next/image';
 // Api
 import { Auth } from '@api'
 
 export const ForgotPage = () => {
-    const [form, setForm] = useState({ ccid: '' })
+    const [showAlert, setAlert] = useState<IAlert>({ show: false, message: '', type: 'success' });
+    const [form, setForm] = useState({ ccid: '' });
 
     const handleFields = (type: string, value: string) => {
         setForm({ ...form, [type]: value })
     }
 
     const handleSubmit = () => {
-        Auth.post('recover-my-password', form, {}).then(v => console.log(v));
+        Auth.post('recover-my-password', form, {}).then(resp => {
+            if (resp.message) {
+                return setAlert({ show: true, message: resp.message.message, type: 'error' });
+            }
+
+            setAlert({ show: true, message: 'Correo de recuperacion enviado', type: 'success' })
+        });
     }
-    
+
     return (
         <ContainerCenter>
             <CardContainer style={{ padding: '2em', width: '25%' }}>
@@ -30,6 +36,15 @@ export const ForgotPage = () => {
                         <small style={{ color: TextColor }}>Ingresa tus credenciales</small>
                     </TitleCard>
                 </HeaderCard>
+                {
+                    showAlert.show ?
+                        <Alert severity={showAlert.type} style={{ marginBottom: '2em' }}>
+                            <AlertTitle>{showAlert.type.substring(0, 1).toUpperCase() + showAlert.type.substring(1)}</AlertTitle>
+                            {showAlert.message}
+                        </Alert>
+                        :
+                        null
+                }
                 <ContentCard>
                     <ItemCard>
                         Cédula
@@ -45,3 +60,10 @@ export const ForgotPage = () => {
 }
 
 export default ForgotPage;
+
+
+interface IAlert {
+    type: AlertColor,
+    show: boolean,
+    message: string
+}
