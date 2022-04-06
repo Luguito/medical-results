@@ -52,11 +52,11 @@ export const ResetPage = () => {
                 <ContentCard>
                     <ItemCard>
                         Contraseña
-                        <TextField size="small" onChange={({ target }) => handleField('password', target.value)} />
+                        <TextField size="small" onChange={({ target }) => handleField('password', target.value)} type="password" />
                     </ItemCard>
                     <ItemCard>
                         Repetir contraseña
-                        <TextField size="small" />
+                        <TextField size="small" type="password" />
                     </ItemCard>
                 </ContentCard>
                 <FooterCard style={{ justifyContent: 'center' }}>

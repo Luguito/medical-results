@@ -44,11 +44,11 @@ export const FirstLoginComponent = () => {
                     </ItemCard>
                     <ItemCard>
                         Nueva contraseña
-                        <TextField size="small" onChange={(e) => handleFields('password', e.target)}/>
+                        <TextField size="small" type="password" onChange={(e) => handleFields('password', e.target)}/>
                     </ItemCard>
                     <ItemCard>
                         Repetir contraseña
-                        <TextField size="small" />
+                        <TextField size="small" type="password" />
                     </ItemCard>
                 </ContentCard>
                 <FooterCard style={{ justifyContent: 'center' }}>
