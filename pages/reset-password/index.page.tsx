@@ -1,6 +1,6 @@
 import { TextColor } from '@global-colors';
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
-import { TextField } from '@mui/material';
+import { Alert, AlertTitle, TextField } from '@mui/material';
 // Logo image
 import Image from 'next/image';
 import logo from '../../assets/logo.png';
@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router'
 
 export const ResetPage = () => {
+    const [showAlert, setAlert] = useState({ show: false, message: '' });
     const [pass, setPassword] = useState({ password: '' });
     const router = useRouter();
 
@@ -20,6 +21,7 @@ export const ResetPage = () => {
 
     const handleSubmit = () => {
         Auth.put('new-password', pass, {}).then(response => {
+            setAlert({ show: true, message: 'Contraseña actualizada' })
             localStorage.setItem('token', response.accessToken as string)
             router.push('/app/dashboard');
         });
@@ -39,6 +41,14 @@ export const ResetPage = () => {
                         <small style={{ color: TextColor }}>Ingresa tu nueva contraseña</small>
                     </TitleCard>
                 </HeaderCard>
+                {
+                    showAlert.show ?
+                        <Alert severity="success">
+                            <AlertTitle>Error</AlertTitle>
+                            {showAlert.message}
+                        </Alert> :
+                        null
+                }
                 <ContentCard>
                     <ItemCard>
                         Contraseña
