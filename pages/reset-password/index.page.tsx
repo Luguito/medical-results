@@ -4,8 +4,31 @@ import { TextField } from '@mui/material';
 // Logo image
 import Image from 'next/image';
 import logo from '../../assets/logo.png';
+// API
+import { Auth } from '@api';
+import { useEffect, useState } from 'react';
+//  Next
+import { useRouter } from 'next/router'
 
 export const ResetPage = () => {
+    const [pass, setPassword] = useState({ password: '' });
+    const router = useRouter();
+
+    useEffect(() => {
+        localStorage.setItem('token', router.query['token'] as string)
+    }, [])
+
+    const handleSubmit = () => {
+        Auth.put('new-password', pass, {}).then(response => {
+            localStorage.setItem('token', response.accessToken as string)
+            router.push('/app/dashboard');
+        });
+    }
+
+    const handleField = (type: string, value: string) => {
+        setPassword({ ...pass, [type]: value })
+    }
+
     return (
         <ContainerCenter>
             <CardContainer style={{ padding: '2em', width: '25%' }}>
@@ -19,7 +42,7 @@ export const ResetPage = () => {
                 <ContentCard>
                     <ItemCard>
                         Contraseña
-                        <TextField size="small" />
+                        <TextField size="small" onChange={({ target }) => handleField('password', target.value)} />
                     </ItemCard>
                     <ItemCard>
                         Repetir contraseña
@@ -27,7 +50,7 @@ export const ResetPage = () => {
                     </ItemCard>
                 </ContentCard>
                 <FooterCard style={{ justifyContent: 'center' }}>
-                    <ButtonGrey style={{ width: '90%' }}>Iniciar sesión</ButtonGrey>
+                    <ButtonGrey style={{ width: '90%' }} onClick={handleSubmit}>Iniciar sesión</ButtonGrey>
                 </FooterCard>
             </CardContainer>
         </ContainerCenter>
