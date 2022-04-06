@@ -12,6 +12,8 @@ import Image from 'next/image';
 import { schema } from '../schema/login.schema';
 // API
 import { Auth } from '@api';
+// Captcha
+import Recaptcha from 'react-recaptcha';
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const [showError, setError] = useState({ show: false, message: '' });
@@ -23,6 +25,8 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     }
 
     const handleLogin = () => {
+        schema.validate(form).catch(e => setError({ show: true, message: e.message }))
+
         schema.isValid(form).then(valid => {
             if (valid) {
                 Auth.post('login', form, {}).then(res => {
