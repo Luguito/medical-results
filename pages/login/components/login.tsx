@@ -13,11 +13,11 @@ import { schema } from '../schema/login.schema';
 // API
 import { Auth } from '@api';
 // Captcha
-import Recaptcha from 'react-recaptcha';
+import ReCAPTCHA from "react-google-recaptcha";
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const [showError, setError] = useState({ show: false, message: '' });
-    const [form, setForm] = useState({ ccid: '', password: '' });
+    const [form, setForm] = useState({ ccid: '', password: '', recaptchaValue: '' });
     const router = useRouter();
 
     const handleFields = (type: string, { value }: { value: string }) => {
@@ -41,6 +41,10 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                 });
             }
         });
+    }
+
+    const handleCaptcha = (token: string | null) => {
+        setForm({ ...form, 'recaptchaValue': token as string});
     }
 
     return (
@@ -74,6 +78,10 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                         <small style={{ textAlign: 'right', color: TextColor }}>Olvide mi contraseña</small>
                     </Link>
                 </ContentCard>
+                <ReCAPTCHA
+                    sitekey="6Lcv30wfAAAAAFyecXGytXv1iVLMO4AMGUU54jpe"
+                    onChange={handleCaptcha}
+                />
                 <FooterCard style={{ justifyContent: 'center' }}>
                     <ButtonGrey style={{ width: '90%' }} onClick={handleLogin}>Iniciar sesión</ButtonGrey>
                 </FooterCard>

@@ -8,7 +8,7 @@ import logo from '../../assets/logo.png';
 import { Auth } from '@api';
 import { useEffect, useState } from 'react';
 //  Next
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
 
 export const ResetPage = () => {
     const [showAlert, setAlert] = useState({ show: false, message: '' });
@@ -16,11 +16,14 @@ export const ResetPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        localStorage.setItem('token', router.query['token'] as string)
-    }, [])
+        localStorage.setItem('token', router.query['token'] as string);
+    }, [router])
 
     const handleSubmit = () => {
         Auth.put('new-password', pass, {}).then(response => {
+            if (response.message) {
+                return setAlert({ show: true, message: response.message }); 
+            }
             setAlert({ show: true, message: 'Contraseña actualizada' })
             localStorage.setItem('token', response.accessToken as string)
             router.push('/app/dashboard');
