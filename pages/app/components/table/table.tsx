@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ContainerTable, Table, HeaderTable, ItemTable, RowTable, FooterTable } from './table.styled';
 
 import Pagination from '@mui/material/Pagination';
@@ -6,11 +6,21 @@ import Stack from '@mui/material/Stack';
 
 import ImageIcon from '@mui/icons-material/Image';
 
+// Api
+import { Lab } from '../../api/index';
+import Modal from '../modal/modal';
+
 export const TableComponent = () => {
     const dummyData = Array(10).fill({})
+    const [list, setList] = useState({
+        data: {
+            rows: [],
+            totalPage: 0
+        }
+    });
 
     useEffect(() => {
-        console.log(dummyData)
+        Lab.get('', {}, { page: 1 }).then(resp => { setList(resp) });
     }, [])
 
     return (
@@ -29,16 +39,16 @@ export const TableComponent = () => {
                     </thead>
                     <tbody>
                         {
-                            dummyData.map((item, index) => {
+                            list.data && list.data['rows'].map((item: any, index: number) => {
                                 return (
                                     <RowTable key={index}>
-                                        <ItemTable>Test #{index}</ItemTable>
-                                        <ItemTable>Test #{index}</ItemTable>
-                                        <ItemTable>Test #{index}</ItemTable>
-                                        <ItemTable>Test #{index}</ItemTable>
-                                        <ItemTable>Test #{index}</ItemTable>
+                                        <ItemTable>{item?.consecutive}</ItemTable>
+                                        <ItemTable>{item.date}</ItemTable>
+                                        <ItemTable>{item.cup}</ItemTable>
+                                        <ItemTable>{item.nomProc}</ItemTable>
+                                        <ItemTable>{Process[item.state as TProcess]}</ItemTable>
                                         <ItemTable>
-                                            <ImageIcon></ImageIcon>
+                                            <Modal></Modal>
                                         </ItemTable>
                                     </RowTable>
                                 )
@@ -48,9 +58,9 @@ export const TableComponent = () => {
                 </Table>
             </ContainerTable>
             <FooterTable>
-                <p>Mostrando 10 de 20</p>
+                <p>Mostrando 1 de {list.data.totalPage}</p>
                 <Stack spacing={2}>
-                    <Pagination count={10} shape="rounded" color="primary" />
+                    <Pagination count={list.data.totalPage} shape="rounded" color="primary" />
                 </Stack>
             </FooterTable>
         </>
@@ -58,3 +68,13 @@ export const TableComponent = () => {
 }
 
 export default TableComponent;
+
+export type TProcess = 'O' | 'E' | 'A' | 'I' | 'N' | 'X';
+export const Process: Record<TProcess, string> = {
+    'O': 'ORDENADO',
+    'E': 'EN PROCESO',
+    'A': 'APLICADO',
+    'I': 'INTERPRETADO',
+    'N': 'ANULADO',
+    'X': 'RESULTADO EXTERNO',
+}
