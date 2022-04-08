@@ -4,7 +4,9 @@ export const DashboardPage = () => {
     return (
         <>
             <LayoutComponent
-                Component={<TableComponent></TableComponent>}
+                Component={
+                    <TableComponent></TableComponent>
+                }
                 navInfo={{
                     buttonText: 'Buscar resultados',
                     title: 'Tus resultados',

@@ -4,7 +4,7 @@ import { LayoutColor, PrimaryBlueColor, ItemListColor, SecondaryBlueColor } from
 export const ContainerLayout = styled.section`
     display: flex;
     height: 100%;
-    background-color: ${SecondaryBlueColor}
+    background-color: ${SecondaryBlueColor};
 `
 export const Layout = styled.section`
     background-color: ${PrimaryBlueColor};
@@ -43,5 +43,5 @@ export const ContainerContent = styled.section`
 export const Container = styled.section`
     padding: 1.2em;
     height: 90%;
-    overflow: hidden;
+    overflow: scroll;
 `
