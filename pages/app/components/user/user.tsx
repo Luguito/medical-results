@@ -2,9 +2,14 @@ import { UserLoggedContainer, ProfileImgContainer, UserName } from './user.style
 // Logo image
 import Image from 'next/image';
 import logo from '../../../../assets/logo.png';
+// Hook
+import { useLoggedUser } from '../../hooks/useLoggedUser';
+// Interface
+import { IUser } from './user.interface';
 
 export const UserLoggedComponent = () => {
-    //  Create a hook to get the information about user logged
+    const user: IUser = useLoggedUser();
+
     return (
         <>
             <UserLoggedContainer>
@@ -14,7 +19,7 @@ export const UserLoggedComponent = () => {
                 <ProfileImgContainer>
                     <img src="" alt="" />
                 </ProfileImgContainer>
-                <UserName>Peter Parker</UserName>
+                <UserName>{user.firstName}</UserName>
             </UserLoggedContainer>
         </>
     )
