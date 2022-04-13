@@ -20,7 +20,7 @@ export const TableComponent = () => {
     });
 
     useEffect(() => {
-        Lab.get('', {}, { page: 1 }).then(resp => { setList(resp) });
+        Lab.get('', {}, { page: 1 }).then(resp => { !resp.message && setList(resp) });
     }, [])
 
     return (
@@ -28,17 +28,22 @@ export const TableComponent = () => {
             <ContainerTable>
                 <Table>
                     <thead>
-                        <RowTable style={{ position: 'sticky', top: '0', backgroundColor: "#FFF" }}>
-                            <HeaderTable>Consecutivo</HeaderTable>
-                            <HeaderTable>Fecha</HeaderTable>
-                            <HeaderTable>Código CUP</HeaderTable>
-                            <HeaderTable>Nombre del examen</HeaderTable>
-                            <HeaderTable>Estado del examen</HeaderTable>
-                            <HeaderTable>Acción</HeaderTable>
+                        <RowTable style={{ position: 'sticky', top: '0', backgroundColor: "#FFF", zIndex: '1' }}>
+                            <HeaderTable>CONSECUTIVO</HeaderTable>
+                            <HeaderTable>FECHA</HeaderTable>
+                            <HeaderTable>CÓDIGO CUP</HeaderTable>
+                            <HeaderTable>NOMBRE DEL EXAMEN</HeaderTable>
+                            <HeaderTable>ESTADO DEL EXAMEN</HeaderTable>
+                            <HeaderTable>ACCIÓN</HeaderTable>
                         </RowTable>
                     </thead>
                     <tbody>
                         {
+                            list.data && list.data['rows'].length == 0 ? 
+                            <RowTable>
+                                <ItemTable colSpan={6}>No hay registros</ItemTable>
+                            </RowTable> 
+                            : 
                             list.data && list.data['rows'].map((item: any, index: number) => {
                                 return (
                                     <RowTable key={index}>
@@ -58,9 +63,9 @@ export const TableComponent = () => {
                 </Table>
             </ContainerTable>
             <FooterTable>
-                <p>Mostrando 1 de {list.data.totalPage}</p>
+                <p>Mostrando 1 de {list?.data?.totalPage || 1}</p>
                 <Stack spacing={2}>
-                    <Pagination count={list.data.totalPage} shape="rounded" color="primary" />
+                    <Pagination count={list?.data?.totalPage || 1} shape="rounded" color="primary" />
                 </Stack>
             </FooterTable>
         </>

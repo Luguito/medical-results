@@ -4,7 +4,7 @@ export const ContainerFilters = styled.section`
     display: flex;
     width: 100%;
     background-color: #FFF;
-    height: 50%;
+    height: 30%;
     margin-bottom: 2em;
     border-radius: 10px;
     align-items: center;

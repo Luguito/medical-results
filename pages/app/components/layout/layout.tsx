@@ -16,7 +16,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
-                        <OptionLists style={{ paddingLeft: '2em' }}>
+                        <OptionLists style={{ paddingLeft: '0.2em' }}>
                             <ItemList>
                                 <MenuBookIcon></MenuBookIcon>
                                 Mis Resultados
