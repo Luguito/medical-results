@@ -6,12 +6,13 @@ export const ContainerTable = styled.section`
     overflow: scroll;
     padding: 0 2em;
     background-color: #FFF;
+    border-radius: 10px;
 `;
 export const Table = styled.table`
     width: 100%;
-    height: 100%;
+    // height: 100%;
     background-color: #FFF;
-    border-radius: 10px;
+    // border-radius: 10px;
     border-collapse: collapse;
 `;
 
@@ -21,6 +22,7 @@ export const HeaderTable = styled.th`
     padding-bottom: 1em;
     padding-top: 1em;
     border-bottom: 1px solid #bcbcbc;
+    font-weight: 400;
 `;
 
 export const ItemTable = styled.td`

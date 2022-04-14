@@ -16,20 +16,20 @@ export const FilterDate = () => {
                             label="Start"
                             value={date.start}
                             onChange={(newValue) => { setDate({ ...date, start: newValue as string }); }}
-                            renderInput={(params) => <TextField {...params} />}
+                            renderInput={(params) => <TextField {...params} size="small" />}
                         />
                         <DatePicker
                             label="End"
                             value={date.start}
                             onChange={(newValue) => { setDate({ ...date, start: newValue as string }); }}
-                            renderInput={(params) => <TextField {...params} />}
+                            renderInput={(params) => <TextField {...params} size="small" />}
                         />
                     </ContainerInputs>
                 </LocalizationProvider>
             </ContainerFilter>
             <ContainerFilter>
                 <p>Tipo de Examen</p>
-                <TextField></TextField>
+                <TextField size="small"></TextField>
             </ContainerFilter>
         </ContainerFilters> 
     )
