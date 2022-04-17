@@ -1,31 +1,26 @@
 import { ContainerLayout, Layout, OptionLists, ItemList, ContainerContent, Container } from './layout.styled';
 import { UserLoggedComponent } from '../user/user';
 import NavBarComponent from '../navbar/navbar';
+import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
-
-// Icons
-
-import SettingsIcon from '@mui/icons-material/Settings';
-import MenuBookIcon from '@mui/icons-material/MenuBook';
+import { Sidebar } from '../sidebar/sidebar';
 
 export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
+    const router = useRouter();
+
+    const logOut = () => {
+        localStorage.clear();
+        router.push('/')
+    }
+
     return (
         <ContainerLayout>
             <Layout>
-                <UserLoggedComponent></UserLoggedComponent>
+                {/* <UserLoggedComponent></UserLoggedComponent> */}
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
-                        <OptionLists style={{ paddingLeft: '0.2em' }}>
-                            <ItemList>
-                                <MenuBookIcon></MenuBookIcon>
-                                Mis Resultados
-                            </ItemList>
-                            <ItemList>
-                                <SettingsIcon></SettingsIcon>
-                                Settings
-                            </ItemList>
-                        </OptionLists>
+                        <Sidebar role='admin'></Sidebar>
                     </li>
                 </OptionLists>
             </Layout>
