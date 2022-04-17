@@ -16,8 +16,9 @@ import { Auth } from '@api';
 import ReCAPTCHA from "react-google-recaptcha";
 
 export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
-    const [showError, setError] = useState({ show: false, message: '' });
     const [form, setForm] = useState({ ccid: '', password: '', recaptchaValue: '' });
+    const [showError, setError] = useState({ show: false, message: '' });
+    const [disabled, setDisabled] = useState(true);
     const router = useRouter();
 
     const handleFields = (type: string, { value }: { value: string }) => {
@@ -44,7 +45,13 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     }
 
     const handleCaptcha = (token: string | null) => {
-        setForm({ ...form, 'recaptchaValue': token as string});
+        setForm({ ...form, 'recaptchaValue': token as string });
+        setDisabled(false)
+    }
+
+    const expiredCaptcha = () => {
+        setForm({ ...form, 'recaptchaValue': '' });
+        setDisabled(true);
     }
 
     return (
@@ -81,9 +88,10 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                 <ReCAPTCHA
                     sitekey="6Lcv30wfAAAAAFyecXGytXv1iVLMO4AMGUU54jpe"
                     onChange={handleCaptcha}
+                    onExpired={expiredCaptcha}
                 />
                 <FooterCard style={{ justifyContent: 'center' }}>
-                    <ButtonGrey style={{ width: '90%' }} onClick={handleLogin}>Iniciar sesión</ButtonGrey>
+                    <ButtonGrey style={{ width: '90%' }} onClick={handleLogin} disabled={disabled}>Iniciar sesión</ButtonGrey>
                 </FooterCard>
             </CardContainer>
         </ContainerCenter>

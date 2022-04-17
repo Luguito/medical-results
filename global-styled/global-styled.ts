@@ -51,4 +51,12 @@ export const ButtonGrey = styled(Button)`
         border-radius: 20px;
         color: #FFFFFF;
     }
+
+    &&:disabled,
+    &&[disabled]{
+      border: 1px solid #999999;
+      background-color: ${PrimaryGreyColor};
+      color: #FFF;
+      cursor: help;
+    }
 `
