@@ -49,7 +49,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
 
     return (
         <ContainerCenter>
-            <CardContainer style={{ padding: '2em', width: '25%' }}>
+            <CardContainer>
                 <HeaderCard>
                     <TitleCard>
                         <Image src={logo} height="20px" width="35px" layout="responsive"></Image>
@@ -79,6 +79,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                     </Link>
                 </ContentCard>
                 <ReCAPTCHA
+                    size="normal"
                     sitekey="6Lcv30wfAAAAAFyecXGytXv1iVLMO4AMGUU54jpe"
                     onChange={handleCaptcha}
                 />

@@ -5,7 +5,7 @@ export const DashboardPage = () => {
         <>
             <LayoutComponent
                 Component={
-                    <TableComponent></TableComponent>
+                    <TableComponent/>
                 }
                 navInfo={{
                     buttonText: 'Buscar resultados',

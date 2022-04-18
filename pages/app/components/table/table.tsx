@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { ContainerTable, Table, HeaderTable, ItemTable, RowTable, FooterTable } from './table.styled';
 
+
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
-
+import Button from '@mui/material/Button';
 import ImageIcon from '@mui/icons-material/Image';
 
 // Api
 import { Lab } from '../../api/index';
-import Modal from '../modal/modal';
+import { ModalComponent } from '../modal/modal';
+
 
 export const TableComponent = () => {
     const dummyData = Array(10).fill({})
@@ -19,10 +21,30 @@ export const TableComponent = () => {
         }
     });
 
+    const [ modalIsOpen, setModalIsOpen ] = useState(false)
+    const [ print, setPrint ] = useState(false)
+
     useEffect(() => {
         Lab.get('', {}, { page: 1 }).then(resp => { !resp.message && setList(resp) });
     }, [])
 
+    const onPrint = () => {
+        console.log('llamo aa la funcion')
+        printdiv('printable')
+    }
+
+    const printdiv = (printdivname: string) => {
+        var headstr = "<html><head><title>Resultados Hospital Universidad del Norte</title></head><body>";
+        var footstr = "</body>";
+        //@ts-ignore
+        var newstr = document.getElementById(printdivname).innerHTML;
+        var oldstr = document.body.innerHTML;
+        document.body.innerHTML = headstr+newstr+footstr;
+        window.print();
+        document.body.innerHTML = oldstr;
+        return false;
+       
+    }
     return (
         <>
             <ContainerTable>
@@ -53,7 +75,9 @@ export const TableComponent = () => {
                                             <ItemTable>{item.nomProc}</ItemTable>
                                             <ItemTable>{Process[item.state as TProcess]}</ItemTable>
                                             <ItemTable>
-                                                <Modal></Modal>
+                                                <Button onClick={() => setModalIsOpen(true)}>
+                                                    <ImageIcon/>
+                                                </Button>
                                             </ItemTable>
                                         </RowTable>
                                     )
@@ -61,6 +85,9 @@ export const TableComponent = () => {
                         }
                     </tbody>
                 </Table>
+                <ModalComponent isOpen={modalIsOpen} onPrint={onPrint} onClose={() => setModalIsOpen(false)}>
+                    
+                </ModalComponent>
             </ContainerTable>
             <FooterTable>
                 <p>Mostrando 1 de {list.data.totalPage || 1}</p>

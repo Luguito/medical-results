@@ -26,4 +26,6 @@ export const FullButton = styled(ButtonGrey)`
 // Change height by real pdf
 export const ContainerPDF = styled.section`
     height: 30em; 
+    margin-top: 30px;
+    overflow-y: scroll
 `;
