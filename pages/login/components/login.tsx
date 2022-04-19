@@ -75,7 +75,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                         <TextField type="password" size="small" onChange={(e) => handleFields('password', e.target)} />
                     </ItemCard>
                     <Link href="/forgot-password">
-                        <small style={{ textAlign: 'right', color: TextColor }}>Olvide mi contraseña</small>
+                        <small style={{ textAlign: 'left', color: TextColor, cursor: 'pointer' }}>Olvide mi contraseña</small>
                     </Link>
                 </ContentCard>
                 <ReCAPTCHA

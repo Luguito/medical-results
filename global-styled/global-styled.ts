@@ -13,13 +13,13 @@ export const ContainerCenter = styled.section`
 export const CardContainer = styled.article`
     background-color: #FFFFFF;
     min-width: 350px;
+    max-width: 450px;
     min-height: 10em;
     font-weight: 500;
     padding: 2em;
-    width: 25%;
     && {
         & iframe {
-            width: 291px
+            // width: 291px
         }
 
     }
