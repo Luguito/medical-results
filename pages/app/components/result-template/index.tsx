@@ -26,13 +26,13 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
     return (
         <ResultContainer id="printable">
             <PreHeader>
-                <img width="200" src="/logo.png" alt=""/>
+                <img style={{marginLeft: '-16px'}} width="200" src="/logo.png" alt=""/>
             </PreHeader>
             <Header>
                 <HeaderBox>
                     <HeaderItem>
                         <ItemText withMargin>PACIENTE</ItemText>
-                        <ItemText>HOMERO SIMPSON</ItemText>
+                        <ItemText>SAPHIRA</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>INGRESO</ItemText>

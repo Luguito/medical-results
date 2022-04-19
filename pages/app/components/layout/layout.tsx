@@ -24,7 +24,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
                             </ItemList>
                             <ItemList>
                                 <SettingsIcon></SettingsIcon>
-                                Settings
+                                Cerrar Sesion
                             </ItemList>
                         </OptionLists>
                     </li>

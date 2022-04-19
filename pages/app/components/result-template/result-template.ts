@@ -2,33 +2,24 @@ import { display } from '@mui/system';
 import styled from 'styled-components';
 
 export const ResultContainer = styled.div`
-    // @media print {
+    
         display: flex;
         flex-direction: column;
         width: 100%;
-        margin-top:40px;
+        padding:40px;
         margin-bottom: 60px
-        color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-    // }
+
+
 `
 export const PreHeader = styled.div`
-    // @media print {
         width: 100%;
-        color-adjust: exact;
-        -webkit-print-color-adjust: exact;
-    // }
 `
 
 export const Header = styled.div`
-    // @media print {
-        color-adjust: exact;
-        -webkit-print-color-adjust: exact;
         width: 100%;
         display: flex; 
         align-items: flex-start; 
         font-size: 12px;
-    // }
 `
 export const HeaderBox = styled.div`
     width:50%

@@ -28,23 +28,6 @@ export const TableComponent = () => {
         Lab.get('', {}, { page: 1 }).then(resp => { !resp.message && setList(resp) });
     }, [])
 
-    const onPrint = () => {
-        console.log('llamo aa la funcion')
-        printdiv('printable')
-    }
-
-    const printdiv = (printdivname: string) => {
-        var headstr = "<html><head><title>Resultados Hospital Universidad del Norte</title></head><body>";
-        var footstr = "</body>";
-        //@ts-ignore
-        var newstr = document.getElementById(printdivname).innerHTML;
-        var oldstr = document.body.innerHTML;
-        document.body.innerHTML = headstr+newstr+footstr;
-        window.print();
-        document.body.innerHTML = oldstr;
-        return false;
-       
-    }
     return (
         <>
             <ContainerTable>
@@ -85,9 +68,7 @@ export const TableComponent = () => {
                         }
                     </tbody>
                 </Table>
-                <ModalComponent isOpen={modalIsOpen} onPrint={onPrint} onClose={() => setModalIsOpen(false)}>
-                    
-                </ModalComponent>
+                <ModalComponent isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}/>
             </ContainerTable>
             <FooterTable>
                 <p>Mostrando 1 de {list.data.totalPage || 1}</p>
