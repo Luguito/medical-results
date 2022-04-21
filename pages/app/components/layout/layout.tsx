@@ -16,7 +16,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
     return (
         <ContainerLayout>
             <Layout>
-                {/* <UserLoggedComponent></UserLoggedComponent> */}
+                <UserLoggedComponent></UserLoggedComponent>
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
@@ -39,7 +39,7 @@ export default LayoutComponent;
 // Interfaces
 interface ILayoutProps {
     Component: ReactElement,
-    navInfo: INavInfo
+    navInfo: Partial<INavInfo>
 }
 
 interface INavInfo {
@@ -47,4 +47,5 @@ interface INavInfo {
     subtitle: string,
     buttonText: string,
     buttonColor: 'blue' | 'grey',
+    showButton: boolean
 }
