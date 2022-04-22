@@ -6,6 +6,7 @@ import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import ImageIcon from '@mui/icons-material/Image';
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 // Api
 import { Lab } from '../../api/index';
@@ -59,7 +60,7 @@ export const TableComponent = () => {
                                             <ItemTable>{Process[item.state as TProcess]}</ItemTable>
                                             <ItemTable>
                                                 <Button onClick={() => setModalIsOpen(true)}>
-                                                    <ImageIcon/>
+                                                    <VisibilityIcon/>
                                                 </Button>
                                             </ItemTable>
                                         </RowTable>
