@@ -30,7 +30,9 @@ export const FirstLoginComponent = () => {
 
         schema.isValid(form).then(res => {
             if (res) {
-                setDisabled(true)
+                setDisabled(true);
+                // @ts-ignore
+                delete form?.repeatPassword;
                 Auth.put('first-login', form, {}).then(res => {
                     if (res.message) {
                         setDisabled(false);
