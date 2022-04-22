@@ -1,4 +1,4 @@
-import { useState, FC, useEffect, useRef  } from 'react';
+import { useState, FC, useEffect, useRef } from 'react';
 import Box from '@mui/material/Box';
 import { useReactToPrint } from 'react-to-print';
 
@@ -7,8 +7,8 @@ import Modal from '@mui/material/Modal';
 
 // Styled Components
 import { HeaderModal, OutlineButton, FullButton, ContainerPDF } from './modal.styled';
-import { WindowSharp } from '@mui/icons-material';
 import { ResultTemplate } from '../result-template'
+import { Results } from '../../api';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -40,28 +40,32 @@ export const ModalComponent: FC<modal> = (props) => {
     }
 
 
+    const sendEmail = () => {
+        Results.get('send-email', {}).then(v => console.log(v));
+    }
+
     return (
-        <div>    
-            <Modal  open={isOpen} onClose={handleClose} id="printModal">
+        <div>
+            <Modal open={isOpen} onClose={handleClose} id="printModal">
                 <Box sx={style}>
                     <HeaderModal>
                         <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
                             Resultado de laboratorio
                         </Typography>
                         <div>
-                            <OutlineButton>Enviar por Correo</OutlineButton>
+                            <OutlineButton onClick={sendEmail}>Enviar por Correo</OutlineButton>
                             <FullButton onClick={handlePrint}>Descargar PDF</FullButton>
                         </div>
                     </HeaderModal>
                     <ContainerPDF>
                         {props.children}
                         <div ref={componentRef}>
-                            <ResultTemplate   data={''} print={()=> {}}></ResultTemplate>
+                            <ResultTemplate data={''} print={() => { }}></ResultTemplate>
                         </div>
                     </ContainerPDF>
                 </Box>
             </Modal>
-           
+
         </div>
     );
 }
