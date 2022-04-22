@@ -19,6 +19,10 @@ export const FirstLoginComponent = () => {
 
     const handleFields = (type: string, { value }: { value: string }) => {
         setForm({ ...form, [type]: value });
+        schema.isValid(form).then(valid => {
+            valid && setDisabled(false);
+            !valid && setDisabled(true);
+        });
     }
 
     const handleLogin = () => {
@@ -44,6 +48,7 @@ export const FirstLoginComponent = () => {
 
     const handleCaptcha = (token: string | null) => {
         setForm({ ...form, 'recaptchaValue': token as string });
+        setDisabled(false);
     }
 
     return (
