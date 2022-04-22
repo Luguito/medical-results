@@ -1,7 +1,7 @@
 import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, TitleCard, ItemCard, ButtonGrey } from '@global-styled';
-import { TextField } from '@mui/material';
+import { TextField, Alert, AlertTitle } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 // Schema
 import { schema } from '../schema/first-time.schema';
@@ -11,24 +11,32 @@ import { Auth } from '@api';
 import ReCAPTCHA from "react-google-recaptcha";
 
 export const FirstLoginComponent = () => {
+    const [form, setForm] = useState({ email: '', password: '', repeatPassword: '', recaptchaValue: '' });
+    const [showError, setError] = useState({ show: false, message: '' });
+    const [disabled, setDisabled] = useState(true);
+    const recaptchaRef = useRef()
     const router = useRouter();
-    const [form, setForm] = useState({ email: '', password: '', recaptchaValue: '' });
 
     const handleFields = (type: string, { value }: { value: string }) => {
         setForm({ ...form, [type]: value });
     }
 
     const handleLogin = () => {
+        schema.validate(form).catch(e => setError({ show: true, message: e.message }));
+
         schema.isValid(form).then(res => {
             if (res) {
+                setDisabled(true)
                 Auth.put('first-login', form, {}).then(res => {
                     if (res.message) {
-                        return;
-                        // return setError({ show: true, message: res.message })
+                        setDisabled(false);
+                        (recaptchaRef.current as any).reset();
+                        return setError({ show: true, message: res.message });
                     }
                     localStorage.setItem('token', res?.data?.accessToken);
                     localStorage.setItem('user', JSON.stringify(res?.data?.user));
                     router.push('/app/dashboard');
+                    setDisabled(false)
                 });
             }
         });
@@ -48,6 +56,14 @@ export const FirstLoginComponent = () => {
                     </TitleCard>
                 </HeaderCard>
                 <ContentCard>
+                    {
+                        showError.show ?
+                            <Alert severity="error">
+                                <AlertTitle>Error</AlertTitle>
+                                {showError.message}
+                            </Alert> :
+                            null
+                    }
                     <ItemCard>
                         Correo electronico
                         <TextField size="small" onChange={(e) => handleFields('email', e.target)} />
@@ -58,15 +74,16 @@ export const FirstLoginComponent = () => {
                     </ItemCard>
                     <ItemCard>
                         Repetir contraseña
-                        <TextField size="small" type="password" />
+                        <TextField size="small" type="password" onChange={(e) => handleFields('repeatPassword', e.target)} />
                     </ItemCard>
                 </ContentCard>
                 <ReCAPTCHA style={{ marginTop: '1em' }}
+                    ref={recaptchaRef}
                     sitekey="6Lcv30wfAAAAAFyecXGytXv1iVLMO4AMGUU54jpe"
                     onChange={handleCaptcha}
                 />
                 <FooterCard style={{ justifyContent: 'center' }}>
-                    <ButtonGrey style={{ width: '90%' }} onClick={handleLogin}>Continuar</ButtonGrey>
+                    <ButtonGrey style={{ width: '90%' }} onClick={handleLogin} disabled={disabled}>Continuar</ButtonGrey>
                 </FooterCard>
             </CardContainer>
         </ContainerCenter>

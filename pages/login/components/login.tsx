@@ -2,7 +2,7 @@ import { CardContainer, ContainerCenter, ContentCard, FooterCard, HeaderCard, Ti
 import { Alert, AlertTitle, TextField } from '@mui/material';
 import { TextColor } from '@global-colors';
 import { useRouter } from 'next/router'
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 
 // Logo image
@@ -19,10 +19,15 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
     const [form, setForm] = useState({ ccid: '', password: '', recaptchaValue: '' });
     const [showError, setError] = useState({ show: false, message: '' });
     const [disabled, setDisabled] = useState(true);
+    const recaptchaRef = useRef();
     const router = useRouter();
 
     const handleFields = (type: string, { value }: { value: string }) => {
         setForm({ ...form, [type]: value });
+        schema.isValid(form).then(valid => {
+            valid && setDisabled(false);
+            !valid && setDisabled(true);
+        });
     }
 
     const handleLogin = () => {
@@ -30,13 +35,17 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
 
         schema.isValid(form).then(valid => {
             if (valid) {
+                setDisabled(true);
                 Auth.post('login', form, {}).then(res => {
                     if (res.message) {
-                        return setError({ show: true, message: res.message })
+                        setDisabled(false);
+                        (recaptchaRef.current as any).reset();
+                        return setError({ show: true, message: res.message });
                     }
                     localStorage.setItem('token', res?.data?.accessToken);
                     localStorage.setItem('user', JSON.stringify(res?.data?.user));
 
+                    setDisabled(false);
                     res?.data?.user?.pendingPassword && changeLogin(true);
                     !res?.data?.user?.pendingPassword && router.push('/app/dashboard');
                 });
@@ -46,7 +55,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
 
     const handleCaptcha = (token: string | null) => {
         setForm({ ...form, 'recaptchaValue': token as string });
-        setDisabled(false)
+        schema.validate(form).then(v => setDisabled(false)).catch(e => console.error(e.message));
     }
 
     const expiredCaptcha = () => {
@@ -89,6 +98,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                     sitekey="6Lcv30wfAAAAAFyecXGytXv1iVLMO4AMGUU54jpe"
                     onChange={handleCaptcha}
                     onExpired={expiredCaptcha}
+                    ref={recaptchaRef}
                 />
                 <FooterCard style={{ justifyContent: 'center' }}>
                     <ButtonGrey style={{ width: '90%' }} onClick={handleLogin} disabled={disabled}>Iniciar sesión</ButtonGrey>
