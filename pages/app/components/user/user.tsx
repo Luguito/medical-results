@@ -14,7 +14,7 @@ export const UserLoggedComponent = () => {
         <>
             <UserLoggedContainer>
                 <div>
-                    <img src="/logo.png"  width="200px" style={{marginLeft: '-46px'}} />
+                    <img src="/logo.png"  width="200px" />
                 </div>
                 <ProfileImgContainer>
                     <img src="" alt="" />

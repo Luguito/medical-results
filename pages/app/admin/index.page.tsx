@@ -16,9 +16,11 @@ export const AdminPage = () => {
                     </>
                 }
                 navInfo={{
-                    showButton: false,
+                    showButton: true,
                     title: 'Creación de administradores',
                     subtitle: 'Crea y controla los usuarios administradores',
+                    buttonColor: 'grey',
+                    buttonText: 'Crear nuevo admin'
                 }}></LayoutComponent>
         </>
     )
