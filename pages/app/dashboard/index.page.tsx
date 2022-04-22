@@ -11,7 +11,8 @@ export const DashboardPage = () => {
                     buttonText: 'Buscar resultados',
                     title: 'Tus resultados',
                     subtitle: 'Encuentra tus resultados de manera facil',
-                    buttonColor: 'blue'
+                    buttonColor: 'blue',
+                    showButton: true
                 }}></LayoutComponent>
         </>
     )
