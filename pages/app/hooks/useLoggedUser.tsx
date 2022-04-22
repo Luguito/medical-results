@@ -5,7 +5,7 @@ export const useLoggedUser = () => {
     const [user, setUser] = useState<IUser>({
         fullname: '',
         firstName: '',
-        role: '',
+        role: 'patient',
         ccid: ''
     });
 

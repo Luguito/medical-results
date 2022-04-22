@@ -1,6 +1,6 @@
 export interface IUser {
     fullname: string
     firstName: string
-    role: string
+    role: 'patient' | 'admin'
     ccid: string
 }

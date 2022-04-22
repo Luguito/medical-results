@@ -4,8 +4,10 @@ import NavBarComponent from '../navbar/navbar';
 import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 import { Sidebar } from '../sidebar/sidebar';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
 
 export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
+    const { role } = useLoggedUser()
     const router = useRouter();
 
     const logOut = () => {
@@ -20,7 +22,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
-                        <Sidebar role='admin'></Sidebar>
+                        <Sidebar role={role}></Sidebar>
                     </li>
                 </OptionLists>
             </Layout>
