@@ -17,10 +17,11 @@ export const FiltersInput = ({ fields, fn }: { fields: string[], fn: any }) => {
 
     return (
         <ContainerFilters>
-            {fields.map(item => {
+            {fields.map((item, key) => {
                 return (
-                    <ContainerFilter>
+                    <ContainerFilter key={key}>
                         <p>{item}</p>
+                        {/* @ts-ignore */}
                         <TextField size="small" onChange={({ target }) => handleForm(target.value, types[item])}></TextField>
                     </ContainerFilter>
                 )

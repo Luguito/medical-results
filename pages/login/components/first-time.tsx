@@ -77,8 +77,8 @@ export const FirstLoginComponent = () => {
                         <TextField size="small" type="password" onChange={(e) => handleFields('repeatPassword', e.target)} />
                     </ItemCard>
                 </ContentCard>
-                <ReCAPTCHA style={{ marginTop: '1em' }}
-                    ref={recaptchaRef}
+                {/* @ts-ignore */}
+                <ReCAPTCHA style={{ marginTop: '1em' }} ref={recaptchaRef}
                     sitekey="6Lcv30wfAAAAAFyecXGytXv1iVLMO4AMGUU54jpe"
                     onChange={handleCaptcha}
                 />

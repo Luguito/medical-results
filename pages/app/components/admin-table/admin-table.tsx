@@ -13,9 +13,9 @@ export const AdminTable = ({ headers, list }: { headers: string[], list: Array<a
                     <thead>
                         <RowTable style={{ position: 'sticky', top: '0', backgroundColor: "#FFF", zIndex: '1' }}>
                             {
-                                headers.map(header => {
+                                headers.map((header, key) => {
                                     return (
-                                        <HeaderTable>
+                                        <HeaderTable key={key}>
                                             {header}
                                         </HeaderTable>
                                     )
@@ -38,9 +38,9 @@ export const AdminTable = ({ headers, list }: { headers: string[], list: Array<a
                                                     <>
                                                         {
                                                             index !== headers.length - 1 ?
-                                                                <ItemTable>Fuego</ItemTable>
+                                                                <ItemTable key={index}>Fuego</ItemTable>
                                                                 :
-                                                                <ItemTable>
+                                                                <ItemTable key={index}>
                                                                     <Modal></Modal>
                                                                 </ItemTable>
                                                         }

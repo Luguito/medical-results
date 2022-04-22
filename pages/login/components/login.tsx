@@ -94,11 +94,11 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                         <small style={{ textAlign: 'right', color: TextColor }}>Olvide mi contraseña</small>
                     </Link>
                 </ContentCard>
-                <ReCAPTCHA
+                {/* @ts-ignore */}
+                <ReCAPTCHA ref={recaptchaRef}
                     sitekey="6Lcv30wfAAAAAFyecXGytXv1iVLMO4AMGUU54jpe"
                     onChange={handleCaptcha}
                     onExpired={expiredCaptcha}
-                    ref={recaptchaRef}
                 />
                 <FooterCard style={{ justifyContent: 'center' }}>
                     <ButtonGrey style={{ width: '90%' }} onClick={handleLogin} disabled={disabled}>Iniciar sesión</ButtonGrey>
