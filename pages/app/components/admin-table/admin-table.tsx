@@ -3,7 +3,7 @@ import { ContainerTable, Table, HeaderTable, ItemTable, RowTable, FooterTable } 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-import Modal from '../modal/modal';
+// import { ModalComponent } from '../modal/modal';
 
 export const AdminTable = ({ headers, list }: { headers: string[], list: Array<any> }) => {
     return (
@@ -41,7 +41,7 @@ export const AdminTable = ({ headers, list }: { headers: string[], list: Array<a
                                                                 <ItemTable key={index}>Fuego</ItemTable>
                                                                 :
                                                                 <ItemTable key={index}>
-                                                                    <Modal></Modal>
+                                                                    {/* <ModalComponent></ModalComponent> */}
                                                                 </ItemTable>
                                                         }
                                                     </>
