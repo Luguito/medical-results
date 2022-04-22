@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, FC, useEffect, useRef  } from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
+import { useReactToPrint } from 'react-to-print';
+
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import ImageIcon from '@mui/icons-material/Image';
+
 // Styled Components
 import { HeaderModal, OutlineButton, FullButton, ContainerPDF } from './modal.styled';
+import { WindowSharp } from '@mui/icons-material';
+import { ResultTemplate } from '../result-template'
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -19,30 +22,47 @@ const style = {
     p: 4,
 };
 
+interface modal {
+    title?: string;
+    isOpen: boolean;
+    onClose: () => void
+}
 
-export default function PdfModal() {
-    const [open, setOpen] = useState(false);
-    const handleOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
+export const ModalComponent: FC<modal> = (props) => {
+    const { onClose, isOpen } = props
+    const componentRef = useRef(null);
+    const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    });
+
+    const handleClose = () => {
+        onClose()
+    }
+
 
     return (
-        <div>
-
-            <Button onClick={handleOpen}><ImageIcon></ImageIcon></Button>
-            <Modal open={open} onClose={handleClose} keepMounted>
+        <div>    
+            <Modal  open={isOpen} onClose={handleClose} id="printModal">
                 <Box sx={style}>
                     <HeaderModal>
                         <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
-                            Nombre del resultado
+                            Resultado de laboratorio
                         </Typography>
                         <div>
                             <OutlineButton>Enviar por Correo</OutlineButton>
-                            <FullButton>Descargar PDF</FullButton>
+                            <FullButton onClick={handlePrint}>Descargar PDF</FullButton>
                         </div>
                     </HeaderModal>
-                    <ContainerPDF></ContainerPDF>
+                    <ContainerPDF>
+                        {props.children}
+                        <div ref={componentRef}>
+                            <ResultTemplate   data={''} print={()=> {}}></ResultTemplate>
+                        </div>
+                    </ContainerPDF>
                 </Box>
             </Modal>
+           
         </div>
     );
 }
+

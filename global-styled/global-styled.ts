@@ -12,9 +12,17 @@ export const ContainerCenter = styled.section`
 
 export const CardContainer = styled.article`
     background-color: #FFFFFF;
-    min-width: 10em;
+    min-width: 350px;
+    max-width: 450px;
     min-height: 10em;
     font-weight: 500;
+    padding: 2em;
+    && {
+        & iframe {
+            // width: 291px
+        }
+
+    }
 `;
 
 export const HeaderCard = styled.header`
@@ -56,7 +64,6 @@ export const ButtonGrey = styled(Button)`
     &&[disabled]{
       border: 1px solid #999999;
       background-color: ${PrimaryGreyColor};
-      color: #FFF;
       cursor: help;
     }
 `
