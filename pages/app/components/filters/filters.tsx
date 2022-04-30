@@ -5,13 +5,13 @@ import { useState } from 'react';
 export const FiltersInput = ({ fields, fn }: { fields: string[], fn: any }) => {
     const [form, setForm] = useState({});
     const types = {
-        'Nombre': 'name',
+        'Nombre': 'fullname',
         'Código cup': 'cup',
-        'Cedula': 'cid',
-        'Correo Electronico': 'cup'
+        'Cedula': 'ccid',
+        'Correo electronico': 'email'
     }
 
-    const handleForm = (value: string, type: 'name' | 'cid' | 'email' | 'cup') => {
+    const handleForm = (value: string, type: 'fullname' | 'ccid' | 'email' | 'cup') => {
         setForm({ ...form, [type]: value });
     }
 
@@ -26,7 +26,7 @@ export const FiltersInput = ({ fields, fn }: { fields: string[], fn: any }) => {
                     </ContainerFilter>
                 )
             })}
-            <SearchButton onClick={fn}>Buscar</SearchButton>
+            <SearchButton onClick={() => fn(form)}>Buscar</SearchButton>
         </ContainerFilters>
     )
 }

@@ -5,7 +5,7 @@ export const AppLayoutPage = () => {
     const route = useRouter();
 
     useEffect(() => {
-        route.push('/app/dashboard')
+        route.push('/app/mis-resultados')
     }, [])
 
     return (
@@ -14,9 +14,9 @@ export const AppLayoutPage = () => {
                 <></>
             }
                 navInfo={{
-                    buttonText: 'Ir al dashboard',
-                    title: 'Redireccionando al dashboard...',
-                    subtitle: 'En breve se te redireccionara al dashboard',
+                    buttonText: 'Ir al mis resultados',
+                    title: 'Redireccionando al mis resultados...',
+                    subtitle: 'En breve se te redireccionara a los resultados',
                     buttonColor: 'blue'
                 }}></LayoutComponent>
         </>

@@ -26,7 +26,7 @@ export const ResetPage = () => {
             }
             setAlert({ show: true, message: 'Contraseña actualizada' })
             localStorage.setItem('token', response.accessToken as string)
-            router.push('/app/dashboard');
+            router.push('/app/mis-resultados');
         });
     }
 

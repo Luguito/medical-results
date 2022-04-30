@@ -47,7 +47,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
 
                     setDisabled(false);
                     res?.data?.user?.pendingPassword && changeLogin(true);
-                    !res?.data?.user?.pendingPassword && router.push('/app/dashboard');
+                    !res?.data?.user?.pendingPassword && router.push('/app/mis-resultados');
                 });
             }
         });

@@ -22,7 +22,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
-                        <Sidebar role={role}></Sidebar>
+                        <Sidebar role={'admin'}></Sidebar>
                     </li>
                 </OptionLists>
             </Layout>

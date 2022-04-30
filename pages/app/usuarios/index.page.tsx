@@ -1,18 +1,39 @@
 import { LayoutComponent } from '../components/layout/layout';
 import { FiltersInput } from '../components/filters/filters';
 import { AdminTable } from '../components/admin-table/admin-table';
-
+import { useEffect, useState } from 'react';
+import User from '../api/users/users';
 
 export const UsersPage = () => {
-    const dummyData = Array(30).fill({'name': 'Fuego', 'cup': 200});
+    const [currentFilter, setCurrentFilter] = useState({});
+    const [paginator, setPaginator] = useState({});
+    const [list, setList] = useState([]);
+
+    useEffect(() => {
+        getPatients({ page: 1 })
+    }, []);
+
+    const getPatients = async (options?: {}) => {
+        let res = await User.get('getPatients', {}, { ...currentFilter, ...options });
+
+        setCurrentFilter({ ...options });
+        setPaginator(res?.data?.meta);
+        setList(res?.data?.items);
+    }
+
+    const getValueFilter = (e: any) => isEmpty(e) ? getPatients({ page: 1 }) : getPatients(e)
+
+    const getValidPeticion = (e: any) => getValueFilter(Object.fromEntries(Object.entries(e).filter(([_, v]) => v)))
+
+    const isEmpty = (e: {}) => Object.keys(e).length === 0;
 
     return (
         <>
             <LayoutComponent
                 Component={
                     <>
-                        <FiltersInput fields={['Nombre', 'Cedula', 'Correo electrónico']} fn={() => console.log}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} list={dummyData}></AdminTable>
+                        <FiltersInput fields={['Nombre', 'Cedula', 'Correo electronico']} fn={getValidPeticion}></FiltersInput>
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} list={list} paginator={paginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{

@@ -8,7 +8,7 @@ export const NavBarComponent = ({ title, subtitle, buttonText, buttonColor, show
     const goToResults = () => {
         let path = router.route.split('/')[2]
 
-        path !== 'resultados' ? router.push('/app/resultados') : router.push('/app/dashboard')
+        path !== 'resultados' ? router.push('/app/resultados') : router.push('/app/mis-resultados')
     }
     return (
         <ContainerNav>

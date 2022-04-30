@@ -14,11 +14,11 @@ export const Sidebar = ({ role }: { role: 'patient' | 'admin' }) => {
 
     const optionsByRole = {
         'patient': [
-            { icon: MenuBookIcon, option: 'Mis Resultados', url: '/results' },
+            { icon: MenuBookIcon, option: 'Mis Resultados', url: '/mis-resultados' },
             { icon: SettingsIcon, option: 'Cerrar sesión', url: 'logout' }
         ],
         'admin': [
-            { icon: DashboardIcon, option: 'Mis resultados', url: '/resultados'},
+            { icon: DashboardIcon, option: 'Mis resultados', url: '/dashboard'},
             { icon: MenuBook, option: 'Códigos cup', url: '/cup'},
             { icon: GroupIcon, option: 'Usuarios/Pacientes', url: '/usuarios' },
             // { icon: GroupIcon, option: 'Creador admin', url: '/admin' },
@@ -28,6 +28,7 @@ export const Sidebar = ({ role }: { role: 'patient' | 'admin' }) => {
 
     const handleRouter = (url: string) => {
         if(['logout'].includes(url)) {
+            localStorage.clear()
             return router.push('/');
         }
 
