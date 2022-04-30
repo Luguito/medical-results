@@ -129,11 +129,11 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
             profileName: data?.profileName,
             permissions: data?.permisions
         });
-    },[data]);
+    }, [data]);
 
     const handleClose = () => onClose();
 
-    const handleCreate = async () =>  await Perfiles.post('profile', form, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+    const handleCreate = async () => await Perfiles.post('profile', form, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
 
     const handleEdit = async () => await Perfiles.put(`profile/${data.id}`, form, {})
 
@@ -182,9 +182,69 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                     <CenterUpdated>
                         <p>Permisos</p>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('dashboard')}/>} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('perfiles')}/>} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('dashboard')} />} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('perfiles')} />} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
                         </FormGroup>
+                        <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>Enviar</FullButton>
+                    </CenterUpdated>
+                </Box>
+            </Modal>
+        </div>
+    )
+}
+
+export const ModalCreateAdmin: FC<IModal> = (props) => {
+    const { onClose, isOpen, data } = props;
+    const [form, setForm] = useState({});
+
+    useEffect(() => {
+        setForm({
+            profileName: data?.profileName,
+            permissions: data?.permisions
+        });
+    }, [data]);
+
+    const handleClose = () => onClose();
+
+    const handleCreate = async () => await Users.post('create-admin', form, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+
+    const handleEdit = async () => await Users.put(`${data.id}`, form, {});
+
+    const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+    return (
+        <div>
+            <Modal open={isOpen} onClose={handleClose}>
+                <Box sx={{
+                    position: 'absolute' as 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    width: 400,
+                    borderRadius: '10px',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <HeaderModal>
+                        <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
+                            {(data ? 'Editar' : 'Crear') + ' Admin'}
+                        </Typography>
+                    </HeaderModal>
+                    <CenterUpdated>
+                        <p>Nombre</p>
+                        <TextField onChange={(e) => onChange(e, 'fullname')}></TextField>
+                    </CenterUpdated>
+                    <CenterUpdated>
+                        <p>Apellido</p>
+                        <TextField onChange={(e) => onChange(e, 'lastname')}></TextField>
+                    </CenterUpdated>
+                    <CenterUpdated>
+                        <p>Cedula</p>
+                        <TextField onChange={(e) => onChange(e, 'ccid')}></TextField>
+                    </CenterUpdated>
+                    <CenterUpdated>
+                        <p>Contraseña</p>
+                        <TextField onChange={(e) => onChange(e, 'password')}></TextField>
                         <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>Enviar</FullButton>
                     </CenterUpdated>
                 </Box>

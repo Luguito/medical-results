@@ -1,8 +1,8 @@
-const apiUrl = new URL("https://huninorte.herokuapp.com/api/user")
+const apiUrl = new URL("https://huninorte.herokuapp.com/api/cup")
 // const apiUrl = "https://e12c-2800-484-6979-ac4-8468-4ef8-6924-a645.ngrok.io/api"
 
 export const get = (url: string, options: RequestInit, params?: {}): Promise<any> => {
-    return fetch(`${apiUrl}/${url}${params ? `?${new URLSearchParams(params)}` : ''}`, { method: 'GET',  headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`, 'Content-Type': 'application/json'}, ...options }).then(response => response.json());
+    return fetch(`${apiUrl}${url ? `/${url}` : ''}${params ? `?${new URLSearchParams(params)}` : ''}`, { method: 'GET',  headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`, 'Content-Type': 'application/json'}, ...options }).then(response => response.json());
 }
 
 export const post = (url: string, data: any, options: RequestInit): Promise<any> => {

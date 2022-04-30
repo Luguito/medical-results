@@ -10,12 +10,11 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { useEffect, useState } from 'react';
 
-import { ModalActualizarEmail } from '../modal/modal';
-import { ModalCreatePerfil } from '../../components/modal/modal';
+import { ModalActualizarEmail, ModalCreateAdmin, ModalCreatePerfil} from '../modal/modal';
 
 import { Auth } from '@api'
 import { useRouter } from 'next/router';
-import { Perfiles } from 'pages/app/api';
+import { Cup, Perfiles, Users } from 'pages/app/api';
 
 export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[] }) => {
     const { asPath } = useRouter();
@@ -55,7 +54,7 @@ export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { head
                                                         <ItemTable key={index}>{item[field]}</ItemTable>
                                                         :
                                                         <ItemTable key={index}>
-                                                            <MenuProfiles fn={fn} ccid={item.ccid} id={item.id} item={item}></MenuProfiles>
+                                                            <MenuCup fn={fn} id={item.id} item={item}></MenuCup>
                                                         </ItemTable>
                                                 )
                                             })}
@@ -175,6 +174,99 @@ export const MenuProfiles = ({ ccid, id, item, fn }: { ccid: string, id: string,
                 setModalIsOpen(false);
                 fn({ page: 1 })
             }} id={id} data={item}></ModalCreatePerfil>
+        </>
+    )
+}
+
+export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, id: string }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+
+    const switchActive = async () => await Users.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
+    const deleteAdmin = async () => await Users.remove(`${item.id}`, {}, {});
+    return (
+        <>
+            <Button
+                id="demo-positioned-button"
+                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                <MoreHorizIcon></MoreHorizIcon>
+            </Button>
+            <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+            >
+                <MenuItem onClick={() => setModalIsOpen(true)}>Editar</MenuItem>
+                <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' perfil'}</MenuItem>
+                <MenuItem onClick={deleteAdmin}>Eliminar</MenuItem>
+            </Menu>
+            <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {
+                setModalIsOpen(false);
+                fn({ page: 1 })
+            }} id={id} data={item}></ModalCreateAdmin>
+        </>
+    )
+}
+
+export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, id: string }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+
+    const switchActive = async () => await Cup.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
+    return (
+        <>
+            <Button
+                id="demo-positioned-button"
+                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                <MoreHorizIcon></MoreHorizIcon>
+            </Button>
+            <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+            >
+                <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' Codigo CUP'}</MenuItem>
+            </Menu>
+            <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {
+                setModalIsOpen(false);
+                fn({ page: 1 })
+            }} id={id} data={item}></ModalCreateAdmin>
         </>
     )
 }
