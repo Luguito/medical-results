@@ -1,20 +1,24 @@
 import { LayoutComponent } from '../components/layout/layout';
+
 import { FiltersInput } from '../components/filters/filters';
 import { AdminTable } from '../components/admin-table/admin-table';
 import { useEffect, useState } from 'react';
-import User from '../api/users/users';
+import { Perfiles } from '../api'
 
-export const UsersPage = () => {
+import { ModalCreatePerfil } from '../components/modal/modal';
+
+export const PerfilesPage = () => {
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
     const [currentFilter, setCurrentFilter] = useState({});
     const [paginator, setPaginator] = useState({});
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        getPatients({ page: 1 })
+        getPatients({ page: 1 });
     }, []);
 
     const getPatients = async (options?: {}) => {
-        let res = await User.get('getPatients', {}, { ...currentFilter, ...options });
+        let res = await Perfiles.get('profile', {}, { ...currentFilter, ...options });
 
         setCurrentFilter({ ...options });
         setPaginator(res?.data?.meta);
@@ -27,23 +31,29 @@ export const UsersPage = () => {
 
     const isEmpty = (e: {}) => Object.keys(e).length === 0;
 
+    const tesFunction = () => setModalIsOpen(true);
+
     return (
         <>
             <LayoutComponent
                 Component={
                     <>
-                        <FiltersInput fields={['Nombre', 'Cedula', 'Correo electronico']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid', 'email', 'accion']} list={list} paginator={paginator} fn={getValidPeticion}></AdminTable>
+                        <FiltersInput fields={['Perfil']} fn={getValidPeticion}></FiltersInput>
+                        <AdminTable headers={['PERFIL', 'ACCIÓN/ACTIVAR']} itemsToShow={['profileName', 'accion']} list={list} paginator={paginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{
-                    showButton: false,
-                    title: 'Usuarios / Pacientes',
-                    subtitle: 'Control usuarios y envio de solicitudes para cambio de contraseña',
+                    title: 'Perfiles',
+                    subtitle: 'Listado de perfiles',
+                    buttonColor: 'blue',
+                    buttonText: 'Agregar nuevo perfil',
+                    showButton: true,
+                    fn: tesFunction
                 }}></LayoutComponent>
+                <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}></ModalCreatePerfil>
         </>
     )
 }
 
 
-export default UsersPage;
+export default PerfilesPage;

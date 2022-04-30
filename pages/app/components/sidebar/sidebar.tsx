@@ -21,7 +21,8 @@ export const Sidebar = ({ role }: { role: 'patient' | 'admin' }) => {
             { icon: DashboardIcon, option: 'Mis resultados', url: '/dashboard'},
             { icon: MenuBook, option: 'Códigos cup', url: '/cup'},
             { icon: GroupIcon, option: 'Usuarios/Pacientes', url: '/usuarios' },
-            // { icon: GroupIcon, option: 'Creador admin', url: '/admin' },
+            { icon: GroupIcon, option: 'Perfiles', url: '/perfiles' },
+            { icon: GroupIcon, option: 'Creador admin', url: '/admin' },
             { icon: SettingsIcon, option: 'Cerrar sesión', url: 'logout' },
         ]
     }

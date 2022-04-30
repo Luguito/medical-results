@@ -8,7 +8,8 @@ export const FiltersInput = ({ fields, fn }: { fields: string[], fn: any }) => {
         'Nombre': 'fullname',
         'Código cup': 'cup',
         'Cedula': 'ccid',
-        'Correo electronico': 'email'
+        'Correo electronico': 'email',
+        'Perfil': 'profileName'
     }
 
     const handleForm = (value: string, type: 'fullname' | 'ccid' | 'email' | 'cup') => {

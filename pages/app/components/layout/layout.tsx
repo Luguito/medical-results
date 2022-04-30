@@ -49,5 +49,6 @@ interface INavInfo {
     subtitle: string,
     buttonText: string,
     buttonColor: 'blue' | 'grey',
-    showButton: boolean
+    showButton: boolean,
+    fn: () => void
 }

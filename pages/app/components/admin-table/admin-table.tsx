@@ -8,12 +8,20 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ModalActualizarEmail } from '../modal/modal';
+import { ModalCreatePerfil } from '../../components/modal/modal';
 
+import { Auth } from '@api'
+import { useRouter } from 'next/router';
+import { Perfiles } from 'pages/app/api';
 
-export const AdminTable = ({ headers, list, paginator, fn }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any }) => {
+export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[] }) => {
+    const { asPath } = useRouter();
+    useEffect(() => {
+        console.log(asPath)
+    }, [])
     return (
         <>
             <ContainerTable>
@@ -41,12 +49,16 @@ export const AdminTable = ({ headers, list, paginator, fn }: { headers: string[]
                                 list.map((item, index) => {
                                     return (
                                         <RowTable key={index}>
-                                            <ItemTable>{item.fullname}</ItemTable>
-                                            <ItemTable>{item.ccid}</ItemTable>
-                                            <ItemTable>{item.email}</ItemTable>
-                                            <ItemTable>
-                                                <MenuPatients id={item.ccid}></MenuPatients>
-                                            </ItemTable>
+                                            {itemsToShow.map((field, index) => {
+                                                return (
+                                                    index !== itemsToShow.length - 1 ?
+                                                        <ItemTable key={index}>{item[field]}</ItemTable>
+                                                        :
+                                                        <ItemTable key={index}>
+                                                            <MenuProfiles fn={fn} ccid={item.ccid} id={item.id} item={item}></MenuProfiles>
+                                                        </ItemTable>
+                                                )
+                                            })}
                                         </RowTable>
                                     )
                                 })
@@ -72,13 +84,17 @@ interface IPaginator {
     currentPage: number
 }
 
-export const MenuPatients = ({ id }: { id: string }) => {
+export const MenuPatients = ({ ccid, id }: { ccid: string, id: string }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
+
+    const handleReset = async () => {
+        await Auth.get(`resend-recovery-password/${ccid}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+    }
 
     return (
         <>
@@ -106,13 +122,59 @@ export const MenuPatients = ({ id }: { id: string }) => {
                     horizontal: 'left',
                 }}
             >
-                <MenuItem onClick={handleClose}>Reiniciar contraseña</MenuItem>
+                <MenuItem onClick={handleReset}>Reiniciar contraseña</MenuItem>
                 <MenuItem onClick={() => setModalIsOpen(true)}>Actualizar email</MenuItem>
                 <MenuItem onClick={handleClose}>Desactivar</MenuItem>
                 <MenuItem onClick={handleClose}>Ver logs</MenuItem>
             </Menu>
-            <ModalActualizarEmail isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} ccid={id}></ModalActualizarEmail>
+            <ModalActualizarEmail isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} id={id}></ModalActualizarEmail>
         </>
     )
 }
 
+export const MenuProfiles = ({ ccid, id, item, fn }: { ccid: string, id: string, item?: any, fn: (arg: {}) => void }) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
+    const handleClose = () => setAnchorEl(null);
+
+    const switchActive = async () => await Perfiles.put(`profile/${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
+
+    return (
+        <>
+            <Button
+                id="demo-positioned-button"
+                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+            >
+                <MoreHorizIcon></MoreHorizIcon>
+            </Button>
+            <Menu
+                id="demo-positioned-menu"
+                aria-labelledby="demo-positioned-button"
+                anchorEl={anchorEl}
+                open={open}
+                onClose={handleClose}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                }}
+            >
+                <MenuItem onClick={() => setModalIsOpen(true)}>Editar</MenuItem>
+                <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' perfil'}</MenuItem>
+            </Menu>
+            <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => {
+                setModalIsOpen(false);
+                fn({ page: 1 })
+            }} id={id} data={item}></ModalCreatePerfil>
+        </>
+    )
+}

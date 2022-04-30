@@ -2,7 +2,7 @@ import { ButtonGrey, ContainerNav, ContainerText, SubTitle, Title } from './navb
 import { PrimaryGreyColor } from '@global-colors';
 import { useRouter } from 'next/router'
 
-export const NavBarComponent = ({ title, subtitle, buttonText, buttonColor, showButton }: Partial<INavProps>) => {
+export const NavBarComponent = ({ title, subtitle, buttonText, buttonColor, showButton, fn }: Partial<INavProps>) => {
     const router = useRouter();
 
     const goToResults = () => {
@@ -16,7 +16,7 @@ export const NavBarComponent = ({ title, subtitle, buttonText, buttonColor, show
                 <Title>{title}</Title>
                 <SubTitle>{subtitle}</SubTitle>
             </ContainerText>
-            {showButton && <ButtonGrey style={{ backgroundColor: buttonColor === 'blue' ? '#008dca' : PrimaryGreyColor}} onClick={goToResults}>{buttonText}</ButtonGrey>}
+            {showButton && <ButtonGrey style={{ backgroundColor: buttonColor === 'blue' ? '#008dca' : PrimaryGreyColor}} onClick={fn}>{buttonText}</ButtonGrey>}
         </ContainerNav>
     )
 }
@@ -28,5 +28,6 @@ interface INavProps {
     subtitle: string,
     buttonText: string,
     buttonColor: 'blue' | 'grey',
-    showButton: boolean
+    showButton: boolean,
+    fn?: () => void
 }
