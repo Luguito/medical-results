@@ -1,12 +1,15 @@
 import { Perfiles } from 'pages/app/api';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { ContainerTable, Table, HeaderTable, ItemTable, RowTable, FooterTable } from './logs.styled';
 
 export const Logs = ({ url }: { url: string }) => {
+    const [logs, setLogs] = useState([]);
+
     useEffect(() => {
         getLogs(url)
-    }, [])
-    const getLogs = async (url: string) => await Perfiles.get('log', {}, { url }).then(v => console.log(v))
+    }, []);
+
+    const getLogs = async (url: string) => await Perfiles.get('log', {}, { url }).then(v => setLogs(v.data))
 
     return (
         <>
@@ -26,11 +29,15 @@ export const Logs = ({ url }: { url: string }) => {
                         </RowTable>
                     </thead>
                     <tbody>
-                        <RowTable>
-                            <ItemTable>Test</ItemTable>
-                            <ItemTable>Test</ItemTable>
-                            <ItemTable>Test</ItemTable>
-                        </RowTable>
+                        {logs.length > 0 && logs.map((item: any, index: number) => {
+                            return (
+                                <RowTable key={index}>
+                                    <ItemTable>{item?.action}</ItemTable>
+                                    <ItemTable>{item?.name}</ItemTable>
+                                    <ItemTable>{new Date(item?.createdAt).toLocaleDateString()}</ItemTable>
+                                </RowTable>
+                            )
+                        })}
                     </tbody>
                 </Table>
             </ContainerTable>

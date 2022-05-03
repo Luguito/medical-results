@@ -130,7 +130,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
     useEffect(() => {
         setForm({
             profileName: data?.profileName,
-            permissions: data?.permisions
+            permisions: data?.permisions
         });
     }, [data]);
 
@@ -200,13 +200,6 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
     const { onClose, isOpen, data } = props;
     const [profile, setProfile] = useState([])
     const [form, setForm] = useState<Partial<IForm>>({});
-
-    useEffect(() => {
-        setForm({
-            profileName: data?.profileName,
-            permissions: data?.permisions
-        });
-    }, [data]);
 
     useEffect(() => {
         getProfiles();
