@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { Perfiles } from '../api'
 
 import { ModalCreatePerfil } from '../components/modal/modal';
+import { IPaginator } from '../interfaces';
 
 export const PerfilesPage = () => {
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
@@ -39,7 +40,7 @@ export const PerfilesPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Perfil']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['PERFIL', 'ACCIÓN/ACTIVAR']} itemsToShow={['profileName', 'accion']} list={list} paginator={paginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['PERFIL', 'ACCIÓN/ACTIVAR']} itemsToShow={['profileName', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{

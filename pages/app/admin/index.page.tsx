@@ -4,6 +4,7 @@ import { AdminTable } from '../components/admin-table/admin-table';
 import { useEffect, useState } from 'react';
 import { Users } from '../api';
 import { ModalCreateAdmin } from '../components/modal/modal';
+import { IPaginator } from '../interfaces';
 
 
 export const AdminPage = () => {
@@ -38,7 +39,7 @@ export const AdminPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Nombre']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid','email', 'accion']} list={list} paginator={paginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid','email', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{

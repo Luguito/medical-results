@@ -3,6 +3,7 @@ import { FiltersInput } from '../components/filters/filters';
 import { AdminTable } from '../components/admin-table/admin-table';
 import { useEffect, useState } from 'react';
 import User from '../api/users/users';
+import { IPaginator } from '../interfaces';
 
 export const UsersPage = () => {
     const [currentFilter, setCurrentFilter] = useState({});
@@ -33,7 +34,7 @@ export const UsersPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Nombre', 'Cedula', 'Correo electronico']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid', 'email', 'accion']} list={list} paginator={paginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid', 'email', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{

@@ -4,6 +4,7 @@ import { AdminTable } from '../components/admin-table/admin-table';
 import { Cup } from '../api';
 import { useEffect, useState } from 'react';
 import { ModalLogs } from '../components/modal/modal';
+import { IPaginator } from '../interfaces';
 
 
 export const CupPage = () => {
@@ -37,7 +38,7 @@ export const CupPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Nombre', 'Código cup']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÓDIGO CUP', 'ACCIÓN/ACTIVAR']} itemsToShow={['name', 'code', 'accion']} list={list} paginator={paginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['NOMBRE', 'CÓDIGO CUP', 'ACCIÓN/ACTIVAR']} itemsToShow={['name', 'code', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{
