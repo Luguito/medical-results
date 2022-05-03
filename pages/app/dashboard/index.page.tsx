@@ -2,16 +2,34 @@ import { LayoutComponent } from '../components/layout/layout';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { TextColor } from '@global-colors';
 import Box from '@mui/material/Box';
+import { useEffect, useState } from 'react';
+import { Perfiles } from '../api';
 
 export const DashboardPage = () => {
+    const [cards, setCards] = useState([]);
+    const labels = {
+        'numberAdmins': 'Admins',
+        'totalPatients': 'Pacientes'
+    }
+    useEffect(() => {
+        getDashboard()
+    }, [])
+
+    const getDashboard = async () => await Perfiles.get('dashboard', {}).then((v) => setCards(v.data));
+
     return (
         <>
             <LayoutComponent
                 Component={
                     <>
-                        <div style={{ display: 'flex', gap: '1.5em'}}>
-                            <BoxChart title={'Codigos cup'} content={'00'}></BoxChart>
-                            <BoxChart title={'Pacientes'} content={'00'}></BoxChart>
+                        <div style={{ display: 'flex', gap: '1.5em' }}>
+                            {Object.keys(cards).map((item, index) => {
+                                return (
+                                    <>
+                                        <BoxChart key={index} title={labels[item as string]} content={cards[item as string]}></BoxChart>
+                                    </>
+                                )
+                            })}
                         </div>
                         <RenderLineChart></RenderLineChart>
                     </>

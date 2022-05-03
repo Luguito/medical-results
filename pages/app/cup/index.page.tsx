@@ -3,7 +3,7 @@ import { FiltersInput } from '../components/filters/filters';
 import { AdminTable } from '../components/admin-table/admin-table';
 import { Cup } from '../api';
 import { useEffect, useState } from 'react';
-import { ModalCreatePerfil } from '../components/modal/modal';
+import { ModalLogs } from '../components/modal/modal';
 
 
 export const CupPage = () => {
@@ -30,7 +30,6 @@ export const CupPage = () => {
 
     const isEmpty = (e: {}) => Object.keys(e).length === 0;
 
-    const tesFunction = () => setModalIsOpen(true);
 
     return (
         <>

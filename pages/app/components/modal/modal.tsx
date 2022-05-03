@@ -11,10 +11,13 @@ import { HeaderModal, OutlineButton, FullButton, ContainerPDF, CenterUpdated } f
 import { ResultTemplate } from '../result-template'
 import { Results, Users, Perfiles } from '../../api';
 
-
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import Logs from '../logs/logs';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
 
 const style = {
     position: 'absolute' as 'absolute',
@@ -122,7 +125,7 @@ export const ModalActualizarEmail = (props: IModal) => {
 export const ModalCreatePerfil: FC<IModal> = (props) => {
     const { onClose, isOpen, data } = props;
     const [form, setForm] = useState({});
-    const [permissions, setPermission] = useState<string[]>([]);
+    const [permissions, setPermission] = useState<Set<string>>(new Set());
 
     useEffect(() => {
         setForm({
@@ -140,19 +143,16 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
     const onChangeCheckbox = (e: any) => {
         let name: string = e.target.name;
 
-        let exist = permissions.includes(name);
+        let exist = permissions.has(name);
 
-        !exist && setPermission([...permissions, name]);
-
-        if (exist) {
-            let index = permissions.findIndex(item => item === name);
-
-            let x = permissions.splice(index, 1);
-
-            setPermission([...permissions]);
+        if(!exist) {
+            permissions.add(name)
+        } else {
+            permissions.delete(name);
         }
-
-        setForm({ ...form, 'permisions': permissions.join(',') });
+        
+        console.log(Array.from(permissions))
+        setForm({ ...form, 'permisions': Array.from(permissions).join(',')});
     }
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
@@ -184,6 +184,9 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                         <FormGroup>
                             <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('dashboard')} />} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
                             <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('perfiles')} />} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('cup')} />} label="Codigos Cup" name="cup" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('pacientes')} />} label="Usuarios" name="pacientes" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('admin')} />} label="Admin" name="admin" onChange={onChangeCheckbox} />
                         </FormGroup>
                         <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>Enviar</FullButton>
                     </CenterUpdated>
@@ -195,6 +198,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
 
 export const ModalCreateAdmin: FC<IModal> = (props) => {
     const { onClose, isOpen, data } = props;
+    const [profile, setProfile] = useState([])
     const [form, setForm] = useState({});
 
     useEffect(() => {
@@ -204,13 +208,21 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
         });
     }, [data]);
 
+    useEffect(() => {
+        getProfiles();
+        console.log(profile)
+    }, []);
+
     const handleClose = () => onClose();
+
+    const getProfiles = async () => await Perfiles.get('profile', {}, {}).then((v) => setProfile(v.data.items));
 
     const handleCreate = async () => await Users.post('create-admin', form, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
 
     const handleEdit = async () => await Users.put(`${data.id}`, form, {});
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+
     return (
         <div>
             <Modal open={isOpen} onClose={handleClose}>
@@ -243,9 +255,59 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                         <TextField onChange={(e) => onChange(e, 'ccid')}></TextField>
                     </CenterUpdated>
                     <CenterUpdated>
+                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                        <Select
+                            value={form['profileName']}
+                            label="Perfiles"
+                            onChange={(e) => onChange(e, 'profile_id')}>
+                            {profile.length > 0 && profile.map((item, index) => {
+                                return (
+                                    <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
+                                )
+                            })}
+                        </Select>
+                    </CenterUpdated>
+                    <CenterUpdated>
                         <p>Contraseña</p>
                         <TextField onChange={(e) => onChange(e, 'password')}></TextField>
                         <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>Enviar</FullButton>
+                    </CenterUpdated>
+                </Box>
+            </Modal>
+        </div>
+    )
+}
+
+export const ModalLogs: FC<IModal> = (props) => {
+    const { onClose, isOpen, data } = props;
+    const [form, setForm] = useState({});
+
+    useEffect(() => { }, []);
+
+    const handleClose = () => onClose();
+
+    const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+    return (
+        <div>
+            <Modal open={isOpen} onClose={handleClose}>
+                <Box sx={{
+                    position: 'absolute' as 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    width: 700,
+                    borderRadius: '10px',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <HeaderModal>
+                        <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
+                            Logs
+                        </Typography>
+                    </HeaderModal>
+                    <CenterUpdated>
+                        <Logs></Logs>
                     </CenterUpdated>
                 </Box>
             </Modal>

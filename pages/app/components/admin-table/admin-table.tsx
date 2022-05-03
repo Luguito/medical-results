@@ -10,11 +10,13 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 
 import { useEffect, useState } from 'react';
 
-import { ModalActualizarEmail, ModalCreateAdmin, ModalCreatePerfil} from '../modal/modal';
+import { ModalActualizarEmail, ModalCreateAdmin, ModalCreatePerfil } from '../modal/modal';
 
 import { Auth } from '@api'
 import { useRouter } from 'next/router';
 import { Cup, Perfiles, Users } from 'pages/app/api';
+
+import { ModalLogs } from '../modal/modal'
 
 export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[] }) => {
     const { asPath } = useRouter();
@@ -229,6 +231,7 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
 export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, id: string }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const [modalLogs, setModalLog] = useState<boolean>(false)
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
@@ -262,11 +265,10 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
                 }}
             >
                 <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' Codigo CUP'}</MenuItem>
+                <MenuItem onClick={() => setModalLog(true)}>Ver logs</MenuItem>
             </Menu>
-            <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {
-                setModalIsOpen(false);
-                fn({ page: 1 })
-            }} id={id} data={item}></ModalCreateAdmin>
+            <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id} data={item}></ModalCreateAdmin>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)}></ModalLogs>
         </>
     )
 }
