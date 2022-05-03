@@ -87,7 +87,7 @@ export const ModalActualizarEmail = (props: IModal) => {
     const [email, setEmail] = useState();
     const handleClose = () => onClose();
 
-    const handleReset = async () => await Users.put(id as string, { 'email': email }, {});
+    const handleReset = async () => await Users.put(id as string, { 'email': email }, {}).then(() => onClose());
 
     const onChange = (e: any) => setEmail(e.target.value);
 
@@ -136,9 +136,9 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
 
     const handleClose = () => onClose();
 
-    const handleCreate = async () => await Perfiles.post('profile', form, {});
+    const handleCreate = async () => await Perfiles.post('profile', form, {}).then(() => onClose());
 
-    const handleEdit = async () => await Perfiles.put(`profile/${data.id}`, form, {})
+    const handleEdit = async () => await Perfiles.put(`profile/${data.id}`, form, {}).then(() => onClose());
 
     const onChangeCheckbox = (e: any) => {
         let name: string = e.target.name;
@@ -208,11 +208,11 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const handleClose = () => onClose();
 
-    const getProfiles = async () => await Perfiles.get('profile', {}, {}).then((v) => setProfile(v.data.items));
+    const getProfiles = async () => await Perfiles.get('profile', {}, {}).then((v) => setProfile(v.data.items)).then(() => onClose());
 
     const handleCreate = async () => await Users.post('create-admin', form, {}).then(() => onClose());
 
-    const handleEdit = async () => await Users.put(`${data.id}`, form, {});
+    const handleEdit = async () => await Users.put(`${data.id}`, form, {}).then(() => onClose());
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
 
