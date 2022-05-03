@@ -36,7 +36,6 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
             // @ts-ignore
             optionsByRole.admin.unshift(adminRouter[option]);
         })
-        console.log(optionsByRole)
         setOptions({...optionsByRole});
     }, [])
 

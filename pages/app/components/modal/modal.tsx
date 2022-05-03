@@ -203,8 +203,16 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     useEffect(() => {
         getProfiles();
-        console.log(profile)
     }, []);
+
+    useEffect(() => {
+        setForm({
+            fullname: data?.fullname,
+            lastname: data?.lastname,
+            ccid: data?.ccid,
+            password: data?.password
+        })
+    }, [data])
 
     const handleClose = () => onClose();
 
@@ -237,20 +245,19 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                     </HeaderModal>
                     <CenterUpdated>
                         <p>Nombre</p>
-                        <TextField onChange={(e) => onChange(e, 'fullname')}></TextField>
+                        <TextField onChange={(e) => onChange(e, 'fullname')} value={form?.fullname}></TextField>
                     </CenterUpdated>
                     <CenterUpdated>
                         <p>Apellido</p>
-                        <TextField onChange={(e) => onChange(e, 'lastname')}></TextField>
+                        <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
                     </CenterUpdated>
                     <CenterUpdated>
                         <p>Cedula</p>
-                        <TextField onChange={(e) => onChange(e, 'ccid')}></TextField>
+                        <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
                     </CenterUpdated>
                     <CenterUpdated>
                         <InputLabel id="demo-simple-select-label">Perfil</InputLabel>
                         <Select
-                            value={form.profileName}
                             label="Perfiles"
                             onChange={(e) => onChange(e, 'profile_id')}>
                             {profile.length > 0 && profile.map((item, index) => {
@@ -307,4 +314,7 @@ export const ModalLogs: FC<IModal> = (props) => {
 export interface IForm {
     profileName: string
     permisions: string
+    fullname: string,
+    lastname: string
+    ccid: string
 }
