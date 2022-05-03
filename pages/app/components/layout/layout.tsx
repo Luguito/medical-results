@@ -7,7 +7,7 @@ import { Sidebar } from '../sidebar/sidebar';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 
 export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
-    const { role } = useLoggedUser()
+    const { role, permissions } = useLoggedUser()
     const router = useRouter();
 
     const logOut = () => {
@@ -22,7 +22,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
-                        <Sidebar role={'admin'}></Sidebar>
+                        <Sidebar role={role} permissions={permissions}></Sidebar>
                     </li>
                 </OptionLists>
             </Layout>

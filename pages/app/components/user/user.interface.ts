@@ -2,5 +2,6 @@ export interface IUser {
     fullname: string
     firstName: string
     role: 'patient' | 'admin'
-    ccid: string
+    ccid: string,
+    permissions: string
 }

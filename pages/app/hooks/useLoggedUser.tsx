@@ -6,17 +6,19 @@ export const useLoggedUser = () => {
         fullname: '',
         firstName: '',
         role: 'patient',
-        ccid: ''
+        ccid: '',
+        permissions: ''
     });
 
     useEffect(() => {
         let user = JSON.parse(localStorage.getItem('user') as string);
-
+        console.log(user)
         setUser({
             fullname: user.fullname + ' ' + user.lastname,
             firstName: user.fullname,
             role: user.role,
-            ccid: user.ccid
+            ccid: user.ccid,
+            permissions: user.permissions
         })
     }, []);
 
