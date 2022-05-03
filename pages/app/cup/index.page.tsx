@@ -38,7 +38,7 @@ export const CupPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Nombre', 'Código cup']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÓDIGO CUP', 'ACCIÓN/ACTIVAR']} itemsToShow={['name', 'code', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['NOMBRE', 'CÓDIGO CUP', 'ACTIVO','ACCIÓN/ACTIVAR']} itemsToShow={['name', 'code', 'isActive','accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{

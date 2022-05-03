@@ -49,7 +49,7 @@ export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { head
                                             {itemsToShow.map((field, index) => {
                                                 return (
                                                     index !== itemsToShow.length - 1 ?
-                                                        <ItemTable key={index}>{item[field]}</ItemTable>
+                                                        <ItemTable key={index}>{typeof item[field] === 'boolean' ? (item[field] ? 'Si' : 'No') : item[field] }</ItemTable>
                                                         :
                                                         <ItemTable key={index}>
                                                             <RenderMenu item={item} id={item.id} ccid={item.ccid} fn={fn}></RenderMenu>
