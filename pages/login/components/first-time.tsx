@@ -41,7 +41,7 @@ export const FirstLoginComponent = () => {
                     }
                     localStorage.setItem('token', res?.data?.accessToken);
                     localStorage.setItem('user', JSON.stringify(res?.data?.user));
-                    router.push('/app/mis-resultados');
+                    router.push('/app');
                     setDisabled(false)
                 });
             }

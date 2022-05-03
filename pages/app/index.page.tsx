@@ -1,12 +1,20 @@
+import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import { LayoutComponent } from './components/layout/layout';
-import { useRouter } from 'next/router'
+import { useLoggedUser } from './hooks/useLoggedUser';
+
 export const AppLayoutPage = () => {
-    const route = useRouter();
+    const user = useLoggedUser();
+    const router = useRouter();
 
     useEffect(() => {
-        route.push('/app/mis-resultados')
-    }, [])
+        if (user.permissions.length > 0 && user.role === 'admin') {
+            let firstRoute = user.permissions.split(',')[1].trim();
+            router.push(`/app/${firstRoute}`);
+        } else {
+            router.push(`/app/mis-resultados`);
+        }
+    },[user]);
 
     return (
         <>
@@ -14,10 +22,8 @@ export const AppLayoutPage = () => {
                 <></>
             }
                 navInfo={{
-                    buttonText: 'Ir al mis resultados',
-                    title: 'Redireccionando al mis resultados...',
-                    subtitle: 'En breve se te redireccionara a los resultados',
-                    buttonColor: 'blue'
+                    title: 'Redireccionando...',
+                    subtitle: 'En breve se te redireccionara',
                 }}></LayoutComponent>
         </>
     )

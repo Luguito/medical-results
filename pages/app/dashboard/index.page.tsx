@@ -83,12 +83,6 @@ export const DashboardPage = () => {
 export default DashboardPage;
 
 export const RenderLineChart = ({ totalByMount }: { totalByMount: any[] }) => {
-    const data = [{ name: 'Mes 1', patient: 200, cup: 20 }, { name: 'Mes 2', patient: 140, cup: 10 }];
-
-    useEffect(() => {
-        console.log(totalByMount)
-    }, [])
-
     return (
         <>
             <LineChart width={1000} height={500} data={totalByMount} margin={{ top: 30, right: 20, bottom: 5, left: 0 }} style={{ backgroundColor: 'white', borderRadius: '10px' }}>
