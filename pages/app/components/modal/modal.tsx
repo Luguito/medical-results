@@ -210,7 +210,6 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
             fullname: data?.fullname,
             lastname: data?.lastname,
             ccid: data?.ccid,
-            password: data?.password
         })
     }, [data])
 
