@@ -8,9 +8,19 @@ import { Perfiles } from '../api';
 export const DashboardPage = () => {
     const [cards, setCards] = useState([]);
     const labels = {
-        'numberAdmins': 'Admins',
-        'totalPatients': 'Pacientes'
+        'totalAdmins': 'Admins',
+        'totalPatients': 'Pacientes',
+        'totalCups': 'Codigos cup',
+        'totalOrderByStatus': {
+            'O': 'ORDENADO',
+            'E': 'EN PROCESO',
+            'A': 'APLICADO',
+            'I': 'INTERPRETADO',
+            'N': 'ANULADO',
+            'X': 'RESULTADO EXTERNO',
+        }
     }
+
     useEffect(() => {
         getDashboard()
     }, [])
@@ -22,16 +32,36 @@ export const DashboardPage = () => {
             <LayoutComponent
                 Component={
                     <>
-                        <div style={{ display: 'flex', gap: '1.5em' }}>
-                            {Object.keys(cards).map((item, index) => {
+                        <div style={{ display: 'flex', gap: '1.5em', }}>
+                            {cards && Object.keys(cards).map((item, index) => {
                                 return (
                                     <>
-                                        <BoxChart key={index} title={labels[item as string]} content={cards[item as string]}></BoxChart>
+                                        {['totalOrderByStatus'].includes(item) && cards['totalOrderByStatus'].map((status, i) => {
+                                            return (
+                                                <>
+                                                    <BoxChart key={i} title={labels?.totalOrderByStatus[status?.code]} content={status?.total}></BoxChart>
+                                                </>
+                                            )
+                                        })}
                                     </>
                                 )
                             })}
                         </div>
-                        <RenderLineChart></RenderLineChart>
+                        <div style={{ display: 'flex', gap: '1.5em', }}>
+                            <RenderLineChart totalByMount={cards['totalByMount']}></RenderLineChart>
+                            <div style={{ display: 'flex', gap: '1.5em', flexDirection: 'column' }}>
+                                {cards && Object.keys(cards).map((item, index) => {
+                                    return (
+                                        <>
+                                            {
+                                                !['totalOrderByStatus'].includes(item) && labels[item] && <BoxChart key={index} title={labels[item as string]} content={cards[item as string]}></BoxChart>
+                                            }
+                                        </>
+                                    )
+                                })
+                                }
+                            </div>
+                        </div>
                     </>
                 }
                 navInfo={{
@@ -48,14 +78,17 @@ export const DashboardPage = () => {
 
 export default DashboardPage;
 
-export const RenderLineChart = () => {
+export const RenderLineChart = ({ totalByMount }: { totalByMount: any[] }) => {
     const data = [{ name: 'Mes 1', patient: 200, cup: 20 }, { name: 'Mes 2', patient: 140, cup: 10 }];
+
+    useEffect(() => {
+        console.log(totalByMount)
+    }, [])
 
     return (
         <>
-            <LineChart width={1000} height={500} data={data} margin={{ top: 30, right: 20, bottom: 5, left: 0 }} style={{ backgroundColor: 'white', borderRadius: '10px' }}>
-                <Line type="monotone" dataKey="patient" stroke="#8884d8" />
-                <Line type="monotone" dataKey="cup" stroke="#000000" />
+            <LineChart width={1000} height={500} data={totalByMount} margin={{ top: 30, right: 20, bottom: 5, left: 0 }} style={{ backgroundColor: 'white', borderRadius: '10px' }}>
+                <Line type="monotone" dataKey="value" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <XAxis dataKey="name" />
                 <YAxis />
