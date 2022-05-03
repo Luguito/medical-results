@@ -25,7 +25,7 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
     const adminRouter = {
         'perfiles': { icon: GroupIcon, option: 'Perfiles', url: '/perfiles' },
         'dashboard': { icon: DashboardIcon, option: 'Dashboard', url: '/dashboard' },
-        'pacientes': { icon: GroupIcon, option: 'Usuarios/Pacientes', url: '/usuarios' },
+        'usuarios': { icon: GroupIcon, option: 'Usuarios/Pacientes', url: '/usuarios' },
         'cup': { icon: MenuBook, option: 'Códigos cup', url: '/cup' },
         'admin': { icon: GroupIcon, option: 'Creador admin', url: '/admin' },
     }
@@ -36,7 +36,8 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
             // @ts-ignore
             optionsByRole.admin.unshift(adminRouter[option]);
         })
-        setOptions({...optionsByRole})
+        console.log(optionsByRole)
+        setOptions({...optionsByRole});
     }, [])
 
     const handleRouter = (url: string) => {
