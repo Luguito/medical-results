@@ -14,7 +14,8 @@ export const Layout = styled.section`
 `
 
 export const OptionLists = styled.ul`
-    padding: 1em 0.5em;
+    padding: 0 0.5em;
+    margin-top: 1em;
 `;
 
 export const ItemList = styled.li`
