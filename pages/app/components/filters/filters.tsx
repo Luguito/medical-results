@@ -1,4 +1,4 @@
-import { ContainerFilters, ContainerFilter, SearchButton} from './filters.styled';
+import { ContainerFilters, ContainerFilter, SearchButton } from './filters.styled';
 import { TextField } from "@mui/material";
 import { useState } from 'react';
 
@@ -27,7 +27,7 @@ export const FiltersInput = ({ fields, fn }: { fields: string[], fn: any }) => {
                     </ContainerFilter>
                 )
             })}
-            <SearchButton onClick={() => fn(form)}>Buscar</SearchButton>
+            <SearchButton onClick={() => fn({ ...form, page: 1})}>Buscar</SearchButton>
         </ContainerFilters>
     )
 }
