@@ -36,9 +36,11 @@ export const DashboardPage = () => {
                             {cards && Object.keys(cards).map((item, index) => {
                                 return (
                                     <>
-                                        {['totalOrderByStatus'].includes(item) && cards['totalOrderByStatus'].map((status, i) => {
+                                        {/* @ts-ignore */}
+                                        {['totalOrderByStatus'].includes(item) && cards['totalOrderByStatus'].map((status: any, i: number) => {
                                             return (
                                                 <>
+                                                    {/* @ts-ignore */}
                                                     <BoxChart key={i} title={labels?.totalOrderByStatus[status?.code]} content={status?.total}></BoxChart>
                                                 </>
                                             )
@@ -48,12 +50,14 @@ export const DashboardPage = () => {
                             })}
                         </div>
                         <div style={{ display: 'flex', gap: '1.5em', }}>
+                            {/* @ts-ignore */}
                             <RenderLineChart totalByMount={cards['totalByMount']}></RenderLineChart>
                             <div style={{ display: 'flex', gap: '1.5em', flexDirection: 'column' }}>
                                 {cards && Object.keys(cards).map((item, index) => {
                                     return (
                                         <>
                                             {
+                                                // @ts-ignore
                                                 !['totalOrderByStatus'].includes(item) && labels[item] && <BoxChart key={index} title={labels[item as string]} content={cards[item as string]}></BoxChart>
                                             }
                                         </>
@@ -116,4 +120,13 @@ export const BoxChart = ({ title, content }: { title: string, content: string })
             </Box>
         </>
     )
+}
+
+
+export interface IDashboard {
+    totalByMount: any[]
+    totalAdmins: any,
+    totalPatients: any,
+    totalCups: any,
+    totalOrderByStatus: any
 }

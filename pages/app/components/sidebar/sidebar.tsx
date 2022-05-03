@@ -33,6 +33,7 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
     useEffect(() => {
         role === 'admin' && permissions.map(route => {
             let option = route.trim()
+            // @ts-ignore
             optionsByRole.admin.unshift(adminRouter[option]);
         })
         setOptions({...optionsByRole})
@@ -50,6 +51,7 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
     return (
         <OptionLists style={{ paddingLeft: '0.2em' }}>
             { 
+            // @ts-ignore
                 optionsByRole[role]?.map((item: any, index: number) => (
                     <ItemList key={index} onClick={() => handleRouter(item.url)}>
                         {<item.icon></item.icon>}
