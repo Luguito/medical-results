@@ -10,7 +10,7 @@ import MenuBook from '@mui/icons-material/MenuBook';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin', permissions: string[] }) => {
+export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | string, permissions: string[] }) => {
     const [optionsByRole, setOptions] = useState({
         'patient': [
             { icon: MenuBookIcon, option: 'Mis Resultados', url: '/mis-resultados' },
@@ -20,7 +20,7 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin', perm
             { icon: SettingsIcon, option: 'Cerrar sesión', url: 'logout' }
         ]
     })
-    
+
     const router = useRouter();
     const adminRouter = {
         'perfiles': { icon: GroupIcon, option: 'Perfiles', url: '/perfiles' },
@@ -31,9 +31,11 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin', perm
     }
 
     useEffect(() => {
-        permissions.map(route => {
-            optionsByRole.admin.unshift(adminRouter[route]);
+        role === 'admin' && permissions.map(route => {
+            let option = route.trim()
+            optionsByRole.admin.unshift(adminRouter[option]);
         })
+        setOptions({...optionsByRole})
     }, [])
 
     const handleRouter = (url: string) => {
@@ -47,8 +49,8 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin', perm
 
     return (
         <OptionLists style={{ paddingLeft: '0.2em' }}>
-            {
-                optionsByRole[role].map((item, index) => (
+            { 
+                optionsByRole[role]?.map((item: any, index: number) => (
                     <ItemList key={index} onClick={() => handleRouter(item.url)}>
                         {<item.icon></item.icon>}
                         {item.option}

@@ -22,7 +22,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
-                        <Sidebar role={role} permissions={permissions}></Sidebar>
+                        {role && <Sidebar role={role} permissions={permissions.split(',')}></Sidebar>}
                     </li>
                 </OptionLists>
             </Layout>
