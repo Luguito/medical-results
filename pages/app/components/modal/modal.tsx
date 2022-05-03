@@ -124,7 +124,7 @@ export const ModalActualizarEmail = (props: IModal) => {
 
 export const ModalCreatePerfil: FC<IModal> = (props) => {
     const { onClose, isOpen, data } = props;
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState<Partial<IForm>>({});
     const [permissions, setPermission] = useState<Set<string>>(new Set());
 
     useEffect(() => {
@@ -136,7 +136,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
 
     const handleClose = () => onClose();
 
-    const handleCreate = async () => await Perfiles.post('profile', form, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+    const handleCreate = async () => await Perfiles.post('profile', form, {});
 
     const handleEdit = async () => await Perfiles.put(`profile/${data.id}`, form, {})
 
@@ -145,14 +145,14 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
 
         let exist = permissions.has(name);
 
-        if(!exist) {
+        if (!exist) {
             permissions.add(name)
         } else {
             permissions.delete(name);
         }
-        
+
         console.log(Array.from(permissions))
-        setForm({ ...form, 'permisions': Array.from(permissions).join(',')});
+        setForm({ ...form, 'permisions': Array.from(permissions).join(',') });
     }
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
@@ -177,7 +177,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                     </HeaderModal>
                     <CenterUpdated>
                         <p>Perfil</p>
-                        <TextField onChange={(e) => onChange(e, 'profileName')} value={form?.profileName}></TextField>
+                        <TextField onChange={(e) => onChange(e, 'profileName')} value={form['profileName']}></TextField>
                     </CenterUpdated>
                     <CenterUpdated>
                         <p>Permisos</p>
@@ -199,7 +199,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
 export const ModalCreateAdmin: FC<IModal> = (props) => {
     const { onClose, isOpen, data } = props;
     const [profile, setProfile] = useState([])
-    const [form, setForm] = useState({});
+    const [form, setForm] = useState<Partial<IForm>>({});
 
     useEffect(() => {
         setForm({
@@ -217,7 +217,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const getProfiles = async () => await Perfiles.get('profile', {}, {}).then((v) => setProfile(v.data.items));
 
-    const handleCreate = async () => await Users.post('create-admin', form, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+    const handleCreate = async () => await Users.post('create-admin', form, {});
 
     const handleEdit = async () => await Users.put(`${data.id}`, form, {});
 
@@ -255,9 +255,9 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                         <TextField onChange={(e) => onChange(e, 'ccid')}></TextField>
                     </CenterUpdated>
                     <CenterUpdated>
-                        <InputLabel id="demo-simple-select-label">Age</InputLabel>
+                        <InputLabel id="demo-simple-select-label">Perfil</InputLabel>
                         <Select
-                            value={form['profileName']}
+                            value={form.profileName}
                             label="Perfiles"
                             onChange={(e) => onChange(e, 'profile_id')}>
                             {profile.length > 0 && profile.map((item, index) => {
@@ -280,13 +280,8 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
 export const ModalLogs: FC<IModal> = (props) => {
     const { onClose, isOpen, data } = props;
-    const [form, setForm] = useState({});
-
-    useEffect(() => { }, []);
 
     const handleClose = () => onClose();
-
-    const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
     return (
         <div>
             <Modal open={isOpen} onClose={handleClose}>
@@ -307,10 +302,16 @@ export const ModalLogs: FC<IModal> = (props) => {
                         </Typography>
                     </HeaderModal>
                     <CenterUpdated>
-                        <Logs></Logs>
+                        <Logs url={data.url}></Logs>
                     </CenterUpdated>
                 </Box>
             </Modal>
         </div>
     )
+}
+
+
+export interface IForm {
+    profileName: string
+    permissions: string
 }

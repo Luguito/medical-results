@@ -6,7 +6,7 @@ export const get = (url: string, options: RequestInit, params?: {}): Promise<any
 }
 
 export const post = (url: string, data: any, options: RequestInit): Promise<any> => {
-    return fetch(`${apiUrl}/${url}`, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json', ...options?.headers }, ...options }).then(response => response.json());
+    return fetch(`${apiUrl}/${url}`, { method: 'POST', body: JSON.stringify(data), headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${localStorage.getItem('token')}` }, ...options }).then(response => response.json());
 }
 
 export const put = (url: string, data: any, options: RequestInit): Promise<any> => {

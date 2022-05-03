@@ -88,6 +88,7 @@ interface IPaginator {
 export const MenuPatients = ({ ccid, id }: { ccid: string, id: string }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const [modalLogs, setModalLog] = useState<boolean>(false)
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
@@ -126,9 +127,10 @@ export const MenuPatients = ({ ccid, id }: { ccid: string, id: string }) => {
                 <MenuItem onClick={handleReset}>Reiniciar contraseña</MenuItem>
                 <MenuItem onClick={() => setModalIsOpen(true)}>Actualizar email</MenuItem>
                 <MenuItem onClick={handleClose}>Desactivar</MenuItem>
-                <MenuItem onClick={handleClose}>Ver logs</MenuItem>
+                <MenuItem onClick={() => setModalLog(true)}>Ver logs</MenuItem>
             </Menu>
             <ModalActualizarEmail isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} id={id}></ModalActualizarEmail>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'perfiles' }}></ModalLogs>
         </>
     )
 }
@@ -183,6 +185,7 @@ export const MenuProfiles = ({ ccid, id, item, fn }: { ccid: string, id: string,
 export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, id: string }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
+    const [modalLogs, setModalLog] = useState<boolean>(false)
     const open = Boolean(anchorEl);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
@@ -219,11 +222,13 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                 <MenuItem onClick={() => setModalIsOpen(true)}>Editar</MenuItem>
                 <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' perfil'}</MenuItem>
                 <MenuItem onClick={deleteAdmin}>Eliminar</MenuItem>
+                <MenuItem onClick={() => setModalLog(true)}>Ver Logs</MenuItem>
             </Menu>
             <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {
                 setModalIsOpen(false);
                 fn({ page: 1 })
             }} id={id} data={item}></ModalCreateAdmin>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'perfiles' }}></ModalLogs>
         </>
     )
 }
@@ -268,7 +273,7 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
                 <MenuItem onClick={() => setModalLog(true)}>Ver logs</MenuItem>
             </Menu>
             <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id} data={item}></ModalCreateAdmin>
-            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)}></ModalLogs>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'cup' }}></ModalLogs>
         </>
     )
 }
