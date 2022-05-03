@@ -19,10 +19,6 @@ import { Cup, Perfiles, Users } from 'pages/app/api';
 import { ModalLogs } from '../modal/modal'
 
 export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[] }) => {
-    const { asPath } = useRouter();
-    useEffect(() => {
-        console.log(asPath)
-    }, [])
     return (
         <>
             <ContainerTable>
@@ -56,7 +52,7 @@ export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { head
                                                         <ItemTable key={index}>{item[field]}</ItemTable>
                                                         :
                                                         <ItemTable key={index}>
-                                                            <MenuCup fn={fn} id={item.id} item={item}></MenuCup>
+                                                            <RenderMenu item={item} id={item.id} ccid={item.ccid} fn={fn}></RenderMenu>
                                                         </ItemTable>
                                                 )
                                             })}
@@ -83,6 +79,29 @@ interface IPaginator {
     itemsPerPage: number
     totalPages: number
     currentPage: number
+}
+
+export const RenderMenu = ({ item, fn, id, ccid }: { item: any, fn: (arg: {}) => void, id: string, ccid: string, }) => {
+    const [currentRoute, setRoute] = useState('');
+
+    const Menu = {
+        'perfiles': <MenuPatients ccid={ccid} id={id}></MenuPatients>,
+        'admin': <MenuAdmin item={item} fn={fn} id={id}></MenuAdmin>,
+        'cup': <MenuCup item={item} fn={fn} id={id}></MenuCup>
+    }
+    const { asPath } = useRouter();
+
+    useEffect(() => {
+        let route = asPath.split('/');
+        setRoute(route[route.length - 1]);
+    }, []);
+
+    return (
+        <>
+            {/* @ts-ignore */}
+            {Menu[currentRoute]}
+        </>
+    )
 }
 
 export const MenuPatients = ({ ccid, id }: { ccid: string, id: string }) => {
@@ -228,7 +247,7 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                 setModalIsOpen(false);
                 fn({ page: 1 })
             }} id={id} data={item}></ModalCreateAdmin>
-            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'perfiles' }}></ModalLogs>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'admin' }}></ModalLogs>
         </>
     )
 }
