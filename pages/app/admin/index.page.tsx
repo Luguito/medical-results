@@ -50,7 +50,7 @@ export const AdminPage = () => {
                     buttonText: 'Crear nuevo admin',
                     fn:createFn
                 }}></LayoutComponent>
-                <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}></ModalCreateAdmin>
+                <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {setModalIsOpen(false); getValidPeticion({ page: 1 })}}></ModalCreateAdmin>
         </>
     )
 }

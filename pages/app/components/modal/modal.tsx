@@ -210,7 +210,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const getProfiles = async () => await Perfiles.get('profile', {}, {}).then((v) => setProfile(v.data.items));
 
-    const handleCreate = async () => await Users.post('create-admin', form, {});
+    const handleCreate = async () => await Users.post('create-admin', form, {}).then(() => onClose());
 
     const handleEdit = async () => await Users.put(`${data.id}`, form, {});
 

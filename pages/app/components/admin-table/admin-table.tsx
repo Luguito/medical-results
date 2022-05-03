@@ -85,9 +85,10 @@ export const RenderMenu = ({ item, fn, id, ccid }: { item: any, fn: (arg: {}) =>
     const [currentRoute, setRoute] = useState('');
 
     const Menu = {
-        'perfiles': <MenuPatients ccid={ccid} id={id}></MenuPatients>,
+        'perfiles': <MenuProfiles ccid={ccid} id={id} item={item} fn={fn}></MenuProfiles>,
         'admin': <MenuAdmin item={item} fn={fn} id={id}></MenuAdmin>,
-        'cup': <MenuCup item={item} fn={fn} id={id}></MenuCup>
+        'cup': <MenuCup item={item} fn={fn} id={id}></MenuCup>,
+        'usuarios': <MenuPatients ccid={ccid} id={id}></MenuPatients>
     }
     const { asPath } = useRouter();
 
