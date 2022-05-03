@@ -313,5 +313,5 @@ export const ModalLogs: FC<IModal> = (props) => {
 
 export interface IForm {
     profileName: string
-    permissions: string
+    permisions: string
 }
