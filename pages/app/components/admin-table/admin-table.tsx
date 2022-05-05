@@ -152,7 +152,7 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
                 <MenuItem onClick={() => setModalLog(true)}>Ver logs</MenuItem>
             </Menu>
             <ModalActualizarEmail data={item} isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id}></ModalActualizarEmail>
-            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'perfiles' }}></ModalLogs>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'pacientes' }}></ModalLogs>
         </>
     )
 }
@@ -242,7 +242,7 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                 }}
             >
                 <MenuItem onClick={() => setModalIsOpen(true)}>Editar</MenuItem>
-                <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' perfil'}</MenuItem>
+                <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' usuario'}</MenuItem>
                 <MenuItem onClick={deleteAdmin}>Eliminar</MenuItem>
                 <MenuItem onClick={() => setModalLog(true)}>Ver Logs</MenuItem>
             </Menu>

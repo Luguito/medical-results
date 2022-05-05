@@ -19,7 +19,7 @@ export const PerfilesPage = () => {
     }, []);
 
     const getPatients = async (options?: {}) => {
-        let res = await Perfiles.get('profile', {}, { ...currentFilter, ...options });
+        let res = await Perfiles.get('profile', {}, {...currentFilter, ...options });
 
         setCurrentFilter({ ...options });
         setPaginator(res?.data?.meta);
@@ -40,7 +40,7 @@ export const PerfilesPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Perfil']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['PERFIL', 'ACCIÓN/ACTIVAR']} itemsToShow={['profileName', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['PERFIL', 'ACTIVO', 'ACCIÓN/ACTIVAR']} itemsToShow={['profileName', 'isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{
@@ -51,7 +51,7 @@ export const PerfilesPage = () => {
                     showButton: true,
                     fn: tesFunction
                 }}></LayoutComponent>
-                <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}></ModalCreatePerfil>
+            <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}></ModalCreatePerfil>
         </>
     )
 }

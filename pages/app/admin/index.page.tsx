@@ -39,7 +39,7 @@ export const AdminPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Nombre']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid','email', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'PERFIL', 'ACTIVO','ACCIÓN/ACTIVAR']} itemsToShow={['user_fullname', 'user_ccid', 'profile_profileName', 'profile_isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{
