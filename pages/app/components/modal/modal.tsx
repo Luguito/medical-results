@@ -187,11 +187,11 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                     <CenterUpdated>
                         <p>Permisos</p>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('dashboard')} />} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('perfiles')} />} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('cup')} />} label="Codigos Cup" name="cup" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('usuarios')} />} label="Usuarios" name="usuarios" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permissions?.split(',').includes('admin')} />} label="Admin" name="admin" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('dashboard')} />} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('perfiles')} />} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('cup')} />} label="Codigos Cup" name="cup" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('usuarios')} />} label="Usuarios" name="usuarios" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('admin')} />} label="Admin" name="admin" onChange={onChangeCheckbox} />
                         </FormGroup>
                         <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>Enviar</FullButton>
                     </CenterUpdated>

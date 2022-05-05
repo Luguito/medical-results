@@ -51,7 +51,6 @@ export const PerfilesPage = () => {
                     showButton: true,
                     fn: tesFunction
                 }}></LayoutComponent>
-            <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}></ModalCreatePerfil>
         </>
     )
 }

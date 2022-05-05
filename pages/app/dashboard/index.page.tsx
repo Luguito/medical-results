@@ -32,7 +32,7 @@ export const DashboardPage = () => {
             <LayoutComponent
                 Component={
                     <>
-                        <h3 style={{ color: TextColor }}>Total ordenes por estado</h3>
+                        <h3 style={{ color: TextColor }}>Examenes ejecutados mes actual</h3>
                         <div style={{ display: 'flex', gap: '1.5em', }}>
                             {cards && Object.keys(cards).map((item, index) => {
                                 return (
