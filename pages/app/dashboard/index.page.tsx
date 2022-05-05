@@ -32,6 +32,7 @@ export const DashboardPage = () => {
             <LayoutComponent
                 Component={
                     <>
+                        <h3 style={{ color: TextColor }}>Total ordenes por estado</h3>
                         <div style={{ display: 'flex', gap: '1.5em', }}>
                             {cards && Object.keys(cards).map((item, index) => {
                                 return (
@@ -48,6 +49,10 @@ export const DashboardPage = () => {
                                     </>
                                 )
                             })}
+                        </div>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <h3 style={{ color: TextColor }}>Total resultados ultimos 4 meses</h3>
+                            <h3 style={{ color: TextColor }}>Usuarios y Cups activos</h3>
                         </div>
                         <div style={{ display: 'flex', gap: '1.5em', }}>
                             {/* @ts-ignore */}
