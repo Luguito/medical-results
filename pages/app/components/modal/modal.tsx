@@ -18,7 +18,7 @@ import Logs from '../logs/logs';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-
+import FormControl from '@mui/material/FormControl';
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -203,7 +203,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
 
 export const ModalCreateAdmin: FC<IModal> = (props) => {
     const { onClose, isOpen, data } = props;
-    const [profile, setProfile] = useState([])
+    const [profile, setProfile] = useState<Partial<Array<Object>>>([])
     const [form, setForm] = useState<Partial<IForm>>({});
 
     useEffect(() => {
@@ -211,20 +211,23 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
     }, []);
 
     useEffect(() => {
+        let profileName: any = profile && profile.find((p: any) => p['id'] === data?.user_profile_id)
+
         setForm({
-            fullname: data?.fullname,
-            lastname: data?.lastname,
-            ccid: data?.ccid,
+            fullname: data?.user_fullname,
+            lastname: data?.user_lastname,
+            ccid: data?.user_ccid,
+            profile_id: profileName?.id
         })
     }, [data])
 
     const handleClose = () => onClose();
 
-    const getProfiles = async () => await Perfiles.get('profile', {}, {}).then((v) => setProfile(v.data.items)).then(() => onClose());
+    const getProfiles = async () => await Perfiles.get('profile', {}, { active: true }).then((v) => setProfile(v.data.items)).then(() => onClose());
 
     const handleCreate = async () => await Users.post('create-admin', form, {}).then(() => onClose());
 
-    const handleEdit = async () => await Users.put(`${data.id}`, form, {}).then(() => onClose());
+    const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() => onClose());
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
 
@@ -260,16 +263,22 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                         <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
                     </CenterUpdated>
                     <CenterUpdated>
-                        <InputLabel id="demo-simple-select-label">Perfil</InputLabel>
-                        <Select
-                            label="Perfiles"
-                            onChange={(e) => onChange(e, 'profile_id')}>
-                            {profile.length > 0 && profile.map((item, index) => {
-                                return (
-                                    <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
-                                )
-                            })}
-                        </Select>
+                        <FormControl fullWidth style={{ marginTop: '1em' }}>
+                            <InputLabel id="demo-simple-select-label">Profile</InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                value={form?.profile_id}
+                                label="Perfiles"
+                                onChange={(e) => onChange(e, 'profile_id')}
+                            >
+                                {profile.length > 0 && profile.map((item: any, index) => {
+                                    return (
+                                        <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
                     </CenterUpdated>
                     <CenterUpdated>
                         <p>Contraseña</p>
@@ -321,4 +330,5 @@ export interface IForm {
     fullname: string,
     lastname: string
     ccid: string
+    profile_id: number
 }
