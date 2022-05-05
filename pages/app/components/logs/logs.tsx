@@ -34,7 +34,7 @@ export const Logs = ({ url }: { url: string }) => {
                                 <RowTable key={index}>
                                     <ItemTable>{item?.action}</ItemTable>
                                     <ItemTable>{item?.name}</ItemTable>
-                                    <ItemTable>{new Date(item?.createdAt).toLocaleDateString()}</ItemTable>
+                                    <ItemTable>{new Date(item?.createdAt).toLocaleString()}</ItemTable>
                                 </RowTable>
                             )
                         })}
