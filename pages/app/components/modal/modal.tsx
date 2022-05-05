@@ -83,8 +83,13 @@ export const ModalComponent: FC<IModal> = (props) => {
 }
 
 export const ModalActualizarEmail = (props: IModal) => {
-    const { onClose, isOpen, id } = props
+    const { onClose, isOpen, id, data } = props
     const [email, setEmail] = useState();
+
+    useEffect(() => {
+        setEmail(data?.email);
+    }, [data]);
+
     const handleClose = () => onClose();
 
     const handleReset = async () => await Users.put(id as string, { 'email': email }, {}).then(() => onClose());
@@ -113,7 +118,7 @@ export const ModalActualizarEmail = (props: IModal) => {
                     </HeaderModal>
                     <CenterUpdated>
                         <p>Email</p>
-                        <TextField onChange={onChange}></TextField>
+                        <TextField onChange={onChange} value={email}></TextField>
                         <FullButton onClick={handleReset} style={{ marginTop: '2em' }}>Enviar</FullButton>
                     </CenterUpdated>
                 </Box>

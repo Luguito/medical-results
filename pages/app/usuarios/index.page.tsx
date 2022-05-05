@@ -34,7 +34,7 @@ export const UsersPage = () => {
                 Component={
                     <>
                         <FiltersInput fields={['Nombre', 'Cedula', 'Correo electronico']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid', 'email', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'ACTIVO','CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid', 'isActive','email', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
                 }
                 navInfo={{

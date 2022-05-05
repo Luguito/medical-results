@@ -49,7 +49,7 @@ export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { head
                                             {itemsToShow.map((field, index) => {
                                                 return (
                                                     index !== itemsToShow.length - 1 ?
-                                                        <ItemTable key={index}>{typeof item[field] === 'boolean' ? (item[field] ? 'Si' : 'No') : item[field] }</ItemTable>
+                                                        <ItemTable key={index}>{typeof item[field] === 'boolean' ? (item[field] ? 'Si' : 'No') : item[field]}</ItemTable>
                                                         :
                                                         <ItemTable key={index}>
                                                             <RenderMenu item={item} id={item.id} ccid={item.ccid} fn={fn}></RenderMenu>
@@ -88,7 +88,7 @@ export const RenderMenu = ({ item, fn, id, ccid }: { item: any, fn: (arg: {}) =>
         'perfiles': <MenuProfiles ccid={ccid} id={id} item={item} fn={fn}></MenuProfiles>,
         'admin': <MenuAdmin item={item} fn={fn} id={id}></MenuAdmin>,
         'cup': <MenuCup item={item} fn={fn} id={id}></MenuCup>,
-        'usuarios': <MenuPatients ccid={ccid} id={id}></MenuPatients>
+        'usuarios': <MenuPatients ccid={ccid} id={id} fn={fn} item={item}></MenuPatients>
     }
     const { asPath } = useRouter();
 
@@ -105,7 +105,7 @@ export const RenderMenu = ({ item, fn, id, ccid }: { item: any, fn: (arg: {}) =>
     )
 }
 
-export const MenuPatients = ({ ccid, id }: { ccid: string, id: string }) => {
+export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string, fn: (arg: {}) => void, item: any}) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
     const [modalLogs, setModalLog] = useState<boolean>(false)
@@ -117,6 +117,8 @@ export const MenuPatients = ({ ccid, id }: { ccid: string, id: string }) => {
     const handleReset = async () => {
         await Auth.get(`resend-recovery-password/${ccid}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
     }
+
+    const switchActive = async () => await Users.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
 
     return (
         <>
@@ -146,10 +148,10 @@ export const MenuPatients = ({ ccid, id }: { ccid: string, id: string }) => {
             >
                 <MenuItem onClick={handleReset}>Reiniciar contraseña</MenuItem>
                 <MenuItem onClick={() => setModalIsOpen(true)}>Actualizar email</MenuItem>
-                <MenuItem onClick={handleClose}>Desactivar</MenuItem>
+                <MenuItem onClick={switchActive}>Desactivar</MenuItem>
                 <MenuItem onClick={() => setModalLog(true)}>Ver logs</MenuItem>
             </Menu>
-            <ModalActualizarEmail isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} id={id}></ModalActualizarEmail>
+            <ModalActualizarEmail data={item} isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id}></ModalActualizarEmail>
             <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'perfiles' }}></ModalLogs>
         </>
     )
