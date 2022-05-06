@@ -69,7 +69,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                 <HeaderCard>
                     <TitleCard>
                         <Image src={logo} height="20px" width="35px" layout="responsive"></Image>
-                        <h3 style={{ marginBottom: '8px', color: 'black' }}>Iniciar sesión</h3>
+                        <h3 style={{ marginBottom: '8px', color: '#717171'}}>Iniciar sesión</h3>
                         <small style={{ color: TextColor }}>Ingresa tus credenciales</small>
                     </TitleCard>
                 </HeaderCard>
@@ -83,12 +83,10 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                             null
                     }
                     <ItemCard>
-                        Cedula
-                        <TextField size="small" onChange={(e) => handleFields('ccid', e.target)} />
+                        <TextField size="small" label="Cedula" variant="standard" onChange={(e) => handleFields('ccid', e.target)} />
                     </ItemCard>
                     <ItemCard>
-                        Contraseña
-                        <TextField type="password" size="small" onChange={(e) => handleFields('password', e.target)} />
+                        <TextField type="password" label="Contraseña" variant="standard" size="small" onChange={(e) => handleFields('password', e.target)} />
                     </ItemCard>
                     <Link href="/forgot-password">
                         <small style={{ textAlign: 'right', color: TextColor }}>Olvide mi contraseña</small>
@@ -101,7 +99,7 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                     onExpired={expiredCaptcha}
                 />
                 <FooterCard style={{ justifyContent: 'center' }}>
-                    <ButtonGrey style={{ width: '90%' }} onClick={handleLogin} disabled={disabled}>Iniciar sesión</ButtonGrey>
+                    <ButtonGrey style={{ width: '60%' }} onClick={handleLogin} disabled={disabled}>Iniciar sesión</ButtonGrey>
                 </FooterCard>
             </CardContainer>
         </ContainerCenter>

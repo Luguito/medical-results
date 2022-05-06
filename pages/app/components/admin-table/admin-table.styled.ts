@@ -5,7 +5,7 @@ export const ContainerTable = styled.section`
     overflow: scroll;
     padding: 0 2em;
     background-color: #FFF;
-    border-radius: 10px;
+    // border-radius: 10px;
 `;
 export const Table = styled.table`
     width: 100%;
@@ -13,7 +13,13 @@ export const Table = styled.table`
     background-color: #FFF;
     // border-radius: 10px;
     border-collapse: collapse;
+    border: 1px solid #bcbcbc;
 `;
+
+export const Test = styled.div`
+    padding: 1em;
+    background-color: white;
+`
 
 export const RowTable = styled.tr``;
 
@@ -26,7 +32,7 @@ export const HeaderTable = styled.th`
 
 export const ItemTable = styled.td`
     text-align: center;
-    border-bottom: 0.1px solid #bcbcbc;
+    // border-bottom: 0.1px solid #bcbcbc;
     padding-bottom: 1em;
     padding-top: 1em;
 `;
@@ -36,7 +42,6 @@ export const FooterTable = styled.footer`
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding: 2em;
     background-color: #FFF;
     border-radius: 0 0 10px 10px;
 `

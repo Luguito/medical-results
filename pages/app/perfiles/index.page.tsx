@@ -32,25 +32,20 @@ export const PerfilesPage = () => {
 
     const isEmpty = (e: {}) => Object.keys(e).length === 0;
 
-    const tesFunction = () => setModalIsOpen(true);
+    const openModal = () => setModalIsOpen(true);
 
     return (
         <>
             <LayoutComponent
                 Component={
                     <>
-                        <FiltersInput fields={['Perfil']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['PERFIL', 'ACTIVO', 'ACCIÓN/ACTIVAR']} itemsToShow={['profileName', 'isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <h3 style={{ marginBottom: '8px', color: '#717171'}}>Perfiles</h3>
+                        <AdminTable headers={['PERFIL', 'ACTIVO', 'ACCIÓN/ACTIVAR']} fields={['Perfil']} itemsToShow={['profileName', 'isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion} modal={{
+                            name: 'Agregar Perfil',
+                            fn: openModal
+                        }}></AdminTable>
                     </>
-                }
-                navInfo={{
-                    title: 'Perfiles',
-                    subtitle: 'Listado de perfiles',
-                    buttonColor: 'blue',
-                    buttonText: 'Agregar nuevo perfil',
-                    showButton: true,
-                    fn: tesFunction
-                }}></LayoutComponent>
+                }></LayoutComponent>
                 <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); getValidPeticion({ page: 1 }) }}></ModalCreatePerfil>
         </>
     )

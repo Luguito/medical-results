@@ -33,15 +33,10 @@ export const UsersPage = () => {
             <LayoutComponent
                 Component={
                     <>
-                        <FiltersInput fields={['Nombre', 'Cedula', 'Correo electronico']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'ACTIVO','CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} itemsToShow={['fullname', 'ccid', 'isActive','email', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <h3 style={{ marginBottom: '8px', color: '#717171'}}>Usuarios y Pacientes</h3>
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'ACTIVO','CORREO ELECTRÓNICO', 'ACCIÓN/ACTIVAR']} fields={['Nombre', 'Cedula', 'Correo electronico']} itemsToShow={['fullname', 'ccid', 'isActive','email', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
-                }
-                navInfo={{
-                    showButton: false,
-                    title: 'Usuarios / Pacientes',
-                    subtitle: 'Control usuarios y envio de solicitudes para cambio de contraseña',
-                }}></LayoutComponent>
+                }></LayoutComponent>
         </>
     )
 }

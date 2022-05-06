@@ -38,19 +38,14 @@ export const AdminPage = () => {
             <LayoutComponent
                 Component={
                     <>
-                        <FiltersInput fields={['Nombre']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'PERFIL', 'ACTIVO','ACCIÓN/ACTIVAR']} itemsToShow={['user_fullname', 'user_ccid', 'profile_profileName', 'profile_isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <h3 style={{ marginBottom: '8px', color: '#717171'}}>Creacion de Administradores</h3>
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'PERFIL', 'ACTIVO', 'ACCIÓN/ACTIVAR']} fields={['Nombre']} itemsToShow={['user_fullname', 'user_ccid', 'profile_profileName', 'profile_isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion} modal={{
+                            name: 'Crear nuevo admin',
+                            fn: createFn
+                        }}></AdminTable>
                     </>
-                }
-                navInfo={{
-                    showButton: true,
-                    title: 'Creación de administradores',
-                    subtitle: 'Crea y controla los usuarios administradores',
-                    buttonColor: 'grey',
-                    buttonText: 'Crear nuevo admin',
-                    fn:createFn
-                }}></LayoutComponent>
-                <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {setModalIsOpen(false); getValidPeticion({ page: 1 })}}></ModalCreateAdmin>
+                }></LayoutComponent>
+            <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); getValidPeticion({ page: 1 }) }}></ModalCreateAdmin>
         </>
     )
 }

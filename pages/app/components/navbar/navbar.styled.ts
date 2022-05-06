@@ -4,24 +4,30 @@ import styled from 'styled-components'
 import Button from '@mui/material/Button';
 
 export const ContainerNav = styled.nav`
-    background-color: #FFF;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
-    padding: 2em;
 `;
+
+export const Container = styled.div`
+    background-color: #FFF;
+    width: 97%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2em;
+`
 
 export const ContainerText = styled.div`
     display: flex;
-    flex-direction: column;
+    align-items:center;
     gap: 10px;
 `
 
 export const Title = styled.p`
     font-weight: 600;
     font-size: 1.2rem;
-    color: #000;
+    color: ${PrimaryBlueColor};
 `
 
 export const SubTitle = styled.small``

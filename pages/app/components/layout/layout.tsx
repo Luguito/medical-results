@@ -6,7 +6,7 @@ import { ReactElement } from 'react';
 import { Sidebar } from '../sidebar/sidebar';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 
-export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
+export const LayoutComponent = ({ Component }: ILayoutProps) => {
     const { role, permissions } = useLoggedUser()
     const router = useRouter();
 
@@ -27,7 +27,7 @@ export const LayoutComponent = ({ Component, navInfo }: ILayoutProps) => {
                 </OptionLists>
             </Layout>
             <ContainerContent>
-                <NavBarComponent {...navInfo}></NavBarComponent>
+                <NavBarComponent></NavBarComponent>
                 <Container>
                     {Component}
                 </Container>
@@ -41,14 +41,4 @@ export default LayoutComponent;
 // Interfaces
 interface ILayoutProps {
     Component: ReactElement,
-    navInfo: Partial<INavInfo>
-}
-
-interface INavInfo {
-    title: string,
-    subtitle: string,
-    buttonText: string,
-    buttonColor: 'blue' | 'grey',
-    showButton: boolean,
-    fn: () => void
 }

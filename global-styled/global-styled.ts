@@ -56,7 +56,7 @@ export const FooterCard = styled.article`
 export const ButtonGrey = styled(Button)`
     && {
         background-color: ${PrimaryBlueColor};
-        border-radius: 20px;
+        border-radius: 7px;
         color: #FFFFFF;
     }
 

@@ -37,15 +37,10 @@ export const CupPage = () => {
             <LayoutComponent
                 Component={
                     <>
-                        <FiltersInput fields={['Nombre', 'Código cup']} fn={getValidPeticion}></FiltersInput>
-                        <AdminTable headers={['NOMBRE', 'CÓDIGO CUP', 'ACTIVO','ACCIÓN/ACTIVAR']} itemsToShow={['name', 'code', 'isActive','accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
+                        <h3 style={{ marginBottom: '8px', color: '#717171'}}>Codigos Cup</h3>
+                        <AdminTable headers={['NOMBRE', 'CÓDIGO CUP', 'ACTIVO','ACCIÓN/ACTIVAR']} fields={['Nombre', 'Código cup']} itemsToShow={['name', 'code', 'isActive','accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion}></AdminTable>
                     </>
-                }
-                navInfo={{
-                    showButton: false,
-                    title: 'Codigo cup',
-                    subtitle: 'Activación de codigo cup',
-                }}></LayoutComponent>
+                }></LayoutComponent>
         </>
     )
 }

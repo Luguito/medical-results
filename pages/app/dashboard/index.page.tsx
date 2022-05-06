@@ -1,6 +1,6 @@
 import { LayoutComponent } from '../components/layout/layout';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
-import { TextColor } from '@global-colors';
+import { PrimaryBlueColor, TextColor } from '@global-colors';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
 import { Perfiles } from '../api';
@@ -42,7 +42,7 @@ export const DashboardPage = () => {
                                             return (
                                                 <>
                                                     {/* @ts-ignore */}
-                                                    <BoxChart key={i} title={labels?.totalOrderByStatus[status?.code]} content={status?.total}></BoxChart>
+                                                    <BoxChart key={i} title={labels?.totalOrderByStatus[status?.code]} content={status?.total} type="vertical"></BoxChart>
                                                 </>
                                             )
                                         })}
@@ -62,7 +62,12 @@ export const DashboardPage = () => {
                                         <>
                                             {
                                                 // @ts-ignore
-                                                !['totalOrderByStatus'].includes(item) && labels[item] && <BoxChart key={index} title={labels[item as string]} content={cards[item as string]}></BoxChart>
+                                                !['totalOrderByStatus'].includes(item) && labels[item] && <BoxChart key={index} title={labels[item as string]} content={cards[item as string]} type="horizontal" style={{
+                                                    width: 250,
+                                                    height: 80,
+                                                    gap: '10px',
+                                                    justify: 'space-around'
+                                                }}></BoxChart>
                                             }
                                         </>
                                     )
@@ -71,14 +76,7 @@ export const DashboardPage = () => {
                             </div>
                         </div>
                     </>
-                }
-                navInfo={{
-                    buttonText: 'Buscar resultados',
-                    title: 'Tus resultados',
-                    subtitle: 'Encuentra tus resultados de manera facil',
-                    buttonColor: 'blue',
-                    showButton: true
-                }}></LayoutComponent>
+                }></LayoutComponent>
         </>
     )
 }
@@ -89,7 +87,7 @@ export default DashboardPage;
 export const RenderLineChart = ({ totalByMount }: { totalByMount: any[] }) => {
     return (
         <>
-            <LineChart width={950} height={500} data={totalByMount} margin={{ top: 30, right: 20, bottom: 5, left: 0 }} style={{ backgroundColor: 'white', borderRadius: '10px' }}>
+            <LineChart width={900} height={500} data={totalByMount} margin={{ top: 30, right: 20, bottom: 5, left: 0 }} style={{ backgroundColor: 'white', borderRadius: '10px' }}>
                 <Line type="monotone" dataKey="value" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
                 <XAxis dataKey="name" />
@@ -100,21 +98,23 @@ export const RenderLineChart = ({ totalByMount }: { totalByMount: any[] }) => {
     )
 };
 
-export const BoxChart = ({ title, content }: { title: string, content: string }) => {
+export const BoxChart = ({ title, content, type, style }: { title: string, content: string, type: 'vertical' | 'horizontal', style?: any}) => {
     return (
         <>
             <Box sx={{
-                width: 200,
-                height: 120,
+                width: style ? style?.width : 200,
+                height: style ? style?.height : 120,
                 backgroundColor: 'white',
                 borderRadius: '10px',
                 marginBottom: '20px',
                 display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center'
+                flexDirection: type === 'vertical' ? 'column' : 'row',
+                alignItems: 'center',
+                justifyContent: style ? style?.justify : '',
+                gap: style ? style?.gap : 0
             }}>
-                <h5 style={{ color: TextColor }}>{title}</h5>
-                <p style={{ color: '#252733', fontWeight: 400, fontSize: '1.4rem', margin: 0 }}>{content}</p>
+                <h5 style={{ color: PrimaryBlueColor }}>{title}</h5>
+                <p style={{ color: PrimaryBlueColor, fontWeight: 400, fontSize: '1.4rem', margin: 0, border: `1px solid ${PrimaryBlueColor}`, padding: '5px 10px'}}>{content}</p>
             </Box>
         </>
     )

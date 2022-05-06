@@ -1,4 +1,4 @@
-import { ContainerTable, Table, HeaderTable, ItemTable, RowTable, FooterTable } from './admin-table.styled';
+import { ContainerTable, HeaderTable, ItemTable, RowTable, FooterTable, Test } from './admin-table.styled';
 
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
@@ -17,58 +17,54 @@ import { useRouter } from 'next/router';
 import { Cup, Perfiles, Users } from 'pages/app/api';
 
 import { ModalLogs } from '../modal/modal'
+import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
+import { FiltersInput } from '../filters/filters'
 
-export const AdminTable = ({ headers, list, paginator, fn, itemsToShow }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[] }) => {
+export const AdminTable = ({ headers, list, paginator, fn, itemsToShow, modal, fields }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[], modal?: any, fields?: string[] }) => {
     return (
         <>
-            <ContainerTable>
-                <Table>
-                    <thead>
-                        <RowTable style={{ position: 'sticky', top: '0', backgroundColor: "#FFF", zIndex: '1' }}>
-                            {
-                                headers.map((header, key) => {
+            <Test>
+                <FiltersInput fields={fields} fn={fn} modal={modal}></FiltersInput>
+                <Paper sx={{ width: '100%', overflow: 'hidden', boxShadow: 'none' }}>
+                    <TableContainer sx={{ maxHeight: 440 }} style={{ border: '1px solid #bcbcbc' }}>
+                        <Table stickyHeader aria-label="sticky table">
+                            <TableHead>
+                                <TableRow>
+                                    {itemsToShow.map((column, index) => (
+                                        <TableCell
+                                            key={column}
+                                            align={'center'}>
+                                            {headers[index]}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {list.map((row, index) => {
                                     return (
-                                        <HeaderTable key={key}>
-                                            {header}
-                                        </HeaderTable>
-                                    )
-                                })
-                            }
-                        </RowTable>
-                    </thead>
-                    <tbody>
-                        {
-                            list.length === 0 ?
-                                <RowTable>
-                                    <ItemTable colSpan={6}>No hay registros</ItemTable>
-                                </RowTable>
-                                :
-                                list.map((item, index) => {
-                                    return (
-                                        <RowTable key={index}>
-                                            {itemsToShow.map((field, index) => {
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                                            {itemsToShow.map((column, index) => {
+                                                const value = row[column];
                                                 return (
-                                                    index !== itemsToShow.length - 1 ?
-                                                        <ItemTable key={index}>{typeof item[field] === 'boolean' ? (item[field] ? 'Si' : 'No') : item[field]}</ItemTable>
-                                                        :
-                                                        <ItemTable key={index}>
-                                                            <RenderMenu item={item} id={item.id} ccid={item.ccid} fn={fn}></RenderMenu>
-                                                        </ItemTable>
-                                                )
+                                                    <TableCell key={index} align={'center'}>
+                                                        {typeof value === 'boolean' ? <ShowActive value={value} /> : (column === 'accion' ? <RenderMenu item={row} id={row.id} ccid={row.ccid} fn={fn}></RenderMenu> : value)}
+                                                    </TableCell>
+                                                );
                                             })}
-                                        </RowTable>
-                                    )
-                                })
-                        }
-                    </tbody>
-                </Table>
-            </ContainerTable>
-            <FooterTable>
-                <p>Mostrando {paginator?.itemCount} de {paginator.totalItems} </p>
-                <Stack spacing={2}>
-                    <Pagination count={paginator.totalPages} shape="rounded" color="primary" onChange={(e, page) => fn({ page })} />
-                </Stack>
-            </FooterTable>
+                                        </TableRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <FooterTable>
+                        <p style={{ fontSize: '0.8rem', color: '#949191' }}>Mostrando {paginator?.itemCount} de {paginator.totalItems} </p>
+                        <Stack spacing={2}>
+                            <Pagination count={paginator.totalPages} shape="rounded" onChange={(e, page) => fn({ page })} />
+                        </Stack>
+                    </FooterTable>
+                </Paper>
+            </Test>
         </>
     )
 }
@@ -105,7 +101,7 @@ export const RenderMenu = ({ item, fn, id, ccid }: { item: any, fn: (arg: {}) =>
     )
 }
 
-export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string, fn: (arg: {}) => void, item: any}) => {
+export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string, fn: (arg: {}) => void, item: any }) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
     const [modalLogs, setModalLog] = useState<boolean>(false)
@@ -296,6 +292,14 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
             </Menu>
             <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id} data={item}></ModalCreateAdmin>
             <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'cup' }}></ModalLogs>
+        </>
+    )
+}
+
+export const ShowActive = ({ value }: { value: boolean }) => {
+    return (
+        <>
+            <span style={{ padding: '5px 1.7em', backgroundColor: value ? '#00c868' : '#939191', color: '#FFFFFF', borderRadius: '20px' }}>{value ? "Activo" : "Inactivo"}</span>
         </>
     )
 }

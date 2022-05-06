@@ -1,8 +1,6 @@
 import { OptionLists, ItemList } from '../layout/layout.styled';
 
 // Icons
-
-import SettingsIcon from '@mui/icons-material/Settings';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import GroupIcon from '@mui/icons-material/Group';
@@ -14,11 +12,8 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
     const [optionsByRole, setOptions] = useState({
         'patient': [
             { icon: MenuBookIcon, option: 'Mis Resultados', url: '/mis-resultados' },
-            { icon: SettingsIcon, option: 'Cerrar sesión', url: 'logout' }
         ],
-        'admin': [
-            { icon: SettingsIcon, option: 'Cerrar sesión', url: 'logout' }
-        ]
+        'admin': []
     })
 
     const router = useRouter();

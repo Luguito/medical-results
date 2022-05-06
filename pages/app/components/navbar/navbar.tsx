@@ -1,22 +1,29 @@
-import { ButtonGrey, ContainerNav, ContainerText, SubTitle, Title } from './navbar.styled';
-import { PrimaryGreyColor } from '@global-colors';
-import { useRouter } from 'next/router'
+import { ContainerNav, ContainerText, SubTitle, Title, Container } from './navbar.styled';
+import LogoutIcon from '@mui/icons-material/Logout';
+import Router from 'next/router';
+import { useLoggedUser } from 'pages/app/hooks/useLoggedUser';
+import { useEffect } from 'react';
 
 export const NavBarComponent = ({ title, subtitle, buttonText, buttonColor, showButton, fn }: Partial<INavProps>) => {
-    const router = useRouter();
+    const user = useLoggedUser();
 
-    const goToResults = () => {
-        let path = router.route.split('/')[2]
-
-        path !== 'resultados' ? router.push('/app/resultados') : router.push('/app/mis-resultados')
+    const logOut = () => {
+        localStorage.clear();
+        Router.push('/')
     }
     return (
         <ContainerNav>
-            <ContainerText>
-                <Title>{title}</Title>
-                <SubTitle>{subtitle}</SubTitle>
-            </ContainerText>
-            {showButton && <ButtonGrey style={{ backgroundColor: buttonColor === 'blue' ? '#008dca' : PrimaryGreyColor}} onClick={fn}>{buttonText}</ButtonGrey>}
+            <Container>
+                <ContainerText>
+                    <Title>Bienvenido, {user?.fullname}</Title>
+                    |
+                    <SubTitle>{user?.role == 'admin' ? 'Administrador' : 'Paciente'}</SubTitle>
+                </ContainerText>
+                <ContainerText>
+                    <LogoutIcon onClick={logOut} style={{ cursor: 'pointer' }}></LogoutIcon>
+                </ContainerText>
+                {/* {showButton && <ButtonGrey style={{ backgroundColor: buttonColor === 'blue' ? '#008dca' : PrimaryGreyColor }} onClick={fn}>{buttonText}</ButtonGrey>} */}
+            </Container>
         </ContainerNav>
     )
 }
