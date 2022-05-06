@@ -1,17 +1,19 @@
 import styled from 'styled-components';
 import { ButtonGrey } from '@global-styled';
-import { } from '@global-colors';
+import { PrimaryBlueColor } from '@global-colors';
+import Switch from '@mui/material/Switch';
 
 export const HeaderModal = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #e4e3e3;
 `
 export const OutlineButton = styled(ButtonGrey)`
     && {
         background-color: #FFF;
-        color: #818181;
-        border: 1px solid #818181;
+        color: ${PrimaryBlueColor};
+        border: 1px solid ${PrimaryBlueColor};
         margin-right: 10px;
         font-size: 0.7rem;
     }
@@ -19,7 +21,7 @@ export const OutlineButton = styled(ButtonGrey)`
 export const FullButton = styled(ButtonGrey)`
     && {
         padding: 0.7em 2em;
-        background-color: #818181;
+        background-color: ${PrimaryBlueColor};
         font-size: 0.7rem;
     }
 `
@@ -51,4 +53,21 @@ export const CenterUpdated = styled.section`
     justify-content: center;
     margin-top: 2em
     padding-bottom: 2em
+`;
+
+export const CustomSwitch = styled(Switch)`
+&& {
+    .MuiSwitch-switchBase: {
+        margin: 1,
+        padding: 0,
+        '&.Mui-checked': {
+          color: ${PrimaryBlueColor},
+          transform: 'translateX(22px)',
+        MuiSwitch-track: {
+            opacity: 1,
+            backgroundColor: ${PrimaryBlueColor},
+          },
+        },
+      },
+}
 `

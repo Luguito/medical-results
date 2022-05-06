@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal';
 import { TextField } from "@mui/material";
 
 // Styled Components
-import { HeaderModal, OutlineButton, FullButton, ContainerPDF, CenterUpdated } from './modal.styled';
+import { HeaderModal, OutlineButton, FullButton, ContainerPDF, CenterUpdated, CustomSwitch } from './modal.styled';
 import { ResultTemplate } from '../result-template'
 import { Results, Users, Perfiles } from '../../api';
 
@@ -19,6 +19,12 @@ import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
+import Switch from '@mui/material/Switch';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import CloseIcon from '@mui/icons-material/Close';
+
+import { PrimaryBlueColor } from '@global-colors';
+
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -135,7 +141,8 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
     useEffect(() => {
         setForm({
             profileName: data?.profileName,
-            permisions: data?.permisions
+            permisions: data?.permisions,
+            isActive: data?.isActive
         });
     }, [data]);
 
@@ -161,6 +168,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
     }
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+
     return (
         <div>
             <Modal open={isOpen} onClose={handleClose}>
@@ -179,21 +187,63 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                         <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
                             {(data ? 'Editar' : 'Crear') + ' perfil'}
                         </Typography>
+                        <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
                     </HeaderModal>
-                    <CenterUpdated>
-                        <p>Perfil</p>
-                        <TextField onChange={(e) => onChange(e, 'profileName')} value={form['profileName']}></TextField>
-                    </CenterUpdated>
+                    {!data ?
+                        <CenterUpdated>
+                            <p>Perfil</p>
+                            <TextField onChange={(e) => onChange(e, 'profileName')} value={form['profileName']}></TextField>
+                        </CenterUpdated>
+                        :
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <CenterUpdated>
+                                <p>Perfil</p>
+                                <TextField onChange={(e) => onChange(e, 'profileName')} value={form['profileName']}></TextField>
+                            </CenterUpdated>
+                            <CenterUpdated>
+                                <p>Estado</p>
+                                <CustomSwitch onChange={(e) => onChange(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
+                            </CenterUpdated>
+                        </div>
+                    }
                     <CenterUpdated>
                         <p>Permisos</p>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('dashboard')} />} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('perfiles')} />} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('cup')} />} label="Codigos Cup" name="cup" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('usuarios')} />} label="Usuarios" name="usuarios" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('admin')} />} label="Admin" name="admin" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('dashboard')} sx={{
+                                color: PrimaryBlueColor,
+                                '&.Mui-checked': {
+                                    color: PrimaryBlueColor,
+                                },
+                            }} />} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('perfiles')} sx={{
+                                color: PrimaryBlueColor,
+                                '&.Mui-checked': {
+                                    color: PrimaryBlueColor,
+                                },
+                            }} />} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('cup')} sx={{
+                                color: PrimaryBlueColor,
+                                '&.Mui-checked': {
+                                    color: PrimaryBlueColor,
+                                },
+                            }} />} label="Codigos Cup" name="cup" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('usuarios')} sx={{
+                                color: PrimaryBlueColor,
+                                '&.Mui-checked': {
+                                    color: PrimaryBlueColor,
+                                },
+                            }} />} label="Usuarios" name="usuarios" onChange={onChangeCheckbox} />
+                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('admin')} sx={{
+                                color: PrimaryBlueColor,
+                                '&.Mui-checked': {
+                                    color: PrimaryBlueColor,
+                                },
+                            }} />} label="Admin" name="admin" onChange={onChangeCheckbox} />
                         </FormGroup>
-                        <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>Enviar</FullButton>
+                        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                            <OutlineButton variant="outlined" onClick={handleClose} style={{ marginTop: '2em' }}>Cancelar</OutlineButton>
+                            <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>{!data ? "Agregar" : "Confirmar"}</FullButton>
+                        </div>
                     </CenterUpdated>
                 </Box>
             </Modal>
@@ -240,7 +290,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     bgcolor: 'background.paper',
-                    width: 400,
+                    width: 500,
                     borderRadius: '10px',
                     boxShadow: 24,
                     p: 4,
@@ -249,42 +299,62 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                         <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
                             {(data ? 'Editar' : 'Crear') + ' Admin'}
                         </Typography>
+                        <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
                     </HeaderModal>
-                    <CenterUpdated>
-                        <p>Nombre</p>
-                        <TextField onChange={(e) => onChange(e, 'fullname')} value={form?.fullname}></TextField>
-                    </CenterUpdated>
-                    <CenterUpdated>
-                        <p>Apellido</p>
-                        <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
-                    </CenterUpdated>
-                    <CenterUpdated>
-                        <p>Cedula</p>
-                        <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
-                    </CenterUpdated>
-                    <CenterUpdated>
-                        <FormControl fullWidth style={{ marginTop: '1em' }}>
-                            <InputLabel id="demo-simple-select-label">Profile</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={form?.profile_id}
-                                label="Perfiles"
-                                onChange={(e) => onChange(e, 'profile_id')}
-                            >
-                                {profile.length > 0 && profile.map((item: any, index) => {
-                                    return (
-                                        <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
-                                    )
-                                })}
-                            </Select>
-                        </FormControl>
-                    </CenterUpdated>
-                    <CenterUpdated>
-                        <p>Contraseña</p>
-                        <TextField onChange={(e) => onChange(e, 'password')}></TextField>
-                        <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>Enviar</FullButton>
-                    </CenterUpdated>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
+                        <CenterUpdated>
+                            <CenterUpdated>
+                                <p>Nombre</p>
+                                <TextField onChange={(e) => onChange(e, 'fullname')} value={form?.fullname}></TextField>
+                            </CenterUpdated>
+                            <CenterUpdated>
+                                <p>Cedula</p>
+                                <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
+                            </CenterUpdated>
+                            <CenterUpdated>
+                                <p>Contraseña</p>
+                                <TextField onChange={(e) => onChange(e, 'password')}></TextField>
+                            </CenterUpdated>
+                        </CenterUpdated>
+                        <CenterUpdated style={{ justifyContent: 'none' }}>
+                            <CenterUpdated>
+                                <p>Apellido</p>
+                                <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
+                            </CenterUpdated>
+                            <CenterUpdated>
+                                <FormControl fullWidth style={{ marginTop: '3em' }}>
+                                    <InputLabel id="demo-simple-select-label">Profile</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={form?.profile_id}
+                                        label="Perfiles"
+                                        onChange={(e) => onChange(e, 'profile_id')}
+                                    >
+                                        {profile.length > 0 && profile.map((item: any, index) => {
+                                            return (
+                                                <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </CenterUpdated>
+                            {!data ?
+                                null
+                                :
+                                <CenterUpdated>
+                                    <p>Estado</p>
+                                    <CustomSwitch />
+                                </CenterUpdated>
+                            }
+                        </CenterUpdated>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <OutlineButton variant="outlined" onClick={handleClose} style={{ marginTop: '2em' }}>
+                            <DeleteOutlineIcon />
+                        </OutlineButton>
+                        <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>{!data ? "Agregar" : "Confirmar"}</FullButton>
+                    </div>
                 </Box>
             </Modal>
         </div>
@@ -331,4 +401,5 @@ export interface IForm {
     lastname: string
     ccid: string
     profile_id: number
+    isActive: boolean
 }
