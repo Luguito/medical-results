@@ -11,14 +11,7 @@ export const Results = () => {
                         <FilterDate></FilterDate>
                         <TableComponent></TableComponent>
                     </>
-                }
-                navInfo={{
-                    buttonText: 'Volver al inicio',
-                    title: 'Consultar los resultados',
-                    subtitle: 'Digita los siguientes filtros para realizar la busqueda de tus resultados',
-                    buttonColor: 'grey',
-                    showButton: true
-                }}></LayoutComponent>
+                }></LayoutComponent>
         </>
     )
 }

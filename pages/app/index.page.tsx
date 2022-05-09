@@ -20,11 +20,7 @@ export const AppLayoutPage = () => {
         <>
             <LayoutComponent Component={
                 <></>
-            }
-                navInfo={{
-                    title: 'Redireccionando...',
-                    subtitle: 'En breve se te redireccionara',
-                }}></LayoutComponent>
+            }></LayoutComponent>
         </>
     )
 }
