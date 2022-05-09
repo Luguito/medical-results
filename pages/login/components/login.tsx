@@ -4,6 +4,7 @@ import { TextColor } from '@global-colors';
 import { useRouter } from 'next/router'
 import { useRef, useState } from 'react';
 import Link from 'next/link';
+import { Title, Paragraph } from './login.styled'
 
 // Logo image
 import logo from '../../../assets/logo.png';
@@ -69,8 +70,8 @@ export const LoginComponent = ({ changeLogin }: { changeLogin: Function }) => {
                 <HeaderCard>
                     <TitleCard>
                         <Image src={logo} height="20px" width="35px" layout="responsive"></Image>
-                        <h3 style={{ marginBottom: '8px', color: '#717171'}}>Iniciar sesión</h3>
-                        <small style={{ color: TextColor }}>Ingresa tus credenciales</small>
+                        <Title>Iniciar sesión</Title>
+                        <Paragraph >Ingresa tus credenciales</Paragraph>
                     </TitleCard>
                 </HeaderCard>
                 <ContentCard>
