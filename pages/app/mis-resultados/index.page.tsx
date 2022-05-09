@@ -7,14 +7,7 @@ export const MisResultados = () => {
             <LayoutComponent
                 Component={
                     <TableComponent></TableComponent>
-                }
-                navInfo={{
-                    buttonText: 'Buscar resultados',
-                    title: 'Tus resultados',
-                    subtitle: 'Encuentra tus resultados de manera facil',
-                    buttonColor: 'blue',
-                    showButton: true
-                }}></LayoutComponent>
+                }></LayoutComponent>
         </>
     )
 }

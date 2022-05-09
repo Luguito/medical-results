@@ -4,7 +4,7 @@ import { useState } from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 
-export const FiltersInput = ({ fields, fn, modal }: { fields: string[], fn: any, modal?: any }) => {
+export const FiltersInput = ({ fields, fn, modal }: { fields: string[] | undefined, fn: any, modal?: any }) => {
     const [form, setForm] = useState({});
     const types = {
         'Nombre': 'fullname',
@@ -22,7 +22,7 @@ export const FiltersInput = ({ fields, fn, modal }: { fields: string[], fn: any,
         <ContainerFilters>
             <ContainerInputs>
                 <Container>
-                    {fields.map((item, key) => {
+                    {(fields as string[]).map((item, key) => {
                         return (
                             <ContainerFilter key={key}>
                                 {/* @ts-ignore */}
@@ -32,6 +32,7 @@ export const FiltersInput = ({ fields, fn, modal }: { fields: string[], fn: any,
                                             <SearchIcon />
                                         </InputAdornment>
                                     ),
+                                    // @ts-ignore
                                 }} size="small" label={item} onChange={({ target }) => handleForm(target.value, types[item])}></TextField>
                             </ContainerFilter>
                         )
