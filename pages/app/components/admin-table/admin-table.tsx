@@ -20,6 +20,7 @@ import { ModalLogs } from '../modal/modal'
 import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
 import { FiltersInput } from '../filters/filters';
 import EditIcon from '@mui/icons-material/Edit';
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export const AdminTable = ({ headers, list, paginator, fn, itemsToShow, modal, fields }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[], modal?: any, fields?: string[] }) => {
     return (
@@ -111,9 +112,7 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
 
-    const handleReset = async () => {
-        await Auth.get(`resend-recovery-password/${ccid}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
-    }
+    
 
     const switchActive = async () => await Users.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
 
@@ -143,10 +142,14 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
                     horizontal: 'left',
                 }}
             >
-                <MenuItem onClick={handleReset}>Reiniciar contraseña</MenuItem>
-                <MenuItem onClick={() => setModalIsOpen(true)}>Actualizar email</MenuItem>
-                <MenuItem onClick={switchActive}>Desactivar</MenuItem>
-                <MenuItem onClick={() => setModalLog(true)}>Ver logs</MenuItem>
+                <MenuItem onClick={() => setModalIsOpen(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                    Editar
+                    <EditIcon style={{fontSize: '0.8rem'}}></EditIcon>
+                </MenuItem>
+                <MenuItem onClick={() => setModalLog(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                    Ver Logs 
+                    <RemoveRedEyeIcon style={{fontSize: '0.8rem', marginLeft: '10px'}}></RemoveRedEyeIcon>
+                </MenuItem>
             </Menu>
             <ModalActualizarEmail data={item} isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id}></ModalActualizarEmail>
             <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'pacientes' }}></ModalLogs>
@@ -217,8 +220,14 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                     horizontal: 'left',
                 }}
             >
-                <MenuItem onClick={() => setModalIsOpen(true)}>Editar</MenuItem>
-                <MenuItem onClick={() => setModalLog(true)}>Ver Logs</MenuItem>
+                <MenuItem onClick={() => setModalIsOpen(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                    Editar
+                    <EditIcon style={{fontSize: '0.8rem'}}></EditIcon>
+                </MenuItem>
+                <MenuItem onClick={() => setModalLog(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                    Ver Logs 
+                    <RemoveRedEyeIcon style={{fontSize: '0.8rem', marginLeft: '10px'}}></RemoveRedEyeIcon>
+                </MenuItem>
             </Menu>
             <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {
                 setModalIsOpen(false);

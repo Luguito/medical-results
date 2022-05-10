@@ -26,6 +26,7 @@ import HistoryIcon from '@mui/icons-material/History';
 
 import { PrimaryBlueColor } from '@global-colors';
 import { IOSSwitch } from '../custom-switch/switch';
+import { Auth } from '@api';
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -108,6 +109,10 @@ export const ModalActualizarEmail = (props: IModal) => {
 
     const onChangeCheckBox = (e: any, type: string) => setEmail({ ...email, [type]: e.target.checked });
 
+    const handleResetEmail = async () => {
+        await Auth.get(`resend-recovery-password/${data?.ccid}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+    }
+
     return (
         <div>
             <Modal open={isOpen} onClose={handleClose}>
@@ -139,7 +144,7 @@ export const ModalActualizarEmail = (props: IModal) => {
                         <CustomSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={email['isActive']} sx={{ color: 'green' }} />
                     </CenterUpdated>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <OutlineButton variant="outlined" onClick={handleClose} style={{ marginTop: '2em' }} startIcon={<HistoryIcon />}>
+                        <OutlineButton variant="outlined" onClick={handleResetEmail} style={{ marginTop: '2em' }} startIcon={<HistoryIcon />}>
                             Reestablecer Contraseña
                         </OutlineButton>
                         <FullButton onClick={handleReset} style={{ marginTop: '2em' }}>Actualizar</FullButton>
