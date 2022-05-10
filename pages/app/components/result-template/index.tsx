@@ -29,7 +29,7 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                 <img style={{ marginLeft: '-16px' }} width="200" src="/logo.png" alt="" />
             </PreHeader>
             <Header>
-                <HeaderBox>
+                <HeaderBox style={{width: '70%'}}>
                     <HeaderItem>
                         <ItemText withMargin>PACIENTE</ItemText>
                         <ItemText>SAPHIRA</ItemText>
