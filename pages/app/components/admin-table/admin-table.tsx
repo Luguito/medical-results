@@ -18,7 +18,8 @@ import { Cup, Perfiles, Users } from 'pages/app/api';
 
 import { ModalLogs } from '../modal/modal'
 import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
-import { FiltersInput } from '../filters/filters'
+import { FiltersInput } from '../filters/filters';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const AdminTable = ({ headers, list, paginator, fn, itemsToShow, modal, fields }: { headers: string[], list: Array<any>, paginator: IPaginator, fn: any, itemsToShow: string[], modal?: any, fields?: string[] }) => {
     return (
@@ -172,7 +173,7 @@ export const MenuProfiles = ({ ccid, id, item, fn }: { ccid: string, id: string,
                 aria-expanded={open ? 'true' : undefined}
                 onClick={handleClick}
             >
-                <MoreHorizIcon></MoreHorizIcon>
+                <EditIcon></EditIcon>
             </Button>
             <Menu
                 id="demo-positioned-menu"
