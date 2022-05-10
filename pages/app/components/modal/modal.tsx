@@ -25,7 +25,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import HistoryIcon from '@mui/icons-material/History';
 
 import { PrimaryBlueColor } from '@global-colors';
-
+import { IOSSwitch } from '../custom-switch/switch';
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -220,7 +220,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                             </CenterUpdated>
                             <CenterUpdated>
                                 <p>Estado</p>
-                                <CustomSwitch onChange={(e) => onChangeSwitch(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
+                                <IOSSwitch onChange={(e) => onChangeSwitch(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
                             </CenterUpdated>
                         </div>
                     }
@@ -365,7 +365,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                                 :
                                 <CenterUpdated>
                                     <p>Estado</p>
-                                    <CustomSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
+                                    <IOSSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
                                 </CenterUpdated>
                             }
                         </CenterUpdated>
