@@ -208,9 +208,6 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
-
-    const switchActive = async () => await Users.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
-    const deleteAdmin = async () => await Users.remove(`${item.id}`, {}, {});
     return (
         <>
             <Button
@@ -238,8 +235,6 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                 }}
             >
                 <MenuItem onClick={() => setModalIsOpen(true)}>Editar</MenuItem>
-                <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' usuario'}</MenuItem>
-                <MenuItem onClick={deleteAdmin}>Eliminar</MenuItem>
                 <MenuItem onClick={() => setModalLog(true)}>Ver Logs</MenuItem>
             </Menu>
             <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => {

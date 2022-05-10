@@ -298,6 +298,8 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() => onClose());
 
+    const deleteAdmin = async () => await Users.remove(`${data?.user_id}`, {}, {});
+
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
 
     const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
@@ -371,7 +373,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                         </CenterUpdated>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <OutlineButton variant="outlined" onClick={handleClose} style={{ marginTop: '2em' }}>
+                        <OutlineButton variant="outlined" onClick={deleteAdmin} style={{ marginTop: '2em' }}>
                             <DeleteOutlineIcon />
                         </OutlineButton>
                         <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>{!data ? "Agregar" : "Confirmar"}</FullButton>

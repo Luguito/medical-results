@@ -85,12 +85,13 @@ export const DashboardPage = () => {
 export default DashboardPage;
 
 export const RenderLineChart = ({ totalByMount }: { totalByMount: any[] }) => {
+    const month = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     return (
         <>
             <LineChart width={900} height={500} data={totalByMount} margin={{ top: 30, right: 20, bottom: 5, left: 0 }} style={{ backgroundColor: 'white', borderRadius: '10px' }}>
-                <Line type="monotone" dataKey="value" stroke="#8884d8" />
+                <Line type="monotone" dataKey="total" stroke="#8884d8" />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey={(e) => month[e.month]} />
                 <YAxis />
                 <Tooltip />
             </LineChart>
