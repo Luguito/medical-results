@@ -103,7 +103,7 @@ export const ModalActualizarEmail = (props: IModal) => {
 
     const handleClose = () => onClose();
 
-    const handleReset = async () => await Users.put(id as string, { 'email': email }, {}).then(() => onClose());
+    const handleReset = async () => await Users.put(id as string, email, {}).then(() => onClose());
 
     const onChange = (e: any) => setEmail(e.target.value);
 
