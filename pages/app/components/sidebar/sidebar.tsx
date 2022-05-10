@@ -29,7 +29,7 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
         role === 'admin' && permissions.map(route => {
             let option = route.trim()
             // @ts-ignore
-            optionsByRole.admin.unshift(adminRouter[option]);
+            optionsByRole.admin.push(adminRouter[option]);
         })
         setOptions({...optionsByRole});
     }, [])
