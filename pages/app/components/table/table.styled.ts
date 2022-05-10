@@ -40,3 +40,8 @@ export const FooterTable = styled.footer`
     background-color: #FFF;
     border-radius: 0 0 10px 10px;
 `
+
+export const Container = styled.div`
+    padding: 1em;
+    background-color: white;
+`

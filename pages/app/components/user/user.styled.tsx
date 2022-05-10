@@ -3,20 +3,24 @@ import { SecondaryGreyColor } from '@global-colors';
 
 export const UserLoggedContainer = styled.section`
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    gap: 1em;
-    margin-top: 3em;
+    gap: 2em;
+    color: #717171;
 `;
 
 export const ProfileImgContainer = styled.div`
     height: 5em;
     width: 5em;
     // background-color: ${SecondaryGreyColor};
-    border-radius: 50%
+    border-radius: 50%;
 `
 
-export const UserName = styled.p`
-    color: white;
+export const UserName = styled.span`
+    font-weight:500;
+`
+
+export const UserProperties = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 1em
 `

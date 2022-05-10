@@ -58,9 +58,9 @@ export const AdminTable = ({ headers, list, paginator, fn, itemsToShow, modal, f
                         </Table>
                     </TableContainer>
                     <FooterTable>
-                        <p style={{ fontSize: '0.8rem', color: '#949191' }}>Mostrando {paginator?.itemCount} de {paginator.totalItems} </p>
+                        <p style={{ fontSize: '0.8rem', color: '#949191' }}>Mostrando {paginator?.itemCount} de {paginator?.totalItems} </p>
                         <Stack spacing={2}>
-                            <Pagination count={paginator.totalPages} shape="rounded" onChange={(e, page) => fn({ page })} />
+                            <Pagination count={paginator?.totalPages} shape="rounded" onChange={(e, page) => fn({ page })} />
                         </Stack>
                     </FooterTable>
                 </Paper>
@@ -297,6 +297,11 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
 }
 
 export const ShowActive = ({ value }: { value: boolean }) => {
+
+    useEffect(() => {
+        console.log(value)
+    },[])
+    
     return (
         <>
             <span style={{ padding: '5px 1.7em', backgroundColor: value ? '#00c868' : '#939191', color: '#FFFFFF', borderRadius: '20px' }}>{value ? "Activo" : "Inactivo"}</span>

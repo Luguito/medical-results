@@ -39,7 +39,7 @@ export const AdminPage = () => {
                 Component={
                     <>
                         <h3 style={{ marginBottom: '8px', color: '#717171'}}>Creacion de Administradores</h3>
-                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'PERFIL', 'ACTIVO', 'ACCIÓN/ACTIVAR']} fields={['Nombre']} itemsToShow={['user_fullname', 'user_ccid', 'profile_profileName', 'profile_isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion} modal={{
+                        <AdminTable headers={['NOMBRE', 'CÉDULA', 'PERFIL', 'ACTIVO', 'ACCIÓN/ACTIVAR']} fields={['Nombre']} itemsToShow={['user_fullname', 'user_ccid', 'profile_profileName', 'user_isActive', 'accion']} list={list} paginator={paginator as IPaginator} fn={getValidPeticion} modal={{
                             name: 'Crear nuevo admin',
                             fn: createFn
                         }}></AdminTable>

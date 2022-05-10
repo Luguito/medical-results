@@ -5,31 +5,32 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { TextField } from "@mui/material";
 
 export const FilterDate = () => {
-    const [date, setDate] = useState({ start: '', end: '' });
+    const [filter, setFilter] = useState({ startDate: '', endDate: '', nomProc: ''});
+
     return (
         <ContainerFilters>
+            <ContainerFilter>
+                <p>Tipo de Examen</p>
+                <TextField size="small"></TextField>
+            </ContainerFilter>
             <ContainerFilter>
                 <p>Rango de fechas</p>
                 <LocalizationProvider dateAdapter={AdapterDateFns}>
                     <ContainerInputs>
                         <DatePicker
-                            label="Start"
-                            value={date.start}
-                            onChange={(newValue) => { setDate({ ...date, start: newValue as string }); }}
+                            label="Fecha Inicial"
+                            value={filter.startDate}
+                            onChange={(newValue) => { setFilter({ ...filter, startDate: newValue as string }); }}
                             renderInput={(params) => <TextField {...params} size="small" />}
                         />
                         <DatePicker
-                            label="End"
-                            value={date.start}
-                            onChange={(newValue) => { setDate({ ...date, start: newValue as string }); }}
+                            label="Fecha Final"
+                            value={filter.endDate}
+                            onChange={(newValue) => { setFilter({ ...filter, endDate: newValue as string }); }}
                             renderInput={(params) => <TextField {...params} size="small" />}
                         />
                     </ContainerInputs>
                 </LocalizationProvider>
-            </ContainerFilter>
-            <ContainerFilter>
-                <p>Tipo de Examen</p>
-                <TextField size="small"></TextField>
             </ContainerFilter>
         </ContainerFilters> 
     )

@@ -1,4 +1,5 @@
 import { ContainerNav, ContainerText, SubTitle, Title, Container } from './navbar.styled';
+import { UserLoggedComponent } from '../user/user';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Router from 'next/router';
 import { useLoggedUser } from 'pages/app/hooks/useLoggedUser';
@@ -15,9 +16,10 @@ export const NavBarComponent = ({ title, subtitle, buttonText, buttonColor, show
         <ContainerNav>
             <Container>
                 <ContainerText>
-                    <Title>Bienvenido, {user?.fullname}</Title>
+                    <UserLoggedComponent></UserLoggedComponent>
+                    {/* <Title>Bienvenido, {user?.fullname}</Title>
                     |
-                    <SubTitle>{user?.role == 'admin' ? 'Administrador' : 'Paciente'}</SubTitle>
+                    <SubTitle>{user?.role == 'admin' ? 'Administrador' : 'Paciente'}</SubTitle> */}
                 </ContainerText>
                 <ContainerText>
                     <LogoutIcon onClick={logOut} style={{ cursor: 'pointer' }}></LogoutIcon>

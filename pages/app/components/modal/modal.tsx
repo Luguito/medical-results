@@ -22,6 +22,7 @@ import FormControl from '@mui/material/FormControl';
 import Switch from '@mui/material/Switch';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import CloseIcon from '@mui/icons-material/Close';
+import HistoryIcon from '@mui/icons-material/History';
 
 import { PrimaryBlueColor } from '@global-colors';
 
@@ -90,10 +91,13 @@ export const ModalComponent: FC<IModal> = (props) => {
 
 export const ModalActualizarEmail = (props: IModal) => {
     const { onClose, isOpen, id, data } = props
-    const [email, setEmail] = useState();
+    const [email, setEmail] = useState({});
 
     useEffect(() => {
-        setEmail(data?.email);
+        setEmail({
+            email: data?.email,
+            isActive: data?.isActive
+        });
     }, [data]);
 
     const handleClose = () => onClose();
@@ -101,6 +105,8 @@ export const ModalActualizarEmail = (props: IModal) => {
     const handleReset = async () => await Users.put(id as string, { 'email': email }, {}).then(() => onClose());
 
     const onChange = (e: any) => setEmail(e.target.value);
+
+    const onChangeCheckBox = (e: any, type: string) => setEmail({ ...email, [type]: e.target.checked });
 
     return (
         <div>
@@ -111,22 +117,33 @@ export const ModalActualizarEmail = (props: IModal) => {
                     left: '50%',
                     transform: 'translate(-50%, -50%)',
                     bgcolor: 'background.paper',
-                    height: 250,
-                    width: 300,
+                    width: 500,
                     borderRadius: '10px',
                     boxShadow: 24,
                     p: 4,
                 }}>
                     <HeaderModal>
                         <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
-                            Actualizar Email
+                            Editar informacion de usuarios
                         </Typography>
+                        <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
                     </HeaderModal>
                     <CenterUpdated>
-                        <p>Email</p>
-                        <TextField onChange={onChange} value={email}></TextField>
-                        <FullButton onClick={handleReset} style={{ marginTop: '2em' }}>Enviar</FullButton>
+                        <p>Nuevo correo electronico</p>
+                        {/* @ts-ignore */}
+                        <TextField onChange={onChange} value={email?.email}></TextField>
                     </CenterUpdated>
+                    <CenterUpdated>
+                        <p>Estado</p>
+                        {/* @ts-ignore */}
+                        <CustomSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={email['isActive']} sx={{ color: 'green' }} />
+                    </CenterUpdated>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                        <OutlineButton variant="outlined" onClick={handleClose} style={{ marginTop: '2em' }} startIcon={<HistoryIcon />}>
+                            Reestablecer Contraseña
+                        </OutlineButton>
+                        <FullButton onClick={handleReset} style={{ marginTop: '2em' }}>Actualizar</FullButton>
+                    </div>
                 </Box>
             </Modal>
         </div>
@@ -168,6 +185,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
     }
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+    const onChangeSwitch = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
 
     return (
         <div>
@@ -202,7 +220,7 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                             </CenterUpdated>
                             <CenterUpdated>
                                 <p>Estado</p>
-                                <CustomSwitch onChange={(e) => onChange(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
+                                <CustomSwitch onChange={(e) => onChangeSwitch(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
                             </CenterUpdated>
                         </div>
                     }
@@ -267,7 +285,8 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
             fullname: data?.user_fullname,
             lastname: data?.user_lastname,
             ccid: data?.user_ccid,
-            profile_id: profileName?.id
+            profile_id: profileName?.id,
+            isActive: data?.user_isActive
         })
     }, [data])
 
@@ -280,6 +299,8 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
     const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() => onClose());
 
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+
+    const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
 
     return (
         <div>
@@ -316,7 +337,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                                 <TextField onChange={(e) => onChange(e, 'password')}></TextField>
                             </CenterUpdated>
                         </CenterUpdated>
-                        <CenterUpdated style={{ justifyContent: 'none' }}>
+                        <CenterUpdated style={{ justifyContent: 'none!important' }}>
                             <CenterUpdated>
                                 <p>Apellido</p>
                                 <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
@@ -344,7 +365,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
                                 :
                                 <CenterUpdated>
                                     <p>Estado</p>
-                                    <CustomSwitch />
+                                    <CustomSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
                                 </CenterUpdated>
                             }
                         </CenterUpdated>

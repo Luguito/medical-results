@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { ReactElement } from 'react';
 import { Sidebar } from '../sidebar/sidebar';
 import { useLoggedUser } from '../../hooks/useLoggedUser';
+import Image from 'next/image';
+import Logo from '../../../../assets/Logo_fondo_azul.svg';
 
 export const LayoutComponent = ({ Component }: ILayoutProps) => {
     const { role, permissions } = useLoggedUser()
@@ -18,7 +20,10 @@ export const LayoutComponent = ({ Component }: ILayoutProps) => {
     return (
         <ContainerLayout>
             <Layout>
-                <UserLoggedComponent></UserLoggedComponent>
+                {/* <UserLoggedComponent></UserLoggedComponent> */}
+                <div style={{ width: '9em' }}>
+                    <Image src={Logo} height="40px" width="45px" layout="responsive" style={{ borderRadius: '50%' }}></Image>
+                </div>
                 <OptionLists>
                     <li>
                         <small style={{ marginLeft: '5px' }}>Mis Opciones</small>
