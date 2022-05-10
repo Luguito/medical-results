@@ -1,5 +1,5 @@
 import react, { FC, useEffect } from 'react';
-import { 
+import {
     ResultContainer,
     PreHeader,
     Header,
@@ -21,12 +21,12 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
     useEffect(() => {
     }, [print])
 
-    
+
 
     return (
         <ResultContainer id="printable">
             <PreHeader>
-                <img style={{marginLeft: '-16px'}} width="200" src="/logo.png" alt=""/>
+                <img style={{ marginLeft: '-16px' }} width="200" src="/logo.png" alt="" />
             </PreHeader>
             <Header>
                 <HeaderBox>
@@ -43,7 +43,11 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                         <ItemText>RICARDO BUTRON</ItemText>
                     </HeaderItem>
                     <HeaderItem>
-                        <ItemText withMargin>HISTORIA</ItemText>
+                        <ItemText withMargin>Tipo de Documento</ItemText>
+                        <ItemText>C.C</ItemText>
+                    </HeaderItem>
+                    <HeaderItem>
+                        <ItemText withMargin>No. Documento</ItemText>
                         <ItemText>554645654</ItemText>
                     </HeaderItem>
                     <HeaderItem>
@@ -88,15 +92,15 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                             <th>Inventario Biologico de Referencia</th>
                             <th>Fecha Validacion</th>
                         </tr>
-                    </thead>    
+                    </thead>
                     <tbody>
                         <tr>
                             <td ><p>BILIRRUBINAS : &nbsp; &nbsp;&nbsp;</p>
 
-                                </td>
-                            <td style={{fontWeight:'bold'}}>0.5</td>
+                            </td>
+                            <td style={{ fontWeight: 'bold' }}>0.5</td>
                             <td></td>
-                            <td style={{fontSize: '10px', margin: 0}}>
+                            <td style={{ fontSize: '10px', margin: 0 }}>
                                 <p>Valores de Referencia: : &nbsp; &nbsp;&nbsp;</p>
                                 <p>Bilirrubina Total .................: :0.67 mg/dl &nbsp; &nbsp;&nbsp;</p>
                                 <p>Hasta 1.2 mg/dl : &nbsp; &nbsp;&nbsp;</p>
@@ -107,9 +111,9 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                         </tr>
                         <tr>
                             <td>Triglic&eacute;ridos......................: :</td>
-                            <td style={{fontWeight:'bold'}}>75.5 mg/dl</td>
-                            <td></td>
-                            <td  style={{fontSize: '10px', margin: 0}}>
+                            <td style={{ fontWeight: 'bold' }}>75.5</td>
+                            <td>mg/dl</td>
+                            <td style={{ fontSize: '10px', margin: 0 }}>
                                 <p>Valores de Referencia: : &nbsp; &nbsp;&nbsp;</p>
                                 <p>Normal: hasta 150mg/dl : &nbsp; &nbsp;&nbsp;</p>
                                 <p>Riesgo moderado: 150-199 mg/dl : &nbsp; &nbsp;&nbsp;</p>
@@ -117,8 +121,8 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                                 <p>Muy elevado: mayor de 500 mg/dl :</p></td>
                             <td>03/05/2022</td>
                         </tr>
-                        
-                    
+
+
                     </tbody>
                 </Table>
             </TableContainer>
