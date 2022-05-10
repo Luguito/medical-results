@@ -39,15 +39,15 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                         <ItemText>2021-10-19 10:30</ItemText>
                     </HeaderItem>
                     <HeaderItem>
-                        <ItemText withMargin>MEDICO</ItemText>
+                        <ItemText withMargin>MÉDICO</ItemText>
                         <ItemText>RICARDO BUTRON</ItemText>
                     </HeaderItem>
                     <HeaderItem>
-                        <ItemText withMargin>Tipo de Documento</ItemText>
+                        <ItemText withMargin>TIPO DE DOCUMENTO</ItemText>
                         <ItemText>C.C</ItemText>
                     </HeaderItem>
                     <HeaderItem>
-                        <ItemText withMargin>No. Documento</ItemText>
+                        <ItemText withMargin>No. DOCUMENTO</ItemText>
                         <ItemText>554645654</ItemText>
                     </HeaderItem>
                     <HeaderItem>
@@ -55,7 +55,7 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                         <ItemText>CALLE 30</ItemText>
                     </HeaderItem>
                     <HeaderItem>
-                        <ItemText withMargin>TELEFONO</ItemText>
+                        <ItemText withMargin>TELÉFONO</ItemText>
                         <ItemText>3015041227</ItemText>
                     </HeaderItem>
                     <HeaderItem>
@@ -89,8 +89,8 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                             <th>Examen</th>
                             <th>Resultado</th>
                             <th>Unidades</th>
-                            <th>Inventario Biologico de Referencia</th>
-                            <th>Fecha Validacion</th>
+                            <th>Inventario Biológicos de Referencia</th>
+                            <th>Fecha Validación</th>
                         </tr>
                     </thead>
                     <tbody>

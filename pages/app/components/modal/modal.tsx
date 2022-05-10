@@ -71,7 +71,7 @@ export const ModalComponent: FC<IModal> = (props) => {
                         <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
                             Resultado de laboratorio
                         </Typography>
-                        <div>
+                        <div style={{ marginBottom: '1em' }}>
                             <OutlineButton onClick={sendEmail}>Enviar por Correo</OutlineButton>
                             <FullButton onClick={handlePrint}>Descargar PDF</FullButton>
                         </div>
