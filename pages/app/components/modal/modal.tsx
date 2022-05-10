@@ -105,7 +105,7 @@ export const ModalActualizarEmail = (props: IModal) => {
 
     const handleReset = async () => await Users.put(id as string, email, {}).then(() => onClose());
 
-    const onChange = (e: any) => setEmail(e.target.value);
+    const onChange = (e: any) => setEmail({ email: e.target.value });
 
     const onChangeCheckBox = (e: any, type: string) => setEmail({ ...email, [type]: e.target.checked });
 
