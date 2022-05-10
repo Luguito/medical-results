@@ -166,33 +166,15 @@ export const MenuProfiles = ({ ccid, id, item, fn }: { ccid: string, id: string,
 
     return (
         <>
-            <Button
+            <Button 
                 id="demo-positioned-button"
                 aria-controls={open ? 'demo-positioned-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
-                onClick={handleClick}
+                onClick={() => setModalIsOpen(true)}
             >
                 <EditIcon></EditIcon>
             </Button>
-            <Menu
-                id="demo-positioned-menu"
-                aria-labelledby="demo-positioned-button"
-                anchorEl={anchorEl}
-                open={open}
-                onClose={handleClose}
-                anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                }}
-            >
-                <MenuItem onClick={() => setModalIsOpen(true)}>Editar</MenuItem>
-                <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' perfil'}</MenuItem>
-            </Menu>
             <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => {
                 setModalIsOpen(false);
                 fn({ page: 1 })
