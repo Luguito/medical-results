@@ -3,6 +3,7 @@ import { useState } from "react";
 import { ContainerFilters, ContainerFilter, ContainerInputs } from './filter-date.styled';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { TextField } from "@mui/material";
+import { ButtonGrey } from "@global-styled";
 
 export const FilterDate = () => {
     const [filter, setFilter] = useState({ startDate: '', endDate: '', nomProc: ''});
@@ -32,6 +33,7 @@ export const FilterDate = () => {
                     </ContainerInputs>
                 </LocalizationProvider>
             </ContainerFilter>
+            <ButtonGrey style={{ marginTop: '2em', marginLeft: '3em'}}>Buscar</ButtonGrey>
         </ContainerFilters> 
     )
 }
