@@ -1,14 +1,11 @@
 import { LayoutComponent } from '../components/layout/layout';
-import { FiltersInput } from '../components/filters/filters';
 import { AdminTable } from '../components/admin-table/admin-table';
 import { Cup } from '../api';
 import { useEffect, useState } from 'react';
-import { ModalLogs } from '../components/modal/modal';
 import { IPaginator } from '../interfaces';
 
 
 export const CupPage = () => {
-    const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
     const [currentFilter, setCurrentFilter] = useState({});
     const [paginator, setPaginator] = useState({});
     const [list, setList] = useState([]);

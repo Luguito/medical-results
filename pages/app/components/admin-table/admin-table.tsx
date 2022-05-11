@@ -111,11 +111,10 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
-
-    
-
-    const switchActive = async () => await Users.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
-
+    const openAction = () => {
+        setModalIsOpen(true);
+        handleClose()
+    }
     return (
         <>
             <Button
@@ -142,11 +141,11 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
                     horizontal: 'left',
                 }}
             >
-                <MenuItem onClick={() => setModalIsOpen(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                <MenuItem onClick={openAction} style={{display: 'flex', justifyContent: 'space-between'}}>
                     Editar
                     <EditIcon style={{fontSize: '0.8rem'}}></EditIcon>
                 </MenuItem>
-                <MenuItem onClick={() => setModalLog(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                <MenuItem onClick={openAction} style={{display: 'flex', justifyContent: 'space-between'}}>
                     Ver Logs 
                     <RemoveRedEyeIcon style={{fontSize: '0.8rem', marginLeft: '10px'}}></RemoveRedEyeIcon>
                 </MenuItem>
@@ -158,24 +157,11 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
 }
 
 export const MenuProfiles = ({ ccid, id, item, fn }: { ccid: string, id: string, item?: any, fn: (arg: {}) => void }) => {
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
-    const open = Boolean(anchorEl);
-
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
-    const handleClose = () => setAnchorEl(null);
-
-    const switchActive = async () => await Perfiles.put(`profile/${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
 
     return (
         <>
-            <Button 
-                id="demo-positioned-button"
-                aria-controls={open ? 'demo-positioned-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? 'true' : undefined}
-                onClick={() => setModalIsOpen(true)}
-            >
+            <Button onClick={() => setModalIsOpen(true)}>
                 <EditIcon></EditIcon>
             </Button>
             <ModalCreatePerfil isOpen={modalIsOpen} onClose={() => {
@@ -194,6 +180,11 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
+
+    const openAction = () => {
+        setModalIsOpen(true);
+        handleClose()
+    }
     return (
         <>
             <Button
@@ -220,11 +211,11 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                     horizontal: 'left',
                 }}
             >
-                <MenuItem onClick={() => setModalIsOpen(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                <MenuItem onClick={openAction} style={{display: 'flex', justifyContent: 'space-between'}}>
                     Editar
                     <EditIcon style={{fontSize: '0.8rem'}}></EditIcon>
                 </MenuItem>
-                <MenuItem onClick={() => setModalLog(true)} style={{display: 'flex', justifyContent: 'space-between'}}>
+                <MenuItem onClick={openAction} style={{display: 'flex', justifyContent: 'space-between'}}>
                     Ver Logs 
                     <RemoveRedEyeIcon style={{fontSize: '0.8rem', marginLeft: '10px'}}></RemoveRedEyeIcon>
                 </MenuItem>
@@ -246,6 +237,11 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => setAnchorEl(event.currentTarget);
     const handleClose = () => setAnchorEl(null);
+    
+    const openAction = () => {
+        setModalIsOpen(true);
+        handleClose()
+    }
 
     const switchActive = async () => await Cup.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
     return (
@@ -275,7 +271,7 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
                 }}
             >
                 <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' Codigo CUP'}</MenuItem>
-                <MenuItem onClick={() => setModalLog(true)}>Ver logs</MenuItem>
+                <MenuItem onClick={openAction}>Ver logs</MenuItem>
             </Menu>
             <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id} data={item}></ModalCreateAdmin>
             <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'cup' }}></ModalLogs>

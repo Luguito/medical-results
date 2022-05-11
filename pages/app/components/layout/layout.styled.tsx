@@ -38,7 +38,6 @@ export const ContainerContent = styled.section`
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 2em;
 `
 
 export const Container = styled.section`

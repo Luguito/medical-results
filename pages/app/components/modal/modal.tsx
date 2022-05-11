@@ -27,6 +27,9 @@ import HistoryIcon from '@mui/icons-material/History';
 import { PrimaryBlueColor } from '@global-colors';
 import { IOSSwitch } from '../custom-switch/switch';
 import { Auth } from '@api';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+
 const style = {
     position: 'absolute' as 'absolute',
     top: '50%',
@@ -47,6 +50,7 @@ interface IModal {
     onClose: () => void;
     data?: any
 }
+const MySwal = withReactContent(Swal)
 
 export const ModalComponent: FC<IModal> = (props) => {
     const { onClose, isOpen } = props
@@ -103,7 +107,10 @@ export const ModalActualizarEmail = (props: IModal) => {
 
     const handleClose = () => onClose();
 
-    const handleReset = async () => await Users.put(id as string, email, {}).then(() => onClose());
+    const handleReset = async () => await Users.put(id as string, email, {}).then(() => {
+        onClose();
+        MySwal.fire("Usuario Editado", '', 'success')
+    });
 
     const onChange = (e: any) => setEmail({ email: e.target.value });
 
@@ -111,6 +118,8 @@ export const ModalActualizarEmail = (props: IModal) => {
 
     const handleResetEmail = async () => {
         await Auth.get(`resend-recovery-password/${data?.ccid}`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+        onClose();
+        MySwal.fire("Recuperar contraseña", "Se ha enviado el correo de recuperación de contraseña", 'success')
     }
 
     return (
@@ -170,9 +179,15 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
 
     const handleClose = () => onClose();
 
-    const handleCreate = async () => await Perfiles.post('profile', form, {}).then(() => onClose());
+    const handleCreate = async () => await Perfiles.post('profile', form, {}).then(() => {
+        onClose();
+        MySwal.fire("Perfil Creado", '', 'success')
+    });
 
-    const handleEdit = async () => await Perfiles.put(`profile/${data.id}`, form, {}).then(() => onClose());
+    const handleEdit = async () => await Perfiles.put(`profile/${data.id}`, form, {}).then(() => {
+        onClose();
+        MySwal.fire("Perfil Editado", '', 'success')
+    });
 
     const onChangeCheckbox = (e: any) => {
         let name: string = e.target.name;
@@ -185,7 +200,6 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
             permissions.delete(name);
         }
 
-        console.log(Array.from(permissions))
         setForm({ ...form, 'permisions': Array.from(permissions).join(',') });
     }
 
@@ -299,94 +313,118 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const getProfiles = async () => await Perfiles.get('profile', {}, { active: true }).then((v) => setProfile(v.data.items)).then(() => onClose());
 
-    const handleCreate = async () => await Users.post('create-admin', form, {}).then(() => onClose());
+    const handleCreate = async () => await Users.post('create-admin', form, {}).then(() => {
+        setForm({});
+        onClose();
+        MySwal.fire("Usuario admin creado", '', 'success');
+    })
 
-    const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() => onClose());
+    const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() =>{
+        onClose();
+        MySwal.fire("Usuario Editado", '', 'success')
+    });
 
-    const deleteAdmin = async () => await Users.remove(`${data?.user_id}`, {}, {});
+    const deleteAdmin = async () => MySwal.fire({
+        title: 'Eliminar usuario admin',
+        text: 'Estas seguro de que quieres eliminar este usuario?',
+        showCancelButton: true,
+        showConfirmButton: true,
+        cancelButtonText: 'No',
+        confirmButtonText: 'Eliminar',
+        confirmButtonColor: '#33bfcd',
+        reverseButtons: true,
+        customClass: {
+            container: 'sweet-alert-custom',
+        }
+    }).then(async (prop) => {
+        if (prop.isConfirmed) {
+            await Users.remove(`${data?.user_id}`, {}, {})
+            onClose();
+            MySwal.fire("Usuario Eliminado", '', 'success')
+        }
+    });
+const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
 
-    const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
 
-    const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
-
-    return (
-        <div>
-            <Modal open={isOpen} onClose={handleClose}>
-                <Box sx={{
-                    position: 'absolute' as 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    bgcolor: 'background.paper',
-                    width: 500,
-                    borderRadius: '10px',
-                    boxShadow: 24,
-                    p: 4,
-                }}>
-                    <HeaderModal>
-                        <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
-                            {(data ? 'Editar' : 'Crear') + ' Admin'}
-                        </Typography>
-                        <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
-                    </HeaderModal>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
+return (
+    <div>
+        <Modal open={isOpen} onClose={handleClose}>
+            <Box sx={{
+                position: 'absolute' as 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                bgcolor: 'background.paper',
+                width: 500,
+                borderRadius: '10px',
+                boxShadow: 24,
+                p: 4,
+            }}>
+                <HeaderModal>
+                    <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
+                        {(data ? 'Editar' : 'Crear') + ' Admin'}
+                    </Typography>
+                    <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
+                </HeaderModal>
+                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
+                    <CenterUpdated>
                         <CenterUpdated>
-                            <CenterUpdated>
-                                <p>Nombre</p>
-                                <TextField onChange={(e) => onChange(e, 'fullname')} value={form?.fullname}></TextField>
-                            </CenterUpdated>
-                            <CenterUpdated>
-                                <p>Cedula</p>
-                                <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
-                            </CenterUpdated>
-                            <CenterUpdated>
-                                <p>Contraseña</p>
-                                <TextField onChange={(e) => onChange(e, 'password')}></TextField>
-                            </CenterUpdated>
+                            <p>Nombre</p>
+                            <TextField onChange={(e) => onChange(e, 'fullname')} value={form?.fullname}></TextField>
                         </CenterUpdated>
-                        <CenterUpdated style={{ justifyContent: 'none!important' }}>
-                            <CenterUpdated>
-                                <p>Apellido</p>
-                                <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
-                            </CenterUpdated>
-                            <CenterUpdated>
-                                <FormControl fullWidth style={{ marginTop: '3em' }}>
-                                    <InputLabel id="demo-simple-select-label">Profile</InputLabel>
-                                    <Select
-                                        labelId="demo-simple-select-label"
-                                        id="demo-simple-select"
-                                        value={form?.profile_id}
-                                        label="Perfiles"
-                                        onChange={(e) => onChange(e, 'profile_id')}
-                                    >
-                                        {profile.length > 0 && profile.map((item: any, index) => {
-                                            return (
-                                                <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
-                                            )
-                                        })}
-                                    </Select>
-                                </FormControl>
-                            </CenterUpdated>
-                            {!data ?
-                                null
-                                :
-                                <CenterUpdated>
-                                    <p>Estado</p>
-                                    <IOSSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
-                                </CenterUpdated>
-                            }
+                        <CenterUpdated>
+                            <p>Cedula</p>
+                            <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
                         </CenterUpdated>
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        <OutlineButton variant="outlined" onClick={deleteAdmin} style={{ marginTop: '2em' }}>
-                            <DeleteOutlineIcon />
-                        </OutlineButton>
-                        <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>{!data ? "Agregar" : "Confirmar"}</FullButton>
-                    </div>
-                </Box>
-            </Modal>
-        </div>
-    )
+                        <CenterUpdated>
+                            <p>Contraseña</p>
+                            <TextField onChange={(e) => onChange(e, 'password')}></TextField>
+                        </CenterUpdated>
+                    </CenterUpdated>
+                    <CenterUpdated style={{ justifyContent: 'none!important' }}>
+                        <CenterUpdated>
+                            <p>Apellido</p>
+                            <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
+                        </CenterUpdated>
+                        <CenterUpdated>
+                            <FormControl fullWidth style={{ marginTop: '3em' }}>
+                                <InputLabel id="demo-simple-select-label">Profile</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={form?.profile_id}
+                                    label="Perfiles"
+                                    onChange={(e) => onChange(e, 'profile_id')}
+                                >
+                                    {profile.length > 0 && profile.map((item: any, index) => {
+                                        return (
+                                            <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </CenterUpdated>
+                        {!data ?
+                            null
+                            :
+                            <CenterUpdated>
+                                <p>Estado</p>
+                                <IOSSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
+                            </CenterUpdated>
+                        }
+                    </CenterUpdated>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <OutlineButton variant="outlined" onClick={deleteAdmin} style={{ marginTop: '2em' }}>
+                        <DeleteOutlineIcon />
+                    </OutlineButton>
+                    <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>{!data ? "Agregar" : "Confirmar"}</FullButton>
+                </div>
+            </Box>
+        </Modal>
+    </div>
+)
 }
 
 export const ModalLogs: FC<IModal> = (props) => {

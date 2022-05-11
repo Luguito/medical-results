@@ -19,3 +19,7 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.sweet-alert-custom {
+  z-index: 99999!important;
+}
