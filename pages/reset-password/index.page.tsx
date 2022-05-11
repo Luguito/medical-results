@@ -25,8 +25,13 @@ export const ResetPage = () => {
                 return setAlert({ show: true, message: response.message }); 
             }
             setAlert({ show: true, message: 'Contraseña actualizada' })
-            localStorage.setItem('token', response.accessToken as string)
-            router.push('/app');
+            localStorage.setItem('token', response.accessToken as string);
+            localStorage.setItem('user', JSON.stringify(response?.data?.user));
+            if(response.data.user.role === 'patient') {
+                router.push('/app/mis-resultados');
+            } else {
+                router.push('/app')
+            }
         });
     }
 
