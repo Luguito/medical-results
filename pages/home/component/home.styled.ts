@@ -13,10 +13,12 @@ export const ContainerCars = styled.section`
     justify-content: center;
     align-items: center;
     gap: 5em;
+    background:rgb(0, 175, 193);
 
 `
 
 export const Cards = styled.div`
+    background:white;
     height: 50%;
     width: 20%;
     border-radius:10px;

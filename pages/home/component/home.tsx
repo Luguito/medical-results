@@ -1,5 +1,6 @@
 
 import { ContainerLanding, ContainerCars, Cards, ImgContainer, Imglab, Imgdiag, ButtonLink, TextContent, Text, ButtonContainer } from './home.styled';
+import Link from 'next/link'
 
 
 export const Home = () => {
@@ -18,7 +19,9 @@ export const Home = () => {
                         </Text>
                     </TextContent>
                     <ButtonContainer>
-                        <ButtonLink>Laboratorios</ButtonLink>
+                        <Link href='/login'>
+                            <ButtonLink>Laboratorios</ButtonLink>
+                        </Link>
                     </ButtonContainer>
                 </Cards>
                 <Cards>
