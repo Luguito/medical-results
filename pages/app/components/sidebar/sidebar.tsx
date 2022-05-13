@@ -31,7 +31,9 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
             // @ts-ignore
             optionsByRole.admin.push(adminRouter[option]);
         })
-        setOptions({...optionsByRole});
+        setOptions({ ...optionsByRole });
+        // @ts-ignore
+        optionsByRole.admin.includes('dashboard') && router.push('/app/dashboard')
     }, [])
 
     const handleRouter = (url: string) => {
@@ -45,8 +47,8 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
 
     return (
         <OptionLists style={{ paddingLeft: '0.2em' }}>
-            { 
-            // @ts-ignore
+            {
+                // @ts-ignore
                 optionsByRole[role]?.map((item: any, index: number) => (
                     <ItemList key={index} onClick={() => handleRouter(item.url)}>
                         {<item.icon></item.icon>}

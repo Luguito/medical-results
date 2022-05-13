@@ -8,13 +8,15 @@ export const AppLayoutPage = () => {
     const router = useRouter();
 
     useEffect(() => {
-        if (user.permissions.length > 0 && user.role === 'admin') {
-            let firstRoute = user.permissions.split(',')[1].trim();
-            router.push(`/app/${firstRoute}`);
-        } else {
-            router.push(`/app/mis-resultados`);
+        if(user) {
+            if (user.permissions.length > 0 && user.role === 'admin') {
+                let firstRoute = user.permissions.split(',')[0].trim();
+                router.push(`/app/${firstRoute}`);
+            } else {
+                router.push(`/app/mis-resultados`);
+            }
         }
-    },[user]);
+    }, [user]);
 
     return (
         <>

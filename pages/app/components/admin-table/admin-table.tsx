@@ -232,7 +232,7 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                 setModalIsOpen(false);
                 fn({ page: 1 })
             }} id={id} data={item}></ModalCreateAdmin>
-            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'admin', logKey: id}}></ModalLogs>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'admin', logKey: item.user_id}}></ModalLogs>
         </>
     )
 }

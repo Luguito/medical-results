@@ -170,6 +170,10 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
     const [permissions, setPermission] = useState<Set<string>>(new Set());
 
     useEffect(() => {
+        data?.permisions.split(',').map((p: string) => {
+            permissions.add(p.trim())
+            setPermission(permissions)
+        })
         setForm({
             profileName: data?.profileName,
             permisions: data?.permisions,
@@ -246,31 +250,31 @@ export const ModalCreatePerfil: FC<IModal> = (props) => {
                     <CenterUpdated>
                         <p>Permisos</p>
                         <FormGroup>
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('dashboard')} sx={{
+                            <FormControlLabel control={<Checkbox checked={form?.permisions?.split(',').includes('dashboard')} sx={{
                                 color: PrimaryBlueColor,
                                 '&.Mui-checked': {
                                     color: PrimaryBlueColor,
                                 },
                             }} />} label="Dashboard" name="dashboard" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('perfiles')} sx={{
+                            <FormControlLabel control={<Checkbox checked={form?.permisions?.split(',').includes('perfiles')} sx={{
                                 color: PrimaryBlueColor,
                                 '&.Mui-checked': {
                                     color: PrimaryBlueColor,
                                 },
                             }} />} label="Perfiles" name="perfiles" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('cup')} sx={{
+                            <FormControlLabel control={<Checkbox checked={form?.permisions?.split(',').includes('cup')} sx={{
                                 color: PrimaryBlueColor,
                                 '&.Mui-checked': {
                                     color: PrimaryBlueColor,
                                 },
                             }} />} label="Codigos Cup" name="cup" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('usuarios')} sx={{
+                            <FormControlLabel control={<Checkbox checked={form?.permisions?.split(',').includes('usuarios')} sx={{
                                 color: PrimaryBlueColor,
                                 '&.Mui-checked': {
                                     color: PrimaryBlueColor,
                                 },
                             }} />} label="Usuarios" name="usuarios" onChange={onChangeCheckbox} />
-                            <FormControlLabel control={<Checkbox checked={data?.permisions?.split(',').includes('admin')} sx={{
+                            <FormControlLabel control={<Checkbox checked={form?.permisions?.split(',').includes('admin')} sx={{
                                 color: PrimaryBlueColor,
                                 '&.Mui-checked': {
                                     color: PrimaryBlueColor,
@@ -317,9 +321,9 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
         setForm({});
         onClose();
         MySwal.fire("Usuario admin creado", '', 'success');
-    })
+    }).catch((e) => MySwal.fire("Error", e.message, 'error'))
 
-    const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() =>{
+    const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() => {
         onClose();
         MySwal.fire("Usuario Editado", '', 'success')
     });
@@ -343,88 +347,88 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
             MySwal.fire("Usuario Eliminado", '', 'success')
         }
     });
-const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
+    const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
 
-const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
+    const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
 
-return (
-    <div>
-        <Modal open={isOpen} onClose={handleClose}>
-            <Box sx={{
-                position: 'absolute' as 'absolute',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                bgcolor: 'background.paper',
-                width: 500,
-                borderRadius: '10px',
-                boxShadow: 24,
-                p: 4,
-            }}>
-                <HeaderModal>
-                    <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
-                        {(data ? 'Editar' : 'Crear') + ' usuario admin'}
-                    </Typography>
-                    <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
-                </HeaderModal>
-                <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
-                    <CenterUpdated>
+    return (
+        <div>
+            <Modal open={isOpen} onClose={handleClose}>
+                <Box sx={{
+                    position: 'absolute' as 'absolute',
+                    top: '50%',
+                    left: '50%',
+                    transform: 'translate(-50%, -50%)',
+                    bgcolor: 'background.paper',
+                    width: 500,
+                    borderRadius: '10px',
+                    boxShadow: 24,
+                    p: 4,
+                }}>
+                    <HeaderModal>
+                        <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
+                            {(data ? 'Editar' : 'Crear') + ' usuario admin'}
+                        </Typography>
+                        <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
+                    </HeaderModal>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1em' }}>
                         <CenterUpdated>
-                            <p>Nombre</p>
-                            <TextField onChange={(e) => onChange(e, 'fullname')} value={form?.fullname}></TextField>
-                        </CenterUpdated>
-                        <CenterUpdated>
-                            <p>Cedula</p>
-                            <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
-                        </CenterUpdated>
-                        <CenterUpdated>
-                            <p>Contraseña</p>
-                            <TextField onChange={(e) => onChange(e, 'password')}></TextField>
-                        </CenterUpdated>
-                    </CenterUpdated>
-                    <CenterUpdated style={{ justifyContent: 'flex-start' }}>
-                        <CenterUpdated>
-                            <p>Apellido</p>
-                            <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
-                        </CenterUpdated>
-                        <CenterUpdated>
-                            <FormControl fullWidth style={{ marginTop: '3em' }}>
-                                <InputLabel id="demo-simple-select-label">Profile</InputLabel>
-                                <Select
-                                    labelId="demo-simple-select-label"
-                                    id="demo-simple-select"
-                                    value={form?.profile_id}
-                                    label="Perfiles"
-                                    onChange={(e) => onChange(e, 'profile_id')}
-                                >
-                                    {profile.length > 0 && profile.map((item: any, index) => {
-                                        return (
-                                            <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
-                                        )
-                                    })}
-                                </Select>
-                            </FormControl>
-                        </CenterUpdated>
-                        {!data ?
-                            null
-                            :
                             <CenterUpdated>
-                                <p>Estado</p>
-                                <IOSSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
+                                <p>Nombre</p>
+                                <TextField onChange={(e) => onChange(e, 'fullname')} value={form?.fullname}></TextField>
                             </CenterUpdated>
-                        }
-                    </CenterUpdated>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                    <OutlineButton variant="outlined" onClick={deleteAdmin} style={{ marginTop: '2em' }}>
-                        <DeleteOutlineIcon />
-                    </OutlineButton>
-                    <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>{!data ? "Agregar" : "Confirmar"}</FullButton>
-                </div>
-            </Box>
-        </Modal>
-    </div>
-)
+                            <CenterUpdated>
+                                <p>Cedula</p>
+                                <TextField onChange={(e) => onChange(e, 'ccid')} value={form?.ccid}></TextField>
+                            </CenterUpdated>
+                            <CenterUpdated>
+                                <p>Contraseña</p>
+                                <TextField onChange={(e) => onChange(e, 'password')}></TextField>
+                            </CenterUpdated>
+                        </CenterUpdated>
+                        <CenterUpdated style={{ justifyContent: 'flex-start' }}>
+                            <CenterUpdated>
+                                <p>Apellido</p>
+                                <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
+                            </CenterUpdated>
+                            <CenterUpdated>
+                                <FormControl fullWidth style={{ marginTop: '3em' }}>
+                                    <InputLabel id="demo-simple-select-label">Profile</InputLabel>
+                                    <Select
+                                        labelId="demo-simple-select-label"
+                                        id="demo-simple-select"
+                                        value={form?.profile_id}
+                                        label="Perfiles"
+                                        onChange={(e) => onChange(e, 'profile_id')}
+                                    >
+                                        {profile.length > 0 && profile.map((item: any, index) => {
+                                            return (
+                                                <MenuItem value={item['id']} key={index}>{item['profileName']}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
+                            </CenterUpdated>
+                            {!data ?
+                                null
+                                :
+                                <CenterUpdated>
+                                    <p>Estado</p>
+                                    <IOSSwitch onChange={(e) => onChangeCheckBox(e, 'isActive')} checked={form['isActive']} sx={{ color: 'green' }} />
+                                </CenterUpdated>
+                            }
+                        </CenterUpdated>
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                        <OutlineButton variant="outlined" onClick={deleteAdmin} style={{ marginTop: '2em' }}>
+                            <DeleteOutlineIcon />
+                        </OutlineButton>
+                        <FullButton onClick={!data ? handleCreate : handleEdit} style={{ marginTop: '2em' }}>{!data ? "Agregar" : "Confirmar"}</FullButton>
+                    </div>
+                </Box>
+            </Modal>
+        </div>
+    )
 }
 
 export const ModalLogs: FC<IModal> = (props) => {
