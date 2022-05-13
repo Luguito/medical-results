@@ -2,14 +2,14 @@ import { Perfiles } from 'pages/app/api';
 import { useEffect, useState } from 'react';
 import { ContainerTable, Table, HeaderTable, ItemTable, RowTable, FooterTable } from './logs.styled';
 
-export const Logs = ({ url }: { url: string }) => {
+export const Logs = ({ url, logKey }: { url: string, logKey: any }) => {
     const [logs, setLogs] = useState([]);
 
     useEffect(() => {
         getLogs(url)
     }, []);
 
-    const getLogs = async (url: string) => await Perfiles.get('log', {}, { url }).then(v => setLogs(v.data))
+    const getLogs = async (url: string) => await Perfiles.get('log', {}, { url, logKey }).then(v => setLogs(v.data))
 
     return (
         <>

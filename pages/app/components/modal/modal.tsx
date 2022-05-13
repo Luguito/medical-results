@@ -363,7 +363,7 @@ return (
             }}>
                 <HeaderModal>
                     <Typography id="modal-modal-title" style={{ color: '#818181', fontWeight: '200' }}>
-                        {(data ? 'Editar' : 'Crear') + ' Admin'}
+                        {(data ? 'Editar' : 'Crear') + ' usuario admin'}
                     </Typography>
                     <CloseIcon style={{ fontSize: '0.9rem', cursor: 'pointer' }} onClick={handleClose} />
                 </HeaderModal>
@@ -382,7 +382,7 @@ return (
                             <TextField onChange={(e) => onChange(e, 'password')}></TextField>
                         </CenterUpdated>
                     </CenterUpdated>
-                    <CenterUpdated style={{ justifyContent: 'none!important' }}>
+                    <CenterUpdated style={{ justifyContent: 'flex-start' }}>
                         <CenterUpdated>
                             <p>Apellido</p>
                             <TextField onChange={(e) => onChange(e, 'lastname')} value={form?.lastname}></TextField>
@@ -451,7 +451,7 @@ export const ModalLogs: FC<IModal> = (props) => {
                         </Typography>
                     </HeaderModal>
                     <CenterUpdated>
-                        <Logs url={data.url}></Logs>
+                        <Logs url={data.url} logKey={data.logKey}></Logs>
                     </CenterUpdated>
                 </Box>
             </Modal>

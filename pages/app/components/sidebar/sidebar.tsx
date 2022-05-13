@@ -22,7 +22,7 @@ export const Sidebar = ({ role, permissions }: { role: 'patient' | 'admin' | str
         'dashboard': { icon: DashboardIcon, option: 'Dashboard', url: '/dashboard' },
         'usuarios': { icon: GroupIcon, option: 'Usuarios/Pacientes', url: '/usuarios' },
         'cup': { icon: MenuBook, option: 'Códigos cup', url: '/cup' },
-        'admin': { icon: GroupIcon, option: 'Creador admin', url: '/admin' },
+        'admin': { icon: GroupIcon, option: 'Crear usuario admin', url: '/admin' },
     }
 
     useEffect(() => {

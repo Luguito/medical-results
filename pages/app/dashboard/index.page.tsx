@@ -85,7 +85,7 @@ export const DashboardPage = () => {
 export default DashboardPage;
 
 export const RenderLineChart = ({ totalByMount }: { totalByMount: any[] }) => {
-    const month = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const month = ['','Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
     return (
         <>
             <LineChart width={900} height={500} data={totalByMount} margin={{ top: 30, right: 20, bottom: 5, left: 0 }} style={{ backgroundColor: 'white', borderRadius: '10px' }}>

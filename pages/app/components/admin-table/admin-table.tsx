@@ -115,6 +115,10 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
         setModalIsOpen(true);
         handleClose()
     }
+    const openLog = () => {
+        setModalLog(true)
+        handleClose()
+    }
     return (
         <>
             <Button
@@ -145,13 +149,13 @@ export const MenuPatients = ({ ccid, id, fn, item }: { ccid: string, id: string,
                     Editar
                     <EditIcon style={{fontSize: '0.8rem'}}></EditIcon>
                 </MenuItem>
-                <MenuItem onClick={openAction} style={{display: 'flex', justifyContent: 'space-between'}}>
+                <MenuItem onClick={openLog} style={{display: 'flex', justifyContent: 'space-between'}}>
                     Ver Logs 
                     <RemoveRedEyeIcon style={{fontSize: '0.8rem', marginLeft: '10px'}}></RemoveRedEyeIcon>
                 </MenuItem>
             </Menu>
             <ModalActualizarEmail data={item} isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id}></ModalActualizarEmail>
-            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'pacientes' }}></ModalLogs>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'pacientes', logKey: id}}></ModalLogs>
         </>
     )
 }
@@ -185,6 +189,10 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
         setModalIsOpen(true);
         handleClose()
     }
+    const openLog = () => {
+        setModalLog(true)
+        handleClose()
+    }
     return (
         <>
             <Button
@@ -215,7 +223,7 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                     Editar
                     <EditIcon style={{fontSize: '0.8rem'}}></EditIcon>
                 </MenuItem>
-                <MenuItem onClick={openAction} style={{display: 'flex', justifyContent: 'space-between'}}>
+                <MenuItem onClick={openLog} style={{display: 'flex', justifyContent: 'space-between'}}>
                     Ver Logs 
                     <RemoveRedEyeIcon style={{fontSize: '0.8rem', marginLeft: '10px'}}></RemoveRedEyeIcon>
                 </MenuItem>
@@ -224,7 +232,7 @@ export const MenuAdmin = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void,
                 setModalIsOpen(false);
                 fn({ page: 1 })
             }} id={id} data={item}></ModalCreateAdmin>
-            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'admin' }}></ModalLogs>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'admin', logKey: id}}></ModalLogs>
         </>
     )
 }
@@ -242,7 +250,10 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
         setModalIsOpen(true);
         handleClose()
     }
-
+    const openLog = () => {
+        setModalLog(true)
+        handleClose()
+    }
     const switchActive = async () => await Cup.put(`${item.id}`, { isActive: !item.isActive ? true : false }, {}).then(() => fn({ page: 1 }))
     return (
         <>
@@ -271,10 +282,10 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
                 }}
             >
                 <MenuItem onClick={switchActive}>{(item.isActive ? 'Desactivar' : 'Activar') + ' Codigo CUP'}</MenuItem>
-                <MenuItem onClick={openAction}>Ver logs</MenuItem>
+                <MenuItem onClick={openLog}>Ver logs</MenuItem>
             </Menu>
             <ModalCreateAdmin isOpen={modalIsOpen} onClose={() => { setModalIsOpen(false); fn({ page: 1 }) }} id={id} data={item}></ModalCreateAdmin>
-            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'cup' }}></ModalLogs>
+            <ModalLogs isOpen={modalLogs} onClose={() => setModalLog(false)} data={{ url: 'cup', logKey: id}}></ModalLogs>
         </>
     )
 }
