@@ -112,7 +112,7 @@ export const ModalActualizarEmail = (props: IModal) => {
         MySwal.fire("Usuario Editado", '', 'success')
     });
 
-    const onChange = (e: any) => setEmail({ email: e.target.value });
+    const onChange = (e: any) => setEmail({ ...email, email: e.target.value });
 
     const onChangeCheckBox = (e: any, type: string) => setEmail({ ...email, [type]: e.target.checked });
 
