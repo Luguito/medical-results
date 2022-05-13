@@ -19,7 +19,7 @@ export const ForgotPage = () => {
     const handleSubmit = () => {
         Auth.post('recover-my-password', form, {}).then(resp => {
             if (resp.message) {
-                return setAlert({ show: true, message: resp.message.message, type: 'error' });
+                return setAlert({ show: true, message: resp.message, type: 'error' });
             }
 
             setAlert({ show: true, message: 'Correo de recuperacion enviado', type: 'success' })

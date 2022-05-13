@@ -5,14 +5,18 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { TextField } from "@mui/material";
 import { ButtonGrey } from "@global-styled";
 
-export const FilterDate = () => {
-    const [filter, setFilter] = useState({ startDate: '', endDate: '', nomProc: ''});
+export const FilterDate = ({ fn }: { fn: (args: any) => void }) => {
+    const [filter, setFilter] = useState({ startDate: '', endDate: '', nomProc: '' });
+
+    const searchFilter = () => {
+        fn(filter)
+    }
 
     return (
         <ContainerFilters>
             <ContainerFilter>
                 <p>Tipo de Examen</p>
-                <TextField size="small"></TextField>
+                <TextField size="small" onChange={(e) => setFilter({ ...filter, nomProc: e.target.value })}></TextField>
             </ContainerFilter>
             <ContainerFilter>
                 <p>Rango de fechas</p>
@@ -21,20 +25,20 @@ export const FilterDate = () => {
                         <DatePicker
                             label="Fecha Inicial"
                             value={filter.startDate}
-                            onChange={(newValue) => { setFilter({ ...filter, startDate: newValue as string }); }}
+                            onChange={(newValue) => { setFilter({ ...filter, startDate: new Date(newValue as unknown as Date).toISOString().split('T')[0] as string }); }}
                             renderInput={(params) => <TextField {...params} size="small" />}
                         />
                         <DatePicker
                             label="Fecha Final"
                             value={filter.endDate}
-                            onChange={(newValue) => { setFilter({ ...filter, endDate: newValue as string }); }}
+                            onChange={(newValue) => { setFilter({ ...filter, endDate: new Date(newValue as unknown as Date).toISOString().split('T')[0] as string }); }}
                             renderInput={(params) => <TextField {...params} size="small" />}
                         />
                     </ContainerInputs>
                 </LocalizationProvider>
             </ContainerFilter>
-            <ButtonGrey style={{ marginTop: '2em', marginLeft: '3em'}}>Buscar</ButtonGrey>
-        </ContainerFilters> 
+            <ButtonGrey style={{ marginTop: '2em', marginLeft: '3em' }} onClick={searchFilter}>Buscar</ButtonGrey>
+        </ContainerFilters>
     )
 }
 

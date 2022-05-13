@@ -16,25 +16,34 @@ import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody
 import { FilterDate } from '../filter-date/filter-date';
 export const TableComponent = () => {
     const dummyData = Array(10).fill({})
-    const [list, setList] = useState({
-        data: {
-            rows: [],
-            totalPage: 0
-        }
-    });
+    const [list, setList] = useState([]);
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [print, setPrint] = useState(false)
 
     useEffect(() => {
-        Lab.get('', {}, { page: 1 }).then(resp => { !resp.message && setList(resp) });
-        console.log(list)
+        getLab({ page: 1 });
     }, [])
+
+    const getLab = async (options?: {}) => {
+        console.log(options)
+        let res = await Lab.get('', {}, { page: 1, ...options });
+        console.log(res)
+        // setCurrentFilter({ ...options });
+        // setPaginator(res?.data?.meta);
+        setList(res?.data?.items);
+    }
+
+    const getValueFilter = (e: any) => isEmpty(e) ? getLab({ page: 1 }) : getLab(e)
+
+    const getValidPeticion = (e: any) => getValueFilter(Object.fromEntries(Object.entries(e).filter(([_, v]) => v)))
+
+    const isEmpty = (e: {}) => Object.keys(e).length === 0;
 
     return (
         <>
             <Container>
-                <FilterDate></FilterDate>
+                <FilterDate fn={getValidPeticion}></FilterDate>
                 <Paper sx={{ width: '100%', overflow: 'hidden', boxShadow: 'none' }}>
                     <TableContainer sx={{ maxHeight: 440 }} style={{ border: '1px solid #bcbcbc' }}>
                         <Table stickyHeader aria-label="sticky table">
@@ -61,14 +70,14 @@ export const TableComponent = () => {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {list?.data?.rows.map((row: any, index: number) => {
+                                {list?.map((row: any, index: number) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                            <TableCell align={'center'}>{row?.consecutive}</TableCell>
-                                            <TableCell align={'center'}>{new Date(row?.date).toLocaleDateString()}</TableCell>
-                                            <TableCell align={'center'}>{row?.cup}</TableCell>
-                                            <TableCell align={'center'}>{row?.nomProc}</TableCell>
-                                            <TableCell align={'center'}>{Process[row.state as TProcess]}</TableCell>
+                                            <TableCell align={'center'}>{row?.HISCKEY}</TableCell>
+                                            <TableCell align={'center'}>{new Date(row?.createdAt).toLocaleDateString()}</TableCell>
+                                            <TableCell align={'center'}>{row?.HCPrcCod}</TableCell>
+                                            <TableCell align={'center'}>{row?.HCPrcTpoP}</TableCell>
+                                            <TableCell align={'center'}>{Process[row.HCPrcEst as TProcess]}</TableCell>
                                             <TableCell align={'center'}>
                                                 <Button onClick={() => setModalIsOpen(true)}>
                                                     <VisibilityIcon />
@@ -88,7 +97,7 @@ export const TableComponent = () => {
                     </FooterTable>
                 </Paper>
             </Container>
-            <ModalComponent isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}/>
+            <ModalComponent isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
             {/* <ContainerTable>
                 <Table>
                     <thead>
