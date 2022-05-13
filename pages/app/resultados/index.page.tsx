@@ -8,7 +8,7 @@ export const Results = () => {
             <LayoutComponent
                 Component={
                     <>
-                        <FilterDate></FilterDate>
+                        {/* <FilterDate></FilterDate> */}
                         <TableComponent></TableComponent>
                     </>
                 }></LayoutComponent>
