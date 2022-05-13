@@ -89,7 +89,7 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                             <th>Examen</th>
                             <th>Resultado</th>
                             <th>Unidades</th>
-                            <th>Inventario Biológicos de Referencia</th>
+                            <th>Intervalo Biológicos de Referencia</th>
                             <th>Fecha Validación</th>
                         </tr>
                     </thead>

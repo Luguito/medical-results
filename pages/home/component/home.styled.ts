@@ -17,28 +17,39 @@ export const ContainerCars = styled.section`
 `
 
 export const Cards = styled.div`
-    height: 70%;
+    height: 50%;
     width: 20%;
     border-radius:10px;
     box-shadow: 1px 4px 7px -3px;
+    padding-top:30px;
 `
 
 export const ImgContainer = styled.div`
-    height: 40%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 `
 
-export const Imgs = styled.div`
-    height: 10em;
-    width: 10em;
+export const Imglab = styled.div`
+    background-image:url(https://www.lgs-analisis.es/wp-content/uploads/2017/06/analisis-de-sangre.jpg);
+    background-size: cover;
+    height: 15em;
+    width: 15em;
+    border-radius: 50%;
+    border:1px inset white;
+`
+
+export const Imgdiag = styled.div`
+    background-image:url(https://www.webconsultas.com/sites/default/files/styles/wc_adaptive_image__small/public/temas/tac-tomografia-axial-computerizada.jpg);
+    background-size: cover;
+    height: 15em;
+    width: 15em;
     border-radius: 50%;
     border:1px inset white;
 `
 export const TextContent = styled.div`
-    height: 40%;
+    height: 25%;
     width: 100%;
     display: flex;
     justify-content: center;

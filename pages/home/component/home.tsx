@@ -1,4 +1,5 @@
-import { ContainerLanding, ContainerCars, Cards, ImgContainer, Imgs, ButtonLink, TextContent, Text, ButtonContainer } from './home.styled';
+
+import { ContainerLanding, ContainerCars, Cards, ImgContainer, Imglab, Imgdiag, ButtonLink, TextContent, Text, ButtonContainer } from './home.styled';
 
 
 export const Home = () => {
@@ -7,7 +8,7 @@ export const Home = () => {
             <ContainerCars>
                 <Cards>
                     <ImgContainer>
-                        <Imgs></Imgs>
+                        <Imglab></Imglab>
                     </ImgContainer>
                     <TextContent>
                         <Text>
@@ -22,7 +23,7 @@ export const Home = () => {
                 </Cards>
                 <Cards>
                     <ImgContainer>
-                        <Imgs></Imgs>
+                        <Imgdiag></Imgdiag>
                     </ImgContainer>
                     <TextContent>
                         <Text>
