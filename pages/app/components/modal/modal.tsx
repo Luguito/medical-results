@@ -317,7 +317,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const getProfiles = async () => await Perfiles.get('profile', {}, { active: true }).then((v) => setProfile(v.data.items)).then(() => onClose());
 
-    const handleCreate = async () => await Users.post('create-admin', form, {}).then(() => {
+    const handleCreate = async () => checkLengthPassword() && await Users.post('create-admin', form, {}).then(() => {
         setForm({});
         onClose();
         MySwal.fire("Usuario admin creado", '', 'success');
@@ -350,6 +350,8 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
     const onChange = (e: any, type: string) => setForm({ ...form, [type]: e.target.value });
 
     const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
+
+    const checkLengthPassword = () => form.password && form.password.length >= 8
 
     return (
         <div>
@@ -472,4 +474,5 @@ export interface IForm {
     ccid: string
     profile_id: number
     isActive: boolean
+    password: string
 }
