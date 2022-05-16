@@ -317,12 +317,18 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const getProfiles = async () => await Perfiles.get('profile', {}, { active: true }).then((v) => setProfile(v.data.items)).then(() => onClose());
 
-    const handleCreate = async () => checkLengthPassword() && await Users.post('create-admin', form, {}).then(() => {
+    const handleCreate = async () => checkLengthPassword() ? await Users.post('create-admin', form, {}).then(() => {
         setForm({});
         onClose();
         MySwal.fire("Usuario admin creado", '', 'success');
-    }).catch((e) => MySwal.fire("Error", e.message, 'error'))
-
+    }).catch((e) => MySwal.fire("Error", e.message, 'error')) : MySwal.fire({
+        title: "Completa los campos",
+        text: "El campo de Contraseña debe tener una longitud de 8 caracteres",
+        icon: 'info',
+        customClass: {
+            container: 'sweet-alert-custom',
+        }
+    })
     const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() => {
         onClose();
         MySwal.fire("Usuario Editado", '', 'success')
