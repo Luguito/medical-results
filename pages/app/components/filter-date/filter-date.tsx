@@ -25,12 +25,14 @@ export const FilterDate = ({ fn }: { fn: (args: any) => void }) => {
                         <DatePicker
                             label="Fecha Inicial"
                             value={filter.startDate}
+                            inputFormat="dd/MM/yyyy"
                             onChange={(newValue) => { setFilter({ ...filter, startDate: new Date(newValue as unknown as Date).toISOString().split('T')[0] as string }); }}
                             renderInput={(params) => <TextField {...params} size="small" />}
                         />
                         <DatePicker
                             label="Fecha Final"
                             value={filter.endDate}
+                            inputFormat="dd/MM/yyyy"
                             onChange={(newValue) => { setFilter({ ...filter, endDate: new Date(newValue as unknown as Date).toISOString().split('T')[0] as string }); }}
                             renderInput={(params) => <TextField {...params} size="small" />}
                         />
