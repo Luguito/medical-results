@@ -36,7 +36,7 @@ export const Home = () => {
                         </Text>
                     </TextContent>
                     <ButtonContainer>
-                        <a target="_blank" href={DiagnosticURL}>
+                        <a target="_blank" href={DiagnosticURL} rel="noreferrer">
                             <ButtonLink>Imagenes diagnosticas</ButtonLink>
                         </a>
                     </ButtonContainer>
