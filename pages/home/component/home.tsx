@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 
 export const Home = () => {
+    const DiagnosticURL = "https://imagenes.hospitaluniversidaddelnorte.com/"
     return (
         <ContainerLanding>
             <ContainerCars>
@@ -35,7 +36,9 @@ export const Home = () => {
                         </Text>
                     </TextContent>
                     <ButtonContainer>
-                        <ButtonLink>Imagenes diagnosticas</ButtonLink>
+                        <a target="_blank" href={DiagnosticURL}>
+                            <ButtonLink>Imagenes diagnosticas</ButtonLink>
+                        </a>
                     </ButtonContainer>
                 </Cards>
             </ContainerCars>

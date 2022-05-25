@@ -6,6 +6,8 @@ export const UserLoggedContainer = styled.section`
     align-items: center;
     gap: 2em;
     color: #717171;
+    padding: 10px 0;
+    box-sizing: border-box;
 `;
 
 export const ProfileImgContainer = styled.div`
@@ -13,6 +15,8 @@ export const ProfileImgContainer = styled.div`
     width: 5em;
     // background-color: ${SecondaryGreyColor};
     border-radius: 50%;
+    overflow: hidden;
+    position:relative;
 `
 
 export const UserName = styled.span`
@@ -23,4 +27,11 @@ export const UserProperties = styled.div`
     display: flex;
     flex-direction: column;
     gap: 1em
+`
+
+export const ImageProfile = styled.img`
+    width:160%;
+    position: absolute;
+    left: -29%;
+
 `

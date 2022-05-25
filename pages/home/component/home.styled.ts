@@ -12,18 +12,22 @@ export const ContainerCars = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap; 
     gap: 5em;
-    background:rgb(0, 175, 193);
+    // background:rgb(0, 175, 193);
+    background:rgb(0, 141, 202);
 
 `
 
 export const Cards = styled.div`
     background:white;
-    height: 50%;
+    height: 468px;
     width: 20%;
+    min-width:382px;
     border-radius:10px;
     box-shadow: 1px 4px 7px -3px;
-    padding-top:30px;
+    padding-top:20px;
+    box-sizing: border-box;
 `
 
 export const ImgContainer = styled.div`
@@ -51,11 +55,11 @@ export const Imgdiag = styled.div`
     border:1px inset white;
 `
 export const TextContent = styled.div`
-    height: 25%;
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 20px 0;
 `
 
 export const Text = styled.p`
@@ -67,6 +71,7 @@ export const ButtonContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: 20px;
 `;
 export const ButtonLink = styled(ButtonGrey)`
     && {

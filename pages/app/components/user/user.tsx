@@ -1,8 +1,8 @@
-import { UserLoggedContainer, ProfileImgContainer, UserName, UserProperties } from './user.styled';
+import { UserLoggedContainer, ProfileImgContainer, UserName, UserProperties, ImageProfile } from './user.styled';
 // Logo image
 import Image from 'next/image';
 // import logo from '../../../../assets/logo.png';
-import User from '../../../../assets/userNotFound.jpeg'
+const imageProfile = '/userNotFound.jpeg'
 // Hook
 import { useLoggedUser } from '../../hooks/useLoggedUser';
 // Interface
@@ -15,7 +15,7 @@ export const UserLoggedComponent = () => {
         <>
             <UserLoggedContainer>
                 <ProfileImgContainer>
-                    <Image src={User} height="30px" width="32px" layout="responsive" style={{ borderRadius: '50%' }}></Image>
+                    <ImageProfile src={imageProfile} />
                 </ProfileImgContainer>
                 <UserProperties>
                     <UserName>{user?.firstName}</UserName>

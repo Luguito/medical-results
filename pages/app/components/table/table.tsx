@@ -40,6 +40,8 @@ export const TableComponent = () => {
 
     const isEmpty = (e: {}) => Object.keys(e).length === 0;
 
+    const optionsDate: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long', day: 'numeric'}
+
     return (
         <>
             <Container>
@@ -74,7 +76,7 @@ export const TableComponent = () => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                             <TableCell align={'center'}>{row?.HISCKEY}</TableCell>
-                                            <TableCell align={'center'}>{new Date(row?.createdAt).toLocaleDateString()}</TableCell>
+                                            <TableCell align={'center'}>{new Date(row?.createdAt).toLocaleDateString('es-CO', optionsDate)}</TableCell>
                                             <TableCell align={'center'}>{row?.HCPrcCod}</TableCell>
                                             <TableCell align={'center'}>{row?.HCPrcTpoP}</TableCell>
                                             <TableCell align={'center'}>{Process[row.HCPrcEst as TProcess]}</TableCell>
