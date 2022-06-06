@@ -16,10 +16,22 @@ interface ResultTemplateProps {
 }
 
 export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
-    const { print } = props
-
+    const { print, data } = props
+    const header = data[0];
     useEffect(() => {
-    }, [print])
+        extractResult()
+    }, [data])
+
+    
+    const extractResult = () => {
+        const result = data[0]
+        // console.log(data)
+        const dataSplited = result.HCDSCRATR?.split(':')
+        const payload = {
+            exam: dataSplited[0]
+        }
+        console.log(payload)
+    }
 
 
 
@@ -32,53 +44,53 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                 <HeaderBox style={{width: '70%'}}>
                     <HeaderItem>
                         <ItemText withMargin>PACIENTE</ItemText>
-                        <ItemText>SAPHIRA</ItemText>
+                        <ItemText>{header.MPNOMC}</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>INGRESO</ItemText>
-                        <ItemText>2021-10-19 10:30</ItemText>
+                        <ItemText></ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>MÉDICO</ItemText>
-                        <ItemText>RICARDO BUTRON</ItemText>
+                        <ItemText>{header.MMNOMM.toUpperCase()}</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>TIPO DE DOCUMENTO</ItemText>
-                        <ItemText>C.C</ItemText>
+                        <ItemText>{header.MPTDOC}</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>No. DOCUMENTO</ItemText>
-                        <ItemText>554645654</ItemText>
-                    </HeaderItem>
-                    <HeaderItem>
-                        <ItemText withMargin>SEDE</ItemText>
-                        <ItemText>CALLE 30</ItemText>
+                        <ItemText>{header.MPDIRE}</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>TELÉFONO</ItemText>
-                        <ItemText>3015041227</ItemText>
+                        <ItemText>{header.MPTELE}</ItemText>
+                    </HeaderItem>
+                    <HeaderItem>
+                        <ItemText withMargin>SEDE</ItemText>
+                        <ItemText>{header.SEDE}</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>EMPRESA</ItemText>
-                        <ItemText>HUN</ItemText>
+                        <ItemText></ItemText>
                     </HeaderItem>
                 </HeaderBox>
                 <HeaderBox>
                     <HeaderItem>
                         <ItemText withMargin>ORDEN</ItemText>
-                        <ItemText>9835324681</ItemText>
+                        <ItemText></ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>EDAD</ItemText>
-                        <ItemText>35 AÑOS</ItemText>
+                        <ItemText>{header.AGE} AÑOS</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>SEXO</ItemText>
-                        <ItemText>M</ItemText>
+                        <ItemText>{header.MPSEXO}</ItemText>
                     </HeaderItem>
                     <HeaderItem>
                         <ItemText withMargin>FECHA DE NACIMIENTO</ItemText>
-                        <ItemText>07/06/1989</ItemText>
+                        <ItemText>{new Date(header.MPFCHN).toLocaleDateString()}</ItemText>
                     </HeaderItem>
                 </HeaderBox>
             </Header>
@@ -94,22 +106,57 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td ><p>BILIRRUBINAS : &nbsp; &nbsp;&nbsp;</p>
+                        { 
+                            data.map((row: any, index: number) => {
+                                const labName = row.HCDSCRATR?.split(':')[0];
+                                const resultValue = row.HCDSCRATR?.split(':')[2].split(/\n/)[0].trim();
+                                const referenceValue = row.HCDSCRATR?.split(/\n/)[1].trim();
+                                const arrayValues: any[] = [];
+                                const arrayReferences: any[] = [];
+                                if(!resultValue){
+                                    const rows = row.HCDSCRATR?.split(/\n/);
+                                    rows.map((row: any, i: number) => {
+                                        if(i > 0){
+                                            const line = row.split('     ');
+                                            arrayValues.push(line[0])
+                                            arrayReferences.push(line[1])
+                                        }
+                                    })
 
-                            </td>
-                            <td style={{ fontWeight: 'bold' }}>0.5</td>
-                            <td></td>
-                            <td style={{ fontSize: '10px', margin: 0 }}>
-                                <p>Valores de Referencia: : &nbsp; &nbsp;&nbsp;</p>
-                                <p>Bilirrubina Total .................: :0.67 mg/dl &nbsp; &nbsp;&nbsp;</p>
-                                <p>Hasta 1.2 mg/dl : &nbsp; &nbsp;&nbsp;</p>
-                                <p>Bilirrubina Directa ...............: :0.25 mg/dl &nbsp; &nbsp;&nbsp;</p>
-                                <p>Hasta 0.25 mg/dl : &nbsp; &nbsp;&nbsp;</p>
-                                <p>Bilirrubina Indirecta .............: :0.42 mg/dl &nbsp;</p></td>
-                            <td>03/05/2022</td>
-                        </tr>
-                        <tr>
+                                } 
+                                console.log(resultValue)
+                                return(
+                                    <tr key={index}>
+                                        <td ><p>{labName} : &nbsp; &nbsp;&nbsp;</p>
+
+                                        </td>
+                                        <td style={{ fontWeight: 'bold' }}>
+                                            { 
+                                                resultValue ? <p>{ resultValue }</p> : arrayValues.map((value: any) => {
+                                                    return(
+                                                        <p>{value}</p>
+                                                    )
+                                                })
+                                            }
+                                        </td>
+                                        <td></td>
+                                        <td style={{ fontSize: '10px', margin: 0 }}>
+                                            { 
+                                                resultValue ? <p>{referenceValue} &nbsp; &nbsp;&nbsp;</p> : arrayReferences.map((value: any) => {
+                                                    return(
+                                                        <p>{value}</p>
+                                                    )
+                                                })
+                                            }
+                                            
+                                        </td>
+                                        <td>{new Date(header.HCFECHRES).toLocaleString()}</td>
+                                    </tr>
+                                )
+                            })
+                        }
+                        
+                        {/* <tr>
                             <td>Triglic&eacute;ridos......................: :</td>
                             <td style={{ fontWeight: 'bold' }}>75.5</td>
                             <td>mg/dl</td>
@@ -120,7 +167,7 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                                 <p>Elevado: 200 - 499 mg/dl : &nbsp; &nbsp;&nbsp;</p>
                                 <p>Muy elevado: mayor de 500 mg/dl :</p></td>
                             <td>03/05/2022</td>
-                        </tr>
+                        </tr> */}
 
 
                     </tbody>

@@ -9,7 +9,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 
 // Api
-import { Lab } from '../../api/index';
+import { Lab, Results } from '../../api/index';
 import { ModalComponent } from '../modal/modal';
 import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody, TablePagination } from '@mui/material';
 
@@ -17,6 +17,7 @@ import { FilterDate } from '../filter-date/filter-date';
 export const TableComponent = () => {
     const dummyData = Array(10).fill({})
     const [list, setList] = useState([]);
+    const [resultData, setResultData] = useState<any[]>([]);
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [print, setPrint] = useState(false)
@@ -24,6 +25,7 @@ export const TableComponent = () => {
     useEffect(() => {
         getLab({ page: 1 });
     }, [])
+    
 
     const getLab = async (options?: {}) => {
         console.log(options)
@@ -40,7 +42,13 @@ export const TableComponent = () => {
 
     const isEmpty = (e: {}) => Object.keys(e).length === 0;
 
-    const optionsDate: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long', day: 'numeric'}
+    const optionsDate: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'numeric', day: 'numeric'}
+
+    const getResultHandler = async (resultData: any) =>{
+        setModalIsOpen(true)
+        const result: any = await Results.get('', {}, {clinicHistory: resultData.hisC});
+        setResultData(result);
+    } 
 
     return (
         <>
@@ -75,13 +83,13 @@ export const TableComponent = () => {
                                 {list?.map((row: any, index: number) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                            <TableCell align={'center'}>{row?.HISCKEY}</TableCell>
-                                            <TableCell align={'center'}>{new Date(row?.createdAt).toLocaleDateString('es-CO', optionsDate)}</TableCell>
+                                            <TableCell align={'center'}>{row?.id}</TableCell>
+                                            <TableCell align={'center'}>{new Date(row?.createdAt).toLocaleDateString()}</TableCell>
                                             <TableCell align={'center'}>{row?.HCPrcCod}</TableCell>
-                                            <TableCell align={'center'}>{row?.HCPrcTpoP}</TableCell>
+                                            <TableCell align={'center'}>{row?.PRNOMB}</TableCell>
                                             <TableCell align={'center'}>{Process[row.HCPrcEst as TProcess]}</TableCell>
                                             <TableCell align={'center'}>
-                                                <Button onClick={() => setModalIsOpen(true)}>
+                                                <Button onClick={() => getResultHandler({ccid: row.HISCKEY, hisC: row.HISCSEC})}>
                                                     <VisibilityIcon />
                                                 </Button>
                                             </TableCell>
@@ -99,7 +107,7 @@ export const TableComponent = () => {
                     </FooterTable>
                 </Paper>
             </Container>
-            <ModalComponent isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)} />
+            <ModalComponent isOpen={modalIsOpen} data={resultData} onClose={() => setModalIsOpen(false)} />
             {/* <ContainerTable>
                 <Table>
                     <thead>

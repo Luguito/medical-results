@@ -7,7 +7,7 @@ import Modal from '@mui/material/Modal';
 import { TextField } from "@mui/material";
 
 // Styled Components
-import { HeaderModal, OutlineButton, FullButton, ContainerPDF, CenterUpdated, CustomSwitch } from './modal.styled';
+import { HeaderModal, OutlineButton, FullButton, ContainerPDF, CenterUpdated, CustomSwitch, PrintContiner } from './modal.styled';
 import { ResultTemplate } from '../result-template'
 import { Results, Users, Perfiles } from '../../api';
 
@@ -53,7 +53,7 @@ interface IModal {
 const MySwal = withReactContent(Swal)
 
 export const ModalComponent: FC<IModal> = (props) => {
-    const { onClose, isOpen } = props
+    const { onClose, isOpen, data } = props
     const componentRef = useRef(null);
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -83,9 +83,9 @@ export const ModalComponent: FC<IModal> = (props) => {
                     </HeaderModal>
                     <ContainerPDF>
                         {props.children}
-                        <div ref={componentRef}>
-                            <ResultTemplate data={''} print={() => { }}></ResultTemplate>
-                        </div>
+                        <PrintContiner ref={componentRef}>
+                            <ResultTemplate data={data} print={() => { }}></ResultTemplate>
+                        </PrintContiner>
                     </ContainerPDF>
                 </Box>
             </Modal>
