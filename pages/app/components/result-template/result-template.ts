@@ -3,8 +3,9 @@ import styled from 'styled-components';
 
 export const ResultContainer = styled.div`
     
-        display: flex;
-        flex-direction: column;
+        // display: flex;
+        // flex-direction: column;
+        display: block;
         width: 100%;
         padding:40px;
         margin-bottom: 60px
