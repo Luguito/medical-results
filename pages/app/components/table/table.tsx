@@ -18,6 +18,7 @@ export const TableComponent = () => {
     const dummyData = Array(10).fill({})
     const [list, setList] = useState([]);
     const [resultData, setResultData] = useState<any[]>([]);
+    const [clinicHistory, setClinicHistory] = useState<number>();
 
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [print, setPrint] = useState(false)
@@ -47,7 +48,8 @@ export const TableComponent = () => {
     const getResultHandler = async (resultData: any) =>{
         setModalIsOpen(true)
         const result: any = await Results.get('', {}, {clinicHistory: resultData.hisC});
-        setResultData(result);
+        setResultData(result?.data);
+        setClinicHistory(resultData.hisC)
     } 
 
     return (
@@ -84,14 +86,16 @@ export const TableComponent = () => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                                             <TableCell align={'center'}>{row?.id}</TableCell>
-                                            <TableCell align={'center'}>{new Date(row?.createdAt).toLocaleDateString()}</TableCell>
+                                            <TableCell align={'center'}>{new Date(row?.HCFcHrOrd).toLocaleDateString()}</TableCell>
                                             <TableCell align={'center'}>{row?.HCPrcCod}</TableCell>
                                             <TableCell align={'center'}>{row?.PRNOMB}</TableCell>
                                             <TableCell align={'center'}>{Process[row.HCPrcEst as TProcess]}</TableCell>
                                             <TableCell align={'center'}>
-                                                <Button onClick={() => getResultHandler({ccid: row.HISCKEY, hisC: row.HISCSEC})}>
-                                                    <VisibilityIcon />
-                                                </Button>
+                                                { row.HCPrcEst != 'O' &&
+                                                    <Button onClick={() => getResultHandler({ccid: row.HISCKEY, hisC: row.HISCSEC})}>
+                                                        <VisibilityIcon />
+                                                    </Button>
+                                                }
                                             </TableCell>
                                         </TableRow>
                                     );
@@ -107,7 +111,7 @@ export const TableComponent = () => {
                     </FooterTable>
                 </Paper>
             </Container>
-            <ModalComponent isOpen={modalIsOpen} data={resultData} onClose={() => setModalIsOpen(false)} />
+            <ModalComponent isOpen={modalIsOpen} data={resultData} clinicHistory={clinicHistory} onClose={() => setModalIsOpen(false)} />
             {/* <ContainerTable>
                 <Table>
                     <thead>

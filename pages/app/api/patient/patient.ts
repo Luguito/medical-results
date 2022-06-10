@@ -1,5 +1,5 @@
 // const apiUrl = "https://huninorte.herokuapp.com/api/patient"
-const apiUrl = new URL("http://172.23.0.10:4000/api/patient")
+const apiUrl = new URL("http://localhost:4000/api/patient")
 
 export const get = (url: string, options: RequestInit): Promise<any> => {
     return fetch(`${apiUrl}/${url}`, { method: 'GET', ...options }).then(response => response.json());

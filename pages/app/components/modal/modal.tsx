@@ -48,12 +48,13 @@ interface IModal {
     id?: string;
     isOpen: boolean;
     onClose: () => void;
-    data?: any
+    data?: any,
+    clinicHistory?: number
 }
 const MySwal = withReactContent(Swal)
 
 export const ModalComponent: FC<IModal> = (props) => {
-    const { onClose, isOpen, data } = props
+    const { onClose, isOpen, data, clinicHistory } = props
     const componentRef = useRef(null);
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
@@ -65,7 +66,9 @@ export const ModalComponent: FC<IModal> = (props) => {
 
 
     const sendEmail = () => {
-        Results.get('send-email', {}).then(v => console.log(v));
+        console.log(clinicHistory);
+        const url =  `send-email/?clinicHistory=${clinicHistory}`;
+        Results.get(url, {}, {clinicHistory}).then(v => console.log(v));
     }
 
     return (
@@ -84,7 +87,7 @@ export const ModalComponent: FC<IModal> = (props) => {
                     <ContainerPDF>
                         {props.children}
                         <PrintContiner ref={componentRef}>
-                            <ResultTemplate data={data} print={() => { }}></ResultTemplate>
+                            { data && <ResultTemplate data={data} print={() => { }}></ResultTemplate> }
                         </PrintContiner>
                     </ContainerPDF>
                 </Box>
@@ -317,23 +320,44 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const getProfiles = async () => await Perfiles.get('profile', {}, { active: true }).then((v) => setProfile(v.data.items)).then(() => onClose());
 
-    const handleCreate = async () => checkLengthPassword() ? await Users.post('create-admin', form, {}).then(() => {
-        setForm({});
-        onClose();
-        MySwal.fire("Usuario admin creado", '', 'success');
-    }).catch((e) => MySwal.fire("Error", e.message, 'error')) : MySwal.fire({
-        title: "Completa los campos",
-        text: "El campo de Contraseña debe tener una longitud de 8 caracteres",
-        icon: 'info',
-        customClass: {
-            container: 'sweet-alert-custom',
+    const handleCreate = async () =>  { 
+        if (checkLengthPassword()) {
+            await Users.post('create-admin', form, {}).then(() => {
+                setForm({});
+                onClose();
+                MySwal.fire("Usuario admin creado", '', 'success');
+            }).catch((e) => MySwal.fire("Error", e.message, 'error'));
+        } else {
+            MySwal.fire({
+                title: "Completa los campos",
+                text: "El campo de Contraseña debe tener una longitud de 8 caracteres, 1 mayuscula y 1 minuscula",
+                icon: 'info',
+                customClass: {
+                    container: 'sweet-alert-custom',
+                }   
+            })
         }
-    })
-    const handleEdit = async () => await Users.put(`${data.user_id}`, form, {}).then(() => {
-        onClose();
-        MySwal.fire("Usuario Editado", '', 'success')
-    });
+    }
 
+    const handleEdit = async () => {
+        if (checkLengthPassword()) {
+            // console.log('paso');
+            await Users.put(`${data.user_id}`, form, {}).then(() => {
+                onClose();
+                MySwal.fire("Usuario Editado", '', 'success')
+            });
+        
+        } else {
+            MySwal.fire({
+                title: "Completa los campos",
+                text: "El campo de Contraseña debe tener una longitud de 8 caracteres, 1 mayuscula y 1 minuscula",
+                icon: 'info',
+                customClass: {
+                    container: 'sweet-alert-custom',
+                }   
+            })
+        }
+    }
     const deleteAdmin = async () => MySwal.fire({
         title: 'Eliminar usuario admin',
         text: 'Estas seguro de que quieres eliminar este usuario?',
@@ -357,7 +381,13 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
 
     const onChangeCheckBox = (e: any, type: string) => setForm({ ...form, [type]: e.target.checked });
 
-    const checkLengthPassword = () => form.password && form.password.length >= 8
+    const checkLengthPassword = () => {
+        const expre = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
+        //@ts-ignore
+        return  expre.test(form.password)
+        // console.log('password:', form.password)
+        // return form.password && form.password.length >= 8
+    }
 
     return (
         <div>

@@ -1,5 +1,5 @@
 // const apiUrl = new URL("https://huninorte.herokuapp.com/api")
-const apiUrl = new URL("http://172.23.0.10:4000/api/profile")
+const apiUrl = new URL("http://localhost:4000/api")
 
 export const get = (url: string, options: RequestInit, params?: {}): Promise<any> => {
     return fetch(`${apiUrl}/${url}${params ? `?${new URLSearchParams(params)}` : ''}`, { method: 'GET',  headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`, 'Content-Type': 'application/json'}, ...options }).then(response => response.json());

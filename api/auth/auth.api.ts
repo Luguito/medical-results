@@ -1,5 +1,5 @@
-const apiUrl = "https://huninorte.herokuapp.com/api/auth"
-// const apiUrl = "https://e12c-2800-484-6979-ac4-8468-4ef8-6924-a645.ngrok.io/api"
+// const apiUrl = "https://huninorte.herokuapp.com/api/auth"
+const apiUrl = new URL("http://localhost:4000/api/auth")
 
 export const get = (url: string, options: RequestInit): Promise<any> => {
     return fetch(`${apiUrl}/${url}`, { method: 'GET', ...options }).then(response => response.json());
