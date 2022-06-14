@@ -46,7 +46,7 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                             </HeaderItem>
                             <HeaderItem>
                                 <ItemText withMargin>INGRESO</ItemText>
-                                <ItemText></ItemText>
+                                <ItemText>{new Date(header.HCMINFECH)?.toLocaleDateString()}</ItemText>
                             </HeaderItem>
                             <HeaderItem>
                                 <ItemText withMargin>MÉDICO</ItemText>
@@ -75,8 +75,8 @@ export const ResultTemplate: FC<ResultTemplateProps> = (props) => {
                         </HeaderBox>
                         <HeaderBox>
                             <HeaderItem>
-                                <ItemText withMargin>ORDEN</ItemText>
-                                <ItemText></ItemText>
+                                <ItemText withMargin>FACTURA</ItemText>
+                                <ItemText>{header.HCCNSFAC}</ItemText>
                             </HeaderItem>
                             <HeaderItem>
                                 <ItemText withMargin>EDAD</ItemText>

@@ -384,9 +384,7 @@ export const ModalCreateAdmin: FC<IModal> = (props) => {
     const checkLengthPassword = () => {
         const expre = new RegExp("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$");
         //@ts-ignore
-        return  expre.test(form.password)
-        // console.log('password:', form.password)
-        // return form.password && form.password.length >= 8
+        return  form.password ? expre.test(form.password) : true;
     }
 
     return (

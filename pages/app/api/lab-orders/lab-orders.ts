@@ -2,7 +2,7 @@
 const apiUrl = new URL("http://localhost:4000/api/lab-orders")
 
 export const get = (url: string, options: RequestInit, params?: {}): Promise<any> => {
-    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA0LCJjY2lkIjoiMTc4NDE5NDIiLCJpYXQiOjE2NTQyNzk1NzgsImV4cCI6MTY1NDcxMTU3OH0.hvVdWvroubyTx2rRkSG1AO9vNI6xr7zcB7jjoPAp044'
+    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTA0LCJjY2lkIjoiMTc4NDE5NDIiLCJpYXQiOjE2NTQyNzk1NzgsImV4cCI6MThttp://localhostNDcxMTU3OH0.hvVdWvroubyTx2rRkSG1AO9vNI6xr7zcB7jjoPAp044'
     return fetch(`${apiUrl}${url.length == 0 ? '?' + new URLSearchParams(params) : `/${url}`}`, { method: 'GET',  headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`, 'Content-Type': 'application/json'}, ...options }).then(response => response.json());
 }
 

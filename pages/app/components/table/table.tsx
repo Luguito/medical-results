@@ -16,7 +16,8 @@ import { Paper, TableContainer, Table, TableHead, TableRow, TableCell, TableBody
 import { FilterDate } from '../filter-date/filter-date';
 export const TableComponent = () => {
     const dummyData = Array(10).fill({})
-    const [list, setList] = useState([]);
+    const [list, setList] = useState<any[]>([]);
+    const [listNew, setListNew] = useState([]);
     const [resultData, setResultData] = useState<any[]>([]);
     const [clinicHistory, setClinicHistory] = useState<number>();
 
@@ -34,7 +35,21 @@ export const TableComponent = () => {
         console.log(res)
         // setCurrentFilter({ ...options });
         // setPaginator(res?.data?.meta);
-        setList(res?.data?.items);
+        const resp: any[] = res?.data?.items;
+        const newArray: any[] = [];
+        resp.map((r:any, index:number) => {
+            if(resp.some((item: any) => item.HISCSEC === r.HISCSEC && item.HCPrcEst == 'O') ) r.HCPrcEst = 'O';
+            if(index == 0) {
+                newArray.push(r);
+            } else {
+                const isExists = newArray.some(item => item.HISCSEC === r.HISCSEC);
+                if(!isExists) {
+                    newArray.push(r)
+                }
+            }
+        })
+        setList(newArray);
+        // setList(res?.data?.items);
     }
 
     const getValueFilter = (e: any) => isEmpty(e) ? getLab({ page: 1 }) : getLab(e)
@@ -62,19 +77,10 @@ export const TableComponent = () => {
                             <TableHead>
                                 <TableRow>
                                     <TableCell align={'center'}>
-                                        Consecutivo
+                                        Fecha de ingreso
                                     </TableCell>
                                     <TableCell align={'center'}>
-                                        Fecha
-                                    </TableCell>
-                                    <TableCell align={'center'}>
-                                        Codigo Cup
-                                    </TableCell>
-                                    <TableCell align={'center'}>
-                                        Nombre del examen
-                                    </TableCell>
-                                    <TableCell align={'center'}>
-                                        Estado
+                                        Factura
                                     </TableCell>
                                     <TableCell align={'center'}>
                                         Acción
@@ -85,11 +91,8 @@ export const TableComponent = () => {
                                 {list?.map((row: any, index: number) => {
                                     return (
                                         <TableRow hover role="checkbox" tabIndex={-1} key={index}>
-                                            <TableCell align={'center'}>{row?.id}</TableCell>
-                                            <TableCell align={'center'}>{new Date(row?.HCFcHrOrd).toLocaleDateString()}</TableCell>
-                                            <TableCell align={'center'}>{row?.HCPrcCod}</TableCell>
-                                            <TableCell align={'center'}>{row?.PRNOMB}</TableCell>
-                                            <TableCell align={'center'}>{Process[row.HCPrcEst as TProcess]}</TableCell>
+                                            <TableCell align={'center'}>{new Date(row?.HCMINFECH).toLocaleDateString()}</TableCell>
+                                            <TableCell align={'center'}>{row?.HCCNSFAC}</TableCell>
                                             <TableCell align={'center'}>
                                                 { row.HCPrcEst != 'O' &&
                                                     <Button onClick={() => getResultHandler({ccid: row.HISCKEY, hisC: row.HISCSEC})}>

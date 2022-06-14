@@ -10,6 +10,19 @@ export const ResultContainer = styled.div`
         padding:40px;
         margin-bottom: 60px
 
+        @media print {
+            html, body {
+              -webkit-print-color-adjust: exact;
+            }
+        }
+        @media print {
+            html, body {
+              height: initial !important;
+              overflow: initial !important;
+              -webkit-print-color-adjust: exact;
+              color: #000;
+            }
+          }
 
 `
 export const PreHeader = styled.div`

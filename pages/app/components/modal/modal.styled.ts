@@ -84,6 +84,7 @@ export const PrintContiner = styled.div`
       height: initial !important;
       overflow: initial !important;
       -webkit-print-color-adjust: exact;
+      color: black;
     }
   }
   

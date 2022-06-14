@@ -49,7 +49,7 @@ export const AdminTable = ({ headers, list, paginator, fn, itemsToShow, modal, f
                                                 const value = row[column];
                                                 return (
                                                     <TableCell key={index} align={'center'}>
-                                                        {typeof value === 'boolean' ? <ShowActive value={value} /> : (column === 'accion' ? <RenderMenu item={row} id={row.id} ccid={row.ccid} fn={fn}></RenderMenu> : value)}
+                                                        {typeof value === 'boolean' ? <ShowActive value={value} isNew={row?.isNew || false}/> : (column === 'accion' ? <RenderMenu item={row} id={row.id} ccid={row.ccid} fn={fn}></RenderMenu> : value)}
                                                     </TableCell>
                                                 );
                                             })}
@@ -290,15 +290,21 @@ export const MenuCup = ({ item, fn, id }: { item?: any, fn: (arg: {}) => void, i
     )
 }
 
-export const ShowActive = ({ value }: { value: boolean }) => {
+export const ShowActive = ({ value, isNew=false }: { value: boolean, isNew: boolean }) => {
 
     useEffect(() => {
         console.log(value)
     },[])
     
     return (
-        <>
-            <span style={{ padding: '5px 1.7em', backgroundColor: value ? '#00c868' : '#939191', color: '#FFFFFF', borderRadius: '20px' }}>{value ? "Activo" : "Inactivo"}</span>
+        <> 
+            <div style={{position:"relative"}}>
+                { isNew &&
+                    <span style={{position:"absolute",top: -14,left: 0, fontWeight:" 700",color: "#fff",zIndex: "10",background: "#000",borderRadius: "20px",padding: "2px 5px",fontSize: "10px"}}>Nuevo</span>
+
+                }
+                <span style={{ padding: '5px 1.7em', backgroundColor: value ? '#00c868' : '#939191', color: '#FFFFFF', borderRadius: '20px' }}>{value ? "Activo" : "Inactivo"}</span>
+            </div>
         </>
     )
 }
