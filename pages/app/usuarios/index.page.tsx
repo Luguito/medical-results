@@ -1,9 +1,9 @@
-import { LayoutComponent } from '../components/layout/layout';
-import { FiltersInput } from '../components/filters/filters';
-import { AdminTable } from '../components/admin-table/admin-table';
+import { LayoutComponent } from '../../../components/app/components/layout/layout';
+import { FiltersInput } from '../../../components/app/components/filters/filters';
+import { AdminTable } from '../../../components/app/components/admin-table/admin-table';
 import { useEffect, useState } from 'react';
-import User from '../api/users/users';
-import { IPaginator } from '../interfaces';
+import User from '../../../components/app/api/users/users';
+import { IPaginator } from '../../../interfaces';
 
 export const UsersPage = () => {
     const [currentFilter, setCurrentFilter] = useState({});
@@ -43,3 +43,10 @@ export const UsersPage = () => {
 
 
 export default UsersPage;
+
+export async function getStaticProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  

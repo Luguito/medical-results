@@ -1,5 +1,5 @@
-import { FirstLoginComponent } from './components/first-time';
-import { LoginComponent } from './components/login';
+import { FirstLoginComponent } from '../../components/login/components/first-time';
+import { LoginComponent } from '../../components/login/components/login';
 import { useState } from 'react';
 
 export const LoginPage = () => {
@@ -17,3 +17,10 @@ export const LoginPage = () => {
 }
 
 export default LoginPage;
+
+export async function getStaticProps() {
+    return {
+      props: {},
+    }
+  }
+  

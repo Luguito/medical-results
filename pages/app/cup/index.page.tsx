@@ -1,8 +1,8 @@
-import { LayoutComponent } from '../components/layout/layout';
-import { AdminTable } from '../components/admin-table/admin-table';
-import { Cup } from '../api';
+import { LayoutComponent } from '../../../components/app/components/layout/layout';
+import { AdminTable } from '../../../components/app/components/admin-table/admin-table';
+import { Cup } from '../../../components/app/api';
 import { useEffect, useState } from 'react';
-import { IPaginator } from '../interfaces';
+import { IPaginator } from '../../../interfaces';
 
 
 export const CupPage = () => {
@@ -44,3 +44,10 @@ export const CupPage = () => {
 
 
 export default CupPage;
+
+export async function getStaticProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  

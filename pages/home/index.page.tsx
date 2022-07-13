@@ -1,4 +1,4 @@
-import { Home } from './component/home';
+import { Home } from '../../components/home/component/home';
 
 export const LandingPage = () => {
     return (
@@ -7,3 +7,10 @@ export const LandingPage = () => {
 }
 
 export default LandingPage
+
+export async function getStaticProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  

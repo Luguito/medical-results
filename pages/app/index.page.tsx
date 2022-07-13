@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import { LayoutComponent } from './components/layout/layout';
-import { useLoggedUser } from './hooks/useLoggedUser';
+import { LayoutComponent } from '../../components/app/components/layout/layout';
+import { useLoggedUser } from '../../hooks/useLoggedUser';
 
 export const AppLayoutPage = () => {
     const user = useLoggedUser();
@@ -28,3 +28,10 @@ export const AppLayoutPage = () => {
 }
 
 export default AppLayoutPage;
+
+export async function getStaticProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  

@@ -1,6 +1,18 @@
 {
-  "/_app": "pages/_app.js",
-  "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/app/dashboard": "pages/app/dashboard.js"
+  "/_error": "pages/_error.js",
+  "/_app": "pages/_app.js",
+  "/app": "pages/app.js",
+  "/app/mis-resultados": "pages/app/mis-resultados.js",
+  "/app/perfiles": "pages/app/perfiles.js",
+  "/app/dashboard": "pages/app/dashboard.js",
+  "/app/resultados": "pages/app/resultados.js",
+  "/home": "pages/home.js",
+  "/app/usuarios": "pages/app/usuarios.js",
+  "/": "pages/index.js",
+  "/forgot-password": "pages/forgot-password.js",
+  "/app/admin": "pages/app/admin.js",
+  "/login": "pages/login.js",
+  "/reset-password": "pages/reset-password.js",
+  "/app/cup": "pages/app/cup.js"
 }

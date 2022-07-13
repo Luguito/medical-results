@@ -1,9 +1,9 @@
-import { LayoutComponent } from '../components/layout/layout';
+import { LayoutComponent } from '../../../components/app/components/layout/layout';
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { PrimaryBlueColor, TextColor } from '@global-colors';
 import Box from '@mui/material/Box';
 import { useEffect, useState } from 'react';
-import { Perfiles } from '../api';
+import { Perfiles } from '../../../components/app/api';
 
 export const DashboardPage = () => {
     const [cards, setCards] = useState([]);
@@ -129,3 +129,9 @@ export interface IDashboard {
     totalCups: any,
     totalOrderByStatus: any
 }
+export async function getStaticProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  

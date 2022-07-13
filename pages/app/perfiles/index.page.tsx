@@ -1,12 +1,12 @@
-import { LayoutComponent } from '../components/layout/layout';
+import { LayoutComponent } from '../../../components/app/components/layout/layout';
 
-import { FiltersInput } from '../components/filters/filters';
-import { AdminTable } from '../components/admin-table/admin-table';
+import { FiltersInput } from '../../../components/app/components/filters/filters';
+import { AdminTable } from '../../../components/app/components/admin-table/admin-table';
 import { useEffect, useState } from 'react';
-import { Perfiles } from '../api'
+import { Perfiles } from '../../../components/app/api'
 
-import { ModalCreatePerfil } from '../components/modal/modal';
-import { IPaginator } from '../interfaces';
+import { ModalCreatePerfil } from '../../../components/app/components/modal/modal';
+import { IPaginator } from '../../../interfaces';
 
 export const PerfilesPage = () => {
     const [modalIsOpen, setModalIsOpen] = useState<boolean>(false)
@@ -53,3 +53,10 @@ export const PerfilesPage = () => {
 
 
 export default PerfilesPage;
+
+export async function getStaticProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  

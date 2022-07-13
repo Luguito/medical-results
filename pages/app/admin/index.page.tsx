@@ -1,10 +1,10 @@
-import { LayoutComponent } from '../components/layout/layout';
-import { FiltersInput } from '../components/filters/filters';
-import { AdminTable } from '../components/admin-table/admin-table';
+import { LayoutComponent } from '../../../components/app/components/layout/layout';
+import { FiltersInput } from '../../../components/app/components/filters/filters';
+import { AdminTable } from '../../../components/app/components/admin-table/admin-table';
 import { useEffect, useState } from 'react';
-import { Users } from '../api';
-import { ModalCreateAdmin } from '../components/modal/modal';
-import { IPaginator } from '../interfaces';
+import { Users } from '../../../components/app/api';
+import { ModalCreateAdmin } from '../../../components/app/components/modal/modal';
+import { IPaginator } from '../../../interfaces';
 
 
 export const AdminPage = () => {
@@ -52,3 +52,10 @@ export const AdminPage = () => {
 
 
 export default AdminPage;
+
+export async function getStaticProps() {
+    return {
+      props: {}, // will be passed to the page component as props
+    }
+  }
+  
